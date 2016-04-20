@@ -1,0 +1,54 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <things-editor-color value="{{color}}">
+    </things-editor-color>
+
+@demo demo/index-editor-color.html
+@hero hero.svg
+-->
+
+<dom-module id="things-editor-color">
+  <template>
+    <style>
+      :host {
+        display: block;
+        @apply(--things-editor-color)
+      }
+      input[type=text] {
+        @apply(--things-editor-color-input-text)
+      }
+      input[type=color] {
+        @apply(--things-editor-color-input-color)
+      }
+    </style>
+
+    <input type="text" value="{{value::change}}">
+    <input type="color" value="{{value::change}}">
+
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'things-editor-color',
+
+        properties: {
+          value: {
+            type: String,
+            notify: true
+          }
+        }
+
+      })
+
+    })();
+
+  </script>
+</dom-module>
