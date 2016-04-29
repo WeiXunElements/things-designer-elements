@@ -1,16 +1,12 @@
 <link rel="import" href="../polymer/polymer.html">
 
 <link rel="import" href="../iron-pages/iron-pages.html">
-<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
-<link rel="import" href="../iron-icons/editor-icons.html">
-
-<link rel="import" href="../paper-styles/paper-styles.html">
 <link rel="import" href="../paper-menu/paper-menu.html">
 <link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../paper-radio-group/paper-radio-group.html">
 <link rel="import" href="../paper-item/paper-item.html">
 
 <link rel="import" href="../things-angle-input/things-angle-input.html">
+<link rel="import" href="./things-editor-color-stops.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -18,10 +14,10 @@ An element providing a solution to no problem in particular.
 Example:
 
     <things-editor-gradient type="{{gradient.type}}"
-                           rotation="{{gradient.rotation}}"
-                           center="{{gradient.center}}"
-                           color-stops="{{gradient.colorStops}}"
-                           rotate-with-shapes="{{gradient.rotateWithShapes}}">
+                            rotation="{{gradient.rotation}}"
+                            center="{{gradient.center}}"
+                            color-stops="{{gradient.colorStops}}"
+                            rotate-with-shapes="{{gradient.rotateWithShapes}}">
     </things-editor-gradient>
 
 @demo demo/index-editor-gradient.html
@@ -55,42 +51,6 @@ Example:
       .gradient-direction [name=center-to-corner]       {background-position:50%  -396px}
       .gradient-direction paper-item[focused]{background-color:rgba(255,246,143,.5);}
       .gradient-direction paper-item:focus:before{display:none !important;}
-      .gradient-stops{
-        clear:both;
-        margin-bottom:-8px;
-      }
-      .gradient-stops .colorbar{
-        width:91%;
-        height:12px;
-        margin:auto;
-        margin-bottom:25px;
-      }
-      .gradient-stops .markers{position:relative;top:-7px;}
-      .gradient-stops .markers div{
-        /*display:inline-block;*/
-        width:10px;height:10px;
-        margin-top:-15px;
-        /*margin-left:3px;*/
-        /*position:relative;*/
-        position:absolute;
-        border:2px solid #fff;
-        cursor:pointer;
-        -webkit-box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.2);
-        -moz-box-shadow:    1px 1px 1px 0px rgba(0,0,0,0.2);
-        box-shadow:         1px 1px 1px 0px rgba(0,0,0,0.2);
-      }
-      .gradient-stops .markers div:before {
-        border-bottom:7px solid #fff;
-        border-left:6px solid transparent;
-        border-right:6px solid transparent;
-        content: "";
-        width:0;height:0;
-        left:-1px;
-        position: absolute;
-        top: -7px;
-      }
-      .gradient-stops .markers div[focused]{border-color:#585858;}
-      .gradient-stops .markers div[focused]:before{border-bottom:7px solid #585858;}
     </style>
 
     <label>gradient type</label>
@@ -137,22 +97,9 @@ Example:
 
     <label>gradient stops</label>
 
-    <div class="gradient-stops">
-      <div id="colorbar" class="colorbar"></div>
-      <div id="markers" class="markers">
-        <template id="markers-template" is="dom-repeat" items="[[colorStops]]">
-          <div style$="background-color:[[item.color]];margin-left:[[_calculatePosition(item.position)]]px;" marker-index$="[[index]]" draggable="true">
-          </div>
-        </template>
-      </div>
-    </div>
-
-    <label>Color #</label>
-    <input type="text" class="width-60p" value="{{focused.color::change}}">
-    <input id="color-pallet" type="color" class="width-40p" value="{{focused.color::change}}">
-
-    <label>position</label>
-    <input type="number" value="{{focused.position::change}}"/>
+    <things-editor-color-stops type="gradient"
+                               color-stops="{{colorStops}}">
+    </things-editor-color-stops>                           
 
     <div class="merge-column">
       <input type="checkbox" value="{{rotateWithShape::change}}" required>
@@ -190,17 +137,7 @@ Example:
           },
 
           colorStops: {
-            notify: true,
-            value: [{
-              position: 0,
-              color: 'black'
-            }, {
-              position: 0.5,
-              color: 'red'
-            }, {
-              position: 1,
-              color: 'green'
-            }],
+            notify: true
           },
 
           rotateWithShape: {
@@ -210,70 +147,9 @@ Example:
           }
         },
 
-        listeners: {
-          'colorbar.dblclick': '_onDblClickColorbar',
-          'markers.mousedown': '_onMouseDownMarkers',
-          'markers.dblclick': '_onDblClickMarkers',
-          'markers.dragstart': '_onDragStartMarkers',
-          'markers.drag': '_onDragMarkers',
-          'markers.dragend': '_onDragEndMarkers',
-          'iron-resize': '_onIronResize'
-        },
-
         observers: [
-          '_onFocusedChanged(focused.*)',
-          '_onChangeColorStops(colorStops.*)',
           'onChangeDirection(direction)'
         ],
-
-        _setFocused: function(index) {
-
-          if(this.focused && this.focused.index === index)
-            return
-
-          var marker = this.$$('#markers div[focused]')
-          if(marker)
-            marker.removeAttribute('focused')
-
-          marker = this.$$(`#markers div[marker-index='${index}']`)
-
-          if(!marker) {
-            this.focused = null
-            return
-          }
-
-          marker.setAttribute('focused', true)
-
-          var colorStop = this.colorStops[index]
-
-          this.focused = {
-            index: index,
-            color: colorStop.color,
-            position: colorStop.position
-          }
-        },
-
-        _onFocusedChanged: function(change) {
-
-          if(change.path === 'focused') {
-            if(!change.value)
-              this._setFocused(-1) // clear focused marker
-
-            return
-          }
-
-          var property = change.path.substr(8)
-          var value = change.value
-
-          if(property === 'position')
-            value = parseFloat(change.value)
-
-          this.changedOnThis = true
-
-          this.set(`colorStops.${this.focused.index}.${property}`, value);
-
-          this.changedOnThis = false
-        },
 
         onChangeDirection: function(after) {
           var rotation
@@ -308,133 +184,6 @@ Example:
           }
 
           this.rotation = rotation / 360 * Math.PI * 2
-        },
-
-        _onChangeColorStops: function() {
-
-          if(!this.changedOnThis)
-            this.focused = null
-
-          var stopsStrings = (this.colorStops || []).map(stop => {
-            return `${stop.color} ${stop.position * 100}%`
-          })
-
-          var gradient = stopsStrings.join(',')
-
-          this.$.colorbar.style = `background: linear-gradient(to right, ${gradient});` /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-
-          // `background: -webkit-linear-gradient(left, ${gradient});` /* Chrome10-25,Safari5.1-6 */
-          // `background: -moz-linear-gradient(left, ${gradient});` /* FF3.6-15 */
-        },
-
-        _onDblClickColorbar: function(e) {
-
-          var width = this.$.colorbar.offsetWidth
-          var position = e.offsetX / width
-          var colorStops = this.colorStops ? this.colorStops.slice() : []
-
-
-          for(var i = 0;i < colorStops.length;i++) {
-            if(colorStops[i].position > position)
-              break
-          }
-
-          colorStops.splice(i, 0, {
-            position: position,
-            color: '#FFFFFF'
-          })
-
-          this.colorStops = colorStops
-
-          this.focused = null
-          this._setFocused(i)
-        },
-
-        _onMouseDownMarkers: function(e) {
-          var marker = e.target
-          var index = marker.getAttribute('marker-index')
-
-          this._setFocused(index)
-        },
-
-        _onDblClickMarkers: function(e) {
-          this.$["color-pallet"].click()
-        },
-
-        _onDragStartMarkers: function(e) {
-          var img = document.createElement("img")
-          img.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
-          e.dataTransfer.setDragImage(img, 0, 0);
-          this.dragstart = {
-            x: e.offsetX,
-            y: e.offsety
-          }
-          // this.undoable_changes = this.scene.undoableChangeBefore()
-        },
-
-        _onDragMarkers: function(e) {
-          var width = this.$.colorbar.offsetWidth
-
-          if(Math.abs(e.offsetX) > width)
-            return
-
-          if(e.offsetY > 15) {
-            return
-          }
-
-          var position = this.focused.position + ((e.offsetX - this.dragstart.x) / width)
-
-          if(position > 1)
-            position = 1
-          else if(position < 0)
-            position = 0
-
-          this.set('focused.position', position)
-        },
-
-        _onDragEndMarkers: function(e) {
-          var width = this.$.colorbar.offsetWidth
-
-          if(Math.abs(e.offsetX) > width || Math.abs(e.offsetX) > 100)
-            return
-
-          if(e.offsetY > 15) {
-            console.log('delete this')
-            this.colorStops.splice(this.focused.index, 1)
-            this.colorStops = this.colorStops.slice()
-
-            return
-          }
-
-          var position = this.focused.position + ((e.offsetX - this.dragstart.x) / width)
-
-          if(position > 1)
-            position = 1
-          else if(position < 0)
-            position = 0
-
-          this.set('focused.position', position)
-          // this.scene.undoableChangeAfter(this.undoable_changes)
-        },
-
-        _calculatePosition: function(position) {
-          return position * this.$.colorbar.offsetWidth + 3
-        },
-
-        _onIronResize: function(e) {
-          /* [더 좋은 방법으로 개선해주세요.]
-           * 이 컴포넌트가 보이지 않는 상태에서 marker의 위치를 잡지 못하는 문제를 해결하기 위한 고육책
-           * 그 원인은 컴포넌트가 보이지 않는 상태에서는 this.$.colorbar.offsetWidth 값이 0이기 떄문이다.
-           */
-          var width = this.$.colorbar.offsetWidth
-
-          if(this._colorbar_size === 0 && width > 0) {
-            let template = this.$['markers-template']
-            template.items = []
-            template.render()
-            template.items = this.colorStops
-          }
-          this._colorbar_size = width
         }
 
       })
