@@ -20,7 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style is="custom-style">
     :root {
       --things-editor-color-stops: {
-        background: yellow;
+        background: lightgray;
       }
     };
 
@@ -52,10 +52,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var app = document.querySelector('#app')
 
         app.colorStops = [{
-          color: 'red',
+          color: 'blue',
           position: 0
         }, {
-          color: 'blue',
+          color: 'green',
+          position: 0.25
+        }, {
+          color: 'yellow',
+          position: 0.5
+        }, {
+          color: 'red',
+          position: 0.75
+        }, {
+          color: 'black',
           position: 1
         }]
 
