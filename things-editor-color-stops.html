@@ -1,0 +1,323 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <things-editor-color-stops type="gradient"
+                               color-stops="{{gradient.colorStops}}">
+    </things-editor-color-stops>
+
+@demo demo/index-editor-color-stops.html
+@hero hero.svg
+-->
+
+<dom-module id="things-editor-color-stops">
+  <template>
+    <style>
+      :host {
+        display: block;
+        @apply(--things-editor-color-stops)
+      }
+
+      .color-stops{
+        clear:both;
+        margin-bottom:-8px;
+      }
+      .color-stops .colorbar{
+        width:91%;
+        height:12px;
+        margin:auto;
+        margin-bottom:25px;
+      }
+      .color-stops .markers{position:relative;top:-7px;}
+      .color-stops .markers div{
+        width:10px;height:10px;
+        margin-top:-15px;
+        position:absolute;
+        border:2px solid #fff;
+        cursor:pointer;
+        -webkit-box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.2);
+        -moz-box-shadow:    1px 1px 1px 0px rgba(0,0,0,0.2);
+        box-shadow:         1px 1px 1px 0px rgba(0,0,0,0.2);
+      }
+      .color-stops .markers div:before {
+        border-bottom:7px solid #fff;
+        border-left:6px solid transparent;
+        border-right:6px solid transparent;
+        content: "";
+        width:0;height:0;
+        left:-1px;
+        position: absolute;
+        top: -7px;
+      }
+      .color-stops .markers div[focused]{border-color:#585858;}
+      .color-stops .markers div[focused]:before{border-bottom:7px solid #585858;}
+    </style>
+
+    <div class="color-stops">
+      <div id="colorbar" class="colorbar"></div>
+      <div id="markers" class="markers">
+        <template id="markers-template" is="dom-repeat" items="[[colorStops]]">
+          <div style$="background-color:[[item.color]];margin-left:[[_calculatePosition(item.position)]]px;" marker-index$="[[index]]" draggable="true">
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <label>Color #</label>
+    <input type="text" class="width-60p" value="{{focused.color::change}}">
+    <input id="color-pallet" type="color" class="width-40p" value="{{focused.color::change}}">
+
+    <label>position</label>
+    <input type="number" value="{{focused.position::change}}"/>
+
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'things-editor-color-stops',
+
+        behaviors: [
+          Polymer.IronResizableBehavior
+        ],
+
+        properties: {
+          type: {
+            type: String,
+            value: "solid" // 'solid', 'gradient'
+          },
+
+          colorStops: {
+            notify: true,
+            value: [{
+              position: 0,
+              color: 'black'
+            }, {
+              position: 0.5,
+              color: 'red'
+            }, {
+              position: 1,
+              color: 'green'
+            }],
+          }
+        },
+
+        listeners: {
+          'colorbar.dblclick': '_onDblClickColorbar',
+          'markers.mousedown': '_onMouseDownMarkers',
+          'markers.dblclick': '_onDblClickMarkers',
+          'markers.dragstart': '_onDragStartMarkers',
+          'markers.drag': '_onDragMarkers',
+          'markers.dragend': '_onDragEndMarkers',
+          'iron-resize': '_onIronResize'
+        },
+
+        observers: [
+          '_onFocusedChanged(focused.*)',
+          '_onChangeColorStops(colorStops.*)'
+        ],
+
+        _setFocused: function(index) {
+
+          if(this.focused && this.focused.index === index)
+            return
+
+          var marker = this.$$('#markers div[focused]')
+          if(marker)
+            marker.removeAttribute('focused')
+
+          marker = this.$$(`#markers div[marker-index='${index}']`)
+
+          if(!marker) {
+            this.focused = null
+            return
+          }
+
+          marker.setAttribute('focused', true)
+
+          var colorStop = this.colorStops[index]
+
+          this.focused = {
+            index: index,
+            color: colorStop.color,
+            position: colorStop.position
+          }
+        },
+
+        _onFocusedChanged: function(change) {
+
+          if(change.path === 'focused') {
+            if(!change.value)
+              this._setFocused(-1) // clear focused marker
+
+            return
+          }
+
+          var property = change.path.substr(8)
+          var value = change.value
+
+          if(property === 'position')
+            value = parseFloat(change.value)
+
+          this.changedOnThis = true
+
+          this.set(`colorStops.${this.focused.index}.${property}`, value);
+
+          this.changedOnThis = false
+        },
+
+        _onChangeColorStops: function() {
+
+          if(!this.changedOnThis)
+            this.focused = null
+
+          if(this.type == 'gradient') {
+            var stopsStrings = (this.colorStops || []).map(stop => {
+              return `${stop.color} ${stop.position * 100}%`
+            })            
+          } else {
+            var stops = this.colorStops || []
+            var last = null
+            var stopsStrings = stops.map(stop => {
+              if(!last) {
+                last = stop
+                return `${stop.color} ${stop.position * 100}%`
+              } else {
+                var str = `${last.color} ${stop.position * 100}%, ${stop.color} ${stop.position * 100}%`
+                last = stop
+                return str
+              }
+            })
+          }
+
+          var gradient = stopsStrings.join(',')
+          if(this.type == 'solid' && last)
+            gradient += `, ${last.color} 100%`
+
+          this.$.colorbar.style = `background: linear-gradient(to right, ${gradient});` 
+          /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+          // `background: -webkit-linear-gradient(left, ${gradient});` /* Chrome10-25,Safari5.1-6 */
+          // `background: -moz-linear-gradient(left, ${gradient});` /* FF3.6-15 */
+        },
+
+        _onDblClickColorbar: function(e) {
+
+          var width = this.$.colorbar.offsetWidth
+          var position = e.offsetX / width
+          var colorStops = this.colorStops ? this.colorStops.slice() : []
+
+
+          for(var i = 0;i < colorStops.length;i++) {
+            if(colorStops[i].position > position)
+              break
+          }
+
+          colorStops.splice(i, 0, {
+            position: position,
+            color: '#FFFFFF'
+          })
+
+          this.colorStops = colorStops
+
+          this.focused = null
+          this._setFocused(i)
+        },
+
+        _onMouseDownMarkers: function(e) {
+          var marker = e.target
+          var index = marker.getAttribute('marker-index')
+
+          this._setFocused(index)
+        },
+
+        _onDblClickMarkers: function(e) {
+          this.$["color-pallet"].click()
+        },
+
+        _onDragStartMarkers: function(e) {
+          var img = document.createElement("img")
+          img.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
+          e.dataTransfer.setDragImage(img, 0, 0);
+          this.dragstart = {
+            x: e.offsetX,
+            y: e.offsety
+          }
+        },
+
+        _onDragMarkers: function(e) {
+          var width = this.$.colorbar.offsetWidth
+
+          if(Math.abs(e.offsetX) > width)
+            return
+
+          if(e.offsetY > 15) {
+            return
+          }
+
+          var position = this.focused.position + ((e.offsetX - this.dragstart.x) / width)
+
+          if(position > 1)
+            position = 1
+          else if(position < 0)
+            position = 0
+
+          this.set('focused.position', position)
+        },
+
+        _onDragEndMarkers: function(e) {
+          var width = this.$.colorbar.offsetWidth
+
+          if(Math.abs(e.offsetX) > width || Math.abs(e.offsetX) > 100)
+            return
+
+          if(e.offsetY > 15) {
+            this.colorStops.splice(this.focused.index, 1)
+            this.colorStops = this.colorStops.slice()
+
+            return
+          }
+
+          var position = this.focused.position + ((e.offsetX - this.dragstart.x) / width)
+
+          if(position > 1)
+            position = 1
+          else if(position < 0)
+            position = 0
+
+          this.set('focused.position', position)
+        },
+
+        _calculatePosition: function(position) {
+          return position * this.$.colorbar.offsetWidth + 3
+        },
+
+        _onIronResize: function(e) {
+          /* [더 좋은 방법으로 개선해주세요.]
+           * 이 컴포넌트가 보이지 않는 상태에서 marker의 위치를 잡지 못하는 문제를 해결하기 위한 고육책
+           * 그 원인은 컴포넌트가 보이지 않는 상태에서는 this.$.colorbar.offsetWidth 값이 0이기 떄문이다.
+           */
+          var width = this.$.colorbar.offsetWidth
+
+          if(this._colorbar_size === 0 && width > 0) {
+            let template = this.$['markers-template']
+            template.items = []
+            template.render()
+            template.items = this.colorStops
+          }
+          this._colorbar_size = width
+        }
+
+      })
+
+    })();
+
+  </script>
+</dom-module>
