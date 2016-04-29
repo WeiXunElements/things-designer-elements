@@ -186,20 +186,15 @@ Example:
             var stops = this.colorStops || []
             var last = null
             var stopsStrings = stops.map(stop => {
-              if(!last) {
-                last = stop
-                return `${stop.color} ${stop.position * 100}%`
-              } else {
-                var str = `${last.color} ${stop.position * 100}%, ${stop.color} ${stop.position * 100}%`
-                last = stop
-                return str
-              }
+              var step = last ? `${last.color} ${stop.position * 100}%, ${stop.color} ${stop.position * 100}%` : `${stop.color} ${stop.position * 100}%`
+              last = stop
+              return step
             })
+            if(last)
+              stopsStrings.push(`${last.color} 100%`)
           }
 
           var gradient = stopsStrings.join(',')
-          if(this.type == 'solid' && last)
-            gradient += `, ${last.color} 100%`
 
           this.$.colorbar.style = `background: linear-gradient(to right, ${gradient});` 
           /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
