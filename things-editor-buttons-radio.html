@@ -21,16 +21,64 @@ Example:
         display: block;
         @apply(--things-editor-buttons-radio)
       }
-      ::shadow paper-button {
+      ::content > paper-button {
+        background:url(./images/icon-properties.png) 85% 2px no-repeat;
+        opacity:.7;
+
         background-color:rgba(0,0,0,.07);
         @apply(--things-editor-buttons-radio-button)
       }
 
-      ::shadow paper-button[active] {
+      ::content > paper-button[active] {
         background-color:#fff;opacity:1;
         @apply(--things-editor-buttons-radio-button-active)
       }
 
+      ::content > paper-button[data-value=halign-left] {
+        background-position:50%  -398px
+      }
+      ::content > paper-button[data-value=halign-center] {
+        background-position:50%  -498px
+      }
+      ::content > paper-button[data-value=halign-right] {
+        background-position:50%  -598px
+      }
+      ::content > paper-button[data-value=halign-justify] {
+        background-position:50%  -698px
+      }
+      ::content > paper-button[data-value=valign-top] {
+        background-position:50%  -798px
+      }
+      ::content > paper-button[data-value=valign-middle] {
+        background-position:50%  -898px
+      }
+      ::content > paper-button[data-value=valign-bottom] {
+        background-position:50%  -998px
+      }
+      ::content > paper-button[data-value=bold] {
+        background-position:40% -1097px
+      }
+      ::content > paper-button[data-value=italic] {
+        background-position:50% -1197px
+      }
+      ::content > paper-button[data-value=underline] {
+        background-position:50% -1297px
+      }
+      ::content > paper-button[data-value=strike] {
+        background-position:50% -1397px
+      }
+      ::content > paper-button[data-value=uppercase] {
+        background-position:50% -1497px
+      }
+      ::content > paper-button[data-value=lowercase] {
+        background-position:50% -1597px
+      }
+      ::content > paper-button[data-value=superscript] {
+        background-position:50% -1697px
+      }
+      ::content > paper-button[data-value=subscript] {
+        background-position:50% -1797px
+      }
     </style>
 
     <content select="paper-button"></content>
@@ -50,7 +98,8 @@ Example:
          */
         value: {
           type: Object,
-          notify: true
+          notify: true,
+          observer: '_onValueChanged'
         }
       },
 
@@ -64,21 +113,26 @@ Example:
         })
       },
 
+      _onValueChanged: function(value) {
+
+        Array.from(this.querySelectorAll('paper-button')).forEach(function(button) {
+          if(value === button.getAttribute('data-value'))
+            button.active = true
+          else
+            button.active = false
+        })
+      },
+
       _onTapButton: function(e) {
         var target = e.target;
 
         if(target.tagName !== 'PAPER-BUTTON')
           return
 
-        Array.from(this.querySelectorAll('paper-button')).forEach(function(button) {
-
-          if(button === target)
-            button.active = true
-          else
-            button.active = false
-        })
-
-        this.value = target.getAttribute('data-value')
+        if(target.active)
+          this.value = target.getAttribute('data-value')
+        else
+          this.value = null
       }
     });
   })();

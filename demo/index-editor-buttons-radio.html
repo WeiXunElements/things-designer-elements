@@ -22,26 +22,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <template is="dom-bind" id="app">
       <style is="custom-style">
-
-      things-editor-buttons-radio paper-button{
-        background:url(../images/icon-properties.png) 85% 2px no-repeat;
-        opacity:.7;
-      }
-      things-editor-buttons-radio paper-button[data-value=halign-left]       {background-position:50%  -398px}
-      things-editor-buttons-radio paper-button[data-value=halign-center]     {background-position:50%  -498px}
-      things-editor-buttons-radio paper-button[data-value=halign-right]      {background-position:50%  -598px}
-      things-editor-buttons-radio paper-button[data-value=halign-justify]    {background-position:50%  -698px}
-      things-editor-buttons-radio paper-button[data-value=valign-top]        {background-position:50%  -798px}
-      things-editor-buttons-radio paper-button[data-value=valign-middle]     {background-position:50%  -898px}
-      things-editor-buttons-radio paper-button[data-value=valign-bottom]     {background-position:50%  -998px}
-      things-editor-buttons-radio paper-button[data-value=bold]         {background-position:40% -1097px}
-      things-editor-buttons-radio paper-button[data-value=italic]       {background-position:50% -1197px}
-      things-editor-buttons-radio paper-button[data-value=underline]    {background-position:50% -1297px}
-      things-editor-buttons-radio paper-button[data-value=strike]{background-position:50% -1397px}
-      things-editor-buttons-radio paper-button[data-value=uppercase]      {background-position:50% -1497px}
-      things-editor-buttons-radio paper-button[data-value=lowercase]    {background-position:50% -1597px}
-      things-editor-buttons-radio paper-button[data-value=superscript]  {background-position:50% -1697px}
-      things-editor-buttons-radio paper-button[data-value=subscript]    {background-position:50% -1797px}
       </style>
 
       <p>An example of <code>&lt;things-editor-buttons-radio&gt;</code>:</p>
@@ -62,6 +42,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script>
       window.addEventListener('WebComponentsReady', function(e) {
         var app = document.querySelector('#app')
+
+        app.value = "uppercase"
 
         app.$.editor.addEventListener('tap', function() {
           console.log(app.value)
