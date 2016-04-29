@@ -28,25 +28,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
 
-      paper-button[data-value=halign-left] {
+      paper-button[data-value=left] {
         background-position:50%  -398px
       }
-      paper-button[data-value=halign-center] {
+      paper-button[data-value=center] {
         background-position:50%  -498px
       }
-      paper-button[data-value=halign-right] {
+      paper-button[data-value=right] {
         background-position:50%  -598px
       }
-      paper-button[data-value=halign-justify] {
+      paper-button[data-value=justify] {
         background-position:50%  -698px
       }
-      paper-button[data-value=valign-top] {
+      paper-button[data-value=top] {
         background-position:50%  -798px
       }
-      paper-button[data-value=valign-middle] {
+      paper-button[data-value=middle] {
         background-position:50%  -898px
       }
-      paper-button[data-value=valign-bottom] {
+      paper-button[data-value=bottom] {
         background-position:50%  -998px
       }
       paper-button[data-value=bold] {
@@ -77,7 +77,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <p>An example of <code>&lt;things-editor-buttons-radio&gt;</code>:</p>
 
-      <things-editor-buttons-radio id="editor" value="{{value}}">
+      <things-editor-buttons-radio id="editor1" value="{{text}}">
         <paper-button data-value="bold"></paper-button>
         <paper-button data-value="italic"></paper-button>
         <paper-button data-value="underline"></paper-button>
@@ -88,17 +88,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-button data-value="subscript"></paper-button>
       </things-editor-buttons-radio>
 
+      <things-editor-buttons-radio id="editor2" value="{{align}}">
+        <paper-button data-value="left"></paper-button>
+        <paper-button data-value="center"></paper-button>
+        <paper-button data-value="right"></paper-button>
+        <paper-button data-value="justify"></paper-button>
+      </things-editor-buttons-radio>
+
+      <things-editor-buttons-radio id="editor3" value="{{baseline}}">
+        <paper-button data-value="top"></paper-button>
+        <paper-button data-value="middle"></paper-button>
+        <paper-button data-value="bottom"></paper-button>
+      </things-editor-buttons-radio>
+
     </template>
 
     <script>
       window.addEventListener('WebComponentsReady', function(e) {
         var app = document.querySelector('#app')
 
-        app.value = "uppercase"
-
-        app.$.editor.addEventListener('tap', function() {
-          console.log(app.value)
-        })
+        app.text = "uppercase"
+        app.align = "center"
+        app.baseline = "bottom"
       })
     </script>
 
