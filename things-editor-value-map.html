@@ -104,21 +104,21 @@ Example:
         },
 
         listeners: {
-          'change': 'onChange'
+          'change': '_onChange'
         },
 
         _isColorType: function(type) {
           return type === 'color'
         },
 
-        onChange: function(e) {
+        _onChange: function(e) {
           var input = e.target
           var value = e.target.value
           var div = input.parentElement
 
           if(input.hasAttribute('data-value')) {
-            let dataList = div.querySelectorAll('[data-value]')
-            for(let i = 0;i < dataList.length;i++)
+            var dataList = div.querySelectorAll('[data-value]')
+            for(var i = 0;i < dataList.length;i++)
               if(dataList[i] !== input)
                 dataList[i].value = value
           }
@@ -137,11 +137,11 @@ Example:
 
           var newmap = {}
 
-          for(let i = 0;i < records.length;i++) {
-            let record = records[i]
+          for(var i = 0;i < records.length;i++) {
+            var record = records[i]
 
-            let key = record.querySelector('[data-key]').value
-            let value = record.querySelector('[data-value]').value
+            var key = record.querySelector('[data-key]').value
+            var value = record.querySelector('[data-value]').value
 
             if(key)
               newmap[key] = value
@@ -154,7 +154,7 @@ Example:
         _toArray: function(map) {
           var array = []
 
-          for(let key in map) {
+          for(var key in map) {
             if(key == 'default')
               continue
             array.push({
@@ -191,7 +191,7 @@ Example:
 
           var inputs = this.querySelectorAll('[data-record-new] input')
 
-          for (let i = 0;i < inputs.length;i++)
+          for (var i = 0;i < inputs.length;i++)
             inputs[i].value = ''
 
           inputs[0].focus()

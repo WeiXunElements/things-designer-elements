@@ -2,6 +2,8 @@
 
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
 
+<link rel="import" href="./things-editor-color.html">
+
 <!--
 An element providing a solution to no problem in particular.
 
@@ -23,18 +25,24 @@ Example:
         @apply(--things-editor-color-stops)
       }
 
-      .color-stops{
+      #color-stops {
         clear:both;
         margin-bottom:-8px;
+        @apply(--things-editor-colorbar-container)
       }
-      .color-stops .colorbar{
-        width:91%;
+      #colorbar {
+        width:90%;
         height:12px;
         margin:auto;
         margin-bottom:25px;
+        @apply(--things-editor-colorbar)
       }
-      .color-stops .markers{position:relative;top:-7px;}
-      .color-stops .markers div{
+      #markers {
+        position:relative;
+        top:30px;
+        @apply(--things-editor-colorbar-markers)
+      }
+      #markers div {
         width:10px;height:10px;
         margin-top:-15px;
         position:absolute;
@@ -43,8 +51,9 @@ Example:
         -webkit-box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.2);
         -moz-box-shadow:    1px 1px 1px 0px rgba(0,0,0,0.2);
         box-shadow:         1px 1px 1px 0px rgba(0,0,0,0.2);
+        @apply(--things-editor-colorbar-marker)
       }
-      .color-stops .markers div:before {
+      #markers div:before {
         border-bottom:7px solid #fff;
         border-left:6px solid transparent;
         border-right:6px solid transparent;
@@ -54,26 +63,43 @@ Example:
         position: absolute;
         top: -7px;
       }
-      .color-stops .markers div[focused]{border-color:#585858;}
-      .color-stops .markers div[focused]:before{border-bottom:7px solid #585858;}
+      #markers div[focused] {
+        border-color:var(--things-editor-colorbar-marker-focused-color, #585858);
+      }
+      #markers div[focused]:before {
+        border-bottom:7px solid var(--things-editor-colorbar-marker-focused-color, #585858);
+      }
+      input[type=color] {
+        @apply(--things-editor-color-stops-input-color)
+      }
+      input[type=text] {
+        @apply(--things-editor-color-stops-input-color-text)
+      }
+      input[type=number] {
+        @apply(--things-editor-color-stops-input-position)
+      }
+      [draggable=true] {
+        -khtml-user-drag: element;
+      }
     </style>
 
-    <div class="color-stops">
-      <div id="colorbar" class="colorbar"></div>
-      <div id="markers" class="markers">
-        <template id="markers-template" is="dom-repeat" items="[[colorStops]]">
-          <div style$="background-color:[[item.color]];margin-left:[[_calculatePosition(item.position)]]px;" marker-index$="[[index]]" draggable="true">
-          </div>
-        </template>
+    <div id="color-stops">
+      <div id="colorbar">
+        <div id="markers">
+          <template id="markers-template" is="dom-repeat" items="[[colorStops]]">
+            <div style$="background-color:[[item.color]];margin-left:[[_calculatePosition(item.position)]]px;" marker-index$="[[index]]" draggable=true>
+            </div>
+          </template>
+        </div>
       </div>
     </div>
 
     <label>Color #</label>
-    <input type="text" class="width-60p" value="{{focused.color::change}}">
-    <input id="color-pallet" type="color" class="width-40p" value="{{focused.color::change}}">
+    <input type="text" value="{{focused.color::change}}">
+    <input id="color-pallet" type="color" value="{{focused.color::change}}">
 
     <label>position</label>
-    <input type="number" value="{{focused.position::change}}"/>
+    <input type="number" value-as-number="{{focused.position::change}}"/>
 
   </template>
 
@@ -89,11 +115,19 @@ Example:
         ],
 
         properties: {
+          /**
+           * `type`은 color-stop bar의 표시 방법을 의미한다.
+           * - 'solid' : 컬러스톱위치에서 다음 컬러스톱까지 solid color로 채운다.
+           * - 'gradient' : 컬러스톱위치에서 다음 컬러스톱까지 gradient color로 채운다.
+           */
           type: {
             type: String,
-            value: "solid" // 'solid', 'gradient'
+            value: "solid"
           },
 
+          /**
+           * `colorStops`은 color-stops에 의해 만들어진 color-stop 배열을 유지한다.
+           */
           colorStops: {
             notify: true,
             value: [{
@@ -129,6 +163,9 @@ Example:
           if(this.focused && this.focused.index === index)
             return
 
+          /* 마커 템플릿을 다시 만든다. */
+          this.$['markers-template'].render()
+              
           var marker = this.$$('#markers div[focused]')
           if(marker)
             marker.removeAttribute('focused')
@@ -147,7 +184,8 @@ Example:
           this.focused = {
             index: index,
             color: colorStop.color,
-            position: colorStop.position
+            position: colorStop.position,
+            colorStop: colorStop
           }
         },
 
@@ -163,12 +201,31 @@ Example:
           var property = change.path.substr(8)
           var value = change.value
 
-          if(property === 'position')
-            value = parseFloat(change.value)
-
           this.changedOnThis = true
 
-          this.set(`colorStops.${this.focused.index}.${property}`, value);
+          if(property === 'position') {
+            var sorted = this.colorStops.sort(function(a, b) {
+              return b.position < a.position
+            })
+
+            if(sorted[this.focused.index] !== this.focused.colorStop) {
+              // 컬러스톱이 재배열되었다면..
+              var index = -1
+              for(var i = 0;i < sorted.length;i++) {
+                if(sorted[i] === this.focused.colorStop) {
+                  index = i
+                  break
+                }
+              }
+              
+              this.set('colorStops', sorted)
+              this._setFocused(index)
+            } else {
+              this.set(`colorStops.${this.focused.index}.${property}`, value);
+            }
+          } else {
+            this.set(`colorStops.${this.focused.index}.${property}`, value);
+          }
 
           this.changedOnThis = false
         },
@@ -179,13 +236,13 @@ Example:
             this.focused = null
 
           if(this.type == 'gradient') {
-            var stopsStrings = (this.colorStops || []).map(stop => {
+            var stopsStrings = (this.colorStops || []).map(function(stop) {
               return `${stop.color} ${stop.position * 100}%`
             })            
           } else {
             var stops = this.colorStops || []
             var last = null
-            var stopsStrings = stops.map(stop => {
+            var stopsStrings = stops.map(function(stop) {
               var step = last ? `${last.color} ${stop.position * 100}%, ${stop.color} ${stop.position * 100}%` : `${stop.color} ${stop.position * 100}%`
               last = stop
               return step
@@ -196,7 +253,7 @@ Example:
 
           var gradient = stopsStrings.join(',')
 
-          this.$.colorbar.style = `background: linear-gradient(to right, ${gradient});` 
+          this.$.colorbar.style.background = `linear-gradient(to right, ${gradient})` 
           /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 
           // `background: -webkit-linear-gradient(left, ${gradient});` /* Chrome10-25,Safari5.1-6 */
@@ -204,6 +261,9 @@ Example:
         },
 
         _onDblClickColorbar: function(e) {
+          /* 마커를 클릭한 경우를 걸러낸다. */
+          if(e.target !== this.$.colorbar)
+            return
 
           var width = this.$.colorbar.offsetWidth
           var position = e.offsetX / width
@@ -239,25 +299,34 @@ Example:
 
         _onDragStartMarkers: function(e) {
           var img = document.createElement("img")
+
+          /* 빈 이미지. */
           img.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
-          e.dataTransfer.setDragImage(img, 0, 0);
+          e.dataTransfer.setDragImage(img, 0, 0)
+          /* Firefox는 dataTransfer.setData를 해주지 않으면, drag 이벤트가 발생하지 않는다. */
+          e.dataTransfer.setData('Text', 'for firefox')
+
           this.dragstart = {
-            x: e.offsetX,
-            y: e.offsety
+            position: this.focused.position,
+            screenX: e.screenX,
+            screenY: e.screenY
           }
+          // console.log('dragstart', e.screenX, e.pageX, e.offsetX, e.clientX)
         },
 
         _onDragMarkers: function(e) {
           var width = this.$.colorbar.offsetWidth
 
-          if(Math.abs(e.offsetX) > width)
+          // TODO Firefox는 마우스 드래깅 이벤트에서 마우스 좌표를 주지 않는다. (Firefox 버그)
+          // 따라서, 부모 엘리먼트의 dragover 이벤트를 가지고 처리하는 방법으로 개선하자.
+          // console.log('ondrag', e.screenX, e.pageX, e.offsetX, e.clientX)
+
+          // TODO 이유는 모르겠으나, 마지막 드래그 이벤트에서 e.screenX값이 0가 됨. 그래서, 이것을 스킵함.
+          if(e.screenX == 0)
             return
 
-          if(e.offsetY > 15) {
-            return
-          }
-
-          var position = this.focused.position + ((e.offsetX - this.dragstart.x) / width)
+          var position = this.dragstart.position 
+            + ((e.screenX - this.dragstart.screenX) / width)
 
           if(position > 1)
             position = 1
@@ -268,30 +337,18 @@ Example:
         },
 
         _onDragEndMarkers: function(e) {
-          var width = this.$.colorbar.offsetWidth
-
-          if(Math.abs(e.offsetX) > width || Math.abs(e.offsetX) > 100)
-            return
-
-          if(e.offsetY > 15) {
+          /* 40 픽셀 이상 아래로 잡아당기면 삭제됨. */
+          if(e.screenY - this.dragstart.screenY > 40) {
             this.colorStops.splice(this.focused.index, 1)
             this.colorStops = this.colorStops.slice()
 
             return
           }
-
-          var position = this.focused.position + ((e.offsetX - this.dragstart.x) / width)
-
-          if(position > 1)
-            position = 1
-          else if(position < 0)
-            position = 0
-
-          this.set('focused.position', position)
         },
 
         _calculatePosition: function(position) {
-          return position * this.$.colorbar.offsetWidth + 3
+          /* TODO 7 ==> 마커 폭의 절반으로 계산해야함. */
+          return position * this.$.colorbar.offsetWidth - 7
         },
 
         _onIronResize: function(e) {
@@ -301,8 +358,8 @@ Example:
            */
           var width = this.$.colorbar.offsetWidth
 
-          if(this._colorbar_size === 0 && width > 0) {
-            let template = this.$['markers-template']
+          if(width > 0) {
+            var template = this.$['markers-template']
             template.items = []
             template.render()
             template.items = this.colorStops

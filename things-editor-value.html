@@ -171,7 +171,7 @@ Example:
 
           /* 사용자가 선택한 컴포넌트가 바뀐 경우도 호출되므로, 이 경우는 제외한다. */
           if(change.path === 'mapping') {
-            let rule = {}
+            var rule = {}
 
             if(this.mapping) {
               switch(this.mapping.rule) {
@@ -240,7 +240,6 @@ Example:
             param = null
           }
 
-          console.log('rule-changed')
           this.set('mapping.param', param)
         }
       })

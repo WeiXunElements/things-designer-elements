@@ -19,9 +19,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <link rel="import" href="../bower_components/juicy-ace-editor/juicy-ace-editor.html">
 
     <style is="custom-style">
-    :root {
-    }
-
     juicy-ace-editor {
       width: 600px;
       height: 300px;
@@ -49,10 +46,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       window.addEventListener('WebComponentsReady', function(e) {
         var app = document.querySelector('#app')
 
-        app.value = {
+        app.set('value', {
           type: "string",
           valueType: "string"
-        }
+        })
 
         app.$.editor.addEventListener('change', function() {
           app.text = JSON.stringify(app.value, null, "\t")

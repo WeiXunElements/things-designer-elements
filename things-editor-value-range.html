@@ -125,8 +125,8 @@ Example:
           var div = input.parentElement
 
           if(input.hasAttribute('data-value')) {
-            let dataList = div.querySelectorAll('[data-value]')
-            for(let i = 0;i < dataList.length;i++)
+            var dataList = div.querySelectorAll('[data-value]')
+            for(var i = 0;i < dataList.length;i++)
               if(dataList[i] !== input)
                 dataList[i].value = value
           }
@@ -145,12 +145,12 @@ Example:
 
           var newrange = {}
 
-          for(let i = 0;i < records.length;i++) {
-            let record = records[i]
+          for(var i = 0;i < records.length;i++) {
+            var record = records[i]
 
-            let from = record.querySelector('[data-from]').value
-            let to = record.querySelector('[data-to]').value
-            let value = record.querySelector('[data-value]').value
+            var from = record.querySelector('[data-from]').value
+            var to = record.querySelector('[data-to]').value
+            var value = record.querySelector('[data-value]').value
 
             if(from) {
               if(from === 'default')
@@ -167,11 +167,11 @@ Example:
         _toArray: function(range) {
           var array = []
 
-          for(let key in range) {
+          for(var key in range) {
             if(key == 'default')
               continue
 
-            let fromto = key.split('~')
+            var fromto = key.split('~')
 
             array.push({
               from: fromto[0],
@@ -208,7 +208,7 @@ Example:
 
           var inputs = this.querySelectorAll('[data-record-new] input')
 
-          for (let i = 0;i < inputs.length;i++)
+          for (var i = 0;i < inputs.length;i++)
             inputs[i].value = ''
 
           inputs[0].focus()
