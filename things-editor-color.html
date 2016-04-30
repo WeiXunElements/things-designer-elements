@@ -194,6 +194,13 @@ Example:
           'change': '_onInputChanged'
         },
 
+        _convert3to6: function(sharp3) {
+          var r = sharp3.charAt(1)
+          var g = sharp3.charAt(2)
+          var b = sharp3.charAt(3)
+          return `#${r}${r}${g}${g}${b}${b}`
+        },
+
         _onValueChanged: function() {
           this.$.text.value = this.value || ''
 
@@ -201,6 +208,8 @@ Example:
             this.$.color.value = '#000000'
           } else if(/^#[0-9a-f]{6}/i.test(this.value)) {
             this.$.color.value = this.value
+          } else if(/^#[0-9a-f]{3}/i.test(this.value)) {
+            this.$.color.value = this._convert3to6(this.value)
           } else {
             this.$.color.value = _colours[this.value.toLowerCase()] || this.value
           }
