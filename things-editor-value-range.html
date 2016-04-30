@@ -111,14 +111,14 @@ Example:
         },
 
         listeners: {
-          'change': 'onChange'
+          'change': '_onChange'
         },
 
         _isColorType: function(type) {
           return type === 'color'
         },
 
-        onChange: function(e) {
+        _onChange: function(e) {
 
           var input = e.target
           var value = e.target.value

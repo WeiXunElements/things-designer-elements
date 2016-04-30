@@ -95,8 +95,8 @@ Example:
     </div>
 
     <label>Color #</label>
-    <input type="text" value="{{focused.color::change}}">
-    <input id="color-pallet" type="color" value="{{focused.color::change}}">
+    <things-editor-color id="color-editor" value="{{focused.color}}">
+    </things-editor-color>
 
     <label>position</label>
     <input type="number" value-as-number="{{focused.position::change}}"/>
@@ -294,7 +294,7 @@ Example:
         },
 
         _onDblClickMarkers: function(e) {
-          this.$["color-pallet"].click()
+          this.$["color-editor"].showPicker()
         },
 
         _onDragStartMarkers: function(e) {
