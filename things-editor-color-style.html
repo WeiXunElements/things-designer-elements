@@ -60,8 +60,9 @@ Example:
       <div fill-type="solid">
         <hr class="fieldset-hr"/>
         <label>Color #</label>
-        <input type="text" class="width-60p" value="{{solid::change}}" on-change="onChangedSolid">
-        <input class="width-40p" type="color" value="{{solid::change}}" on-change="onChangedSolid">
+        <things-editor-color value="{{solid}}">
+        </things-editor-color>
+
       </div>
 
       <div fill-type="gradient">
@@ -110,7 +111,8 @@ Example:
 
         observers: [
           'onChandedGradient(gradient.*)',
-          'onChangedPattern(pattern.*)'
+          'onChangedPattern(pattern.*)',
+          'onChangedSolid(solid)'
         ],
 
         onChangedValue: function(changed, after) {
@@ -181,8 +183,8 @@ Example:
           }
         },
 
-        onChangedSolid: function(e) {
-          this.value = e.target.value
+        onChangedSolid: function(value) {
+          this.value = value
         },
 
         onChangedFillType: function(e) {
