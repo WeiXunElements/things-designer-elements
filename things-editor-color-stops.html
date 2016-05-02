@@ -125,6 +125,16 @@ Example:
             value: "solid"
           },
 
+          min: {
+            type: Number,
+            value: 0
+          },
+
+          max: {
+            type: Number,
+            value: 1
+          },
+
           /**
            * `colorStops`은 color-stops에 의해 만들어진 color-stop 배열을 유지한다.
            */
@@ -181,10 +191,16 @@ Example:
 
           var colorStop = this.colorStops[index]
 
+          var position = colorStop.position
+          if(position < this.min)
+            position = this.min
+          if(position > this.max)
+            position = this.max
+          
           this.focused = {
             index: index,
             color: colorStop.color,
-            position: colorStop.position,
+            position: position,
             colorStop: colorStop
           }
         },
@@ -235,15 +251,24 @@ Example:
           if(!this.changedOnThis)
             this.focused = null
 
+          var self = this
+
           if(this.type == 'gradient') {
             var stopsStrings = (this.colorStops || []).map(function(stop) {
-              return `${stop.color} ${stop.position * 100}%`
+              var position = (stop.position - self.min) / (self.max - self.min)
+              return `${stop.color} ${position * 100}%`
             })            
           } else {
             var stops = this.colorStops || []
             var last = null
             var stopsStrings = stops.map(function(stop) {
-              var step = last ? `${last.color} ${stop.position * 100}%, ${stop.color} ${stop.position * 100}%` : `${stop.color} ${stop.position * 100}%`
+              var stop_position = (stop.position - self.min) / (self.max - self.min)
+              if(last) {
+                var last_position = (last.position - self.min) / (self.max - self.min)
+                var step = `${last.color} ${stop_position * 100}%, ${stop.color} ${stop_position * 100}%`
+              } else {
+                var step = `${stop.color} ${stop_position * 100}%`
+              }
               last = stop
               return step
             })
@@ -325,13 +350,13 @@ Example:
           if(e.screenX == 0)
             return
 
-          var position = this.dragstart.position 
-            + ((e.screenX - this.dragstart.screenX) / width)
+          var position = this.dragstart.position
+            + ((e.screenX - this.dragstart.screenX) / width * (this.max - this.min))
 
-          if(position > 1)
-            position = 1
-          else if(position < 0)
-            position = 0
+          if(position > this.max)
+            position = this.max
+          else if(position < this.min)
+            position = this.min
 
           this.set('focused.position', position)
         },
@@ -348,7 +373,14 @@ Example:
 
         _calculatePosition: function(position) {
           /* TODO 7 ==> 마커 폭의 절반으로 계산해야함. */
-          return position * this.$.colorbar.offsetWidth - 7
+          var calculated = position
+          
+          if(calculated > this.max)
+            calculated = this.max
+          else if(calculated < this.min)
+            calculated = this.min
+
+          return (calculated - this.min) / (this.max - this.min) * this.$.colorbar.offsetWidth - 7
         },
 
         _onIronResize: function(e) {
