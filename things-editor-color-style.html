@@ -184,7 +184,14 @@ Example:
         },
 
         onChangedSolid: function(value) {
+          if(this.fillType !== 'solid')
+            return
+
+          this.changedOnThis = true
+
           this.value = value
+
+          this.changedOnThis = false
         },
 
         onChangedFillType: function(e) {
