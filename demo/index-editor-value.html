@@ -18,7 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <link rel="import" href="../things-editor-value.html">
 
     <style is="custom-style">
-    juicy-ace-editor {
+    textarea {
       width: 600px;
       height: 300px;
     }
@@ -29,9 +29,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <template is="dom-bind" id="app">
       <p>An example of <code>&lt;things-editor-value&gt;</code>:</p>
 
-      <juicy-ace-editor theme="ace/theme/monokai"
-                        mode="ace/mode/javascript"
-      >[[text]]</juicy-ace-editor>
+      <textarea value="[[text]]"></textarea>
 
       <things-editor-value id="editor"
                            mapping="{{mapping}}"

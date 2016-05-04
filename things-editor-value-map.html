@@ -49,7 +49,7 @@ Example:
       }
     </style>
 
-    <template is="dom-repeat" items="{{_toArray(map)}}">
+     <template is="dom-repeat" items="{{_toArray(map)}}">
       <div data-record>
         <input type="text" data-key placeholder="key" value="{{item.key}}"/>
         <input type="text" data-value placeholder="value" value="{{item.value}}" data-value-type$="[[valueType]]"/>
@@ -59,8 +59,8 @@ Example:
         <button class="record-action" on-tap="_delete" tabindex="-1">-</button>
       </div>
     </template>
-
-    <div data-record-new>
+ 
+     <div data-record-new>
       <input type="text" data-key placeholder="key" value=""/>
       <input type="text" data-value placeholder="value" value="" data-value-type$="[[valueType]]"/>
       <template is="dom-if" if="[[_isColorType(valueType)]]">
