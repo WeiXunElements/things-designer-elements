@@ -5,7 +5,15 @@
 <link rel="import" href="./things-editor-color.html">
 
 <!--
-An element providing a solution to no problem in particular.
+범위내에서 여러 컬러셋(포지션과 색깔) 배열을 편집하는 컴포넌트이다.
+
+미리보기 Bar에서는 gradient나, solid 형태의 컬러셋을 보여준다.
+
+새로운 컬러셋을 추가고자 할 때는 미리보기 Bar를 더블클릭한다.
+컬러셋을 제거하고자 할 때는 컬러셋 마커를 아래방향으로 드래깅한다.
+컬러셋의 위치를 옮기고자 할 때는, 컬러셋 마커를 좌우로 드래깅하여 이동시키거나,
+옮기고자하는 컬러셋 마커를 마우스로 선택하고, 포지션 입력 에디터에서 직접 수정한다.
+컬러셋의 색상을 바꾸고자 할 때는, 컬러셋 마커를 더블클릭하여 컬러파레트를 팝업시켜서 색상을 선택하거나, 색상 입력 에디터에서 직접 색상을 수정할 수 있다.
 
 Example:
 
@@ -124,12 +132,16 @@ Example:
             type: String,
             value: "solid"
           },
-
+          /**
+           * `min`은 color-stop bar의 위치값 범위의 최소값을 의미한다.
+           */
           min: {
             type: Number,
             value: 0
           },
-
+          /**
+           * `max`은 color-stop bar의 위치값 범위의 최대값을 의미한다.
+           */
           max: {
             type: Number,
             value: 1
