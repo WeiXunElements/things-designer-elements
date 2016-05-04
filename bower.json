@@ -1,6 +1,6 @@
 {
   "name": "things-designer-elements",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "authors": [
     "Hatio Lab. <heartyoh@hatiolab.com>"
   ],
@@ -21,12 +21,12 @@
     "polymer": "Polymer/polymer#^1.2.0",
     "iron-elements": "PolymerElements/iron-elements#^1.0.0",
     "paper-elements": "PolymerElements/paper-elements#^1.0.1",
-    "things-angle-input": "ThingsElements/things-angle-input#^1.0.2",
+    "things-angle-input": "ThingsElements/things-angle-input",
     "juicy-ace-editor": "^1.1.1"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
     "web-component-tester": "^4.0.0",
-    "things-scene": "^0.4.20"
+    "things-scene": "^0.5.2"
   }
 }
