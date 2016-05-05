@@ -95,7 +95,7 @@ Example:
       <div id="colorbar">
         <div id="markers">
           <template id="markers-template" is="dom-repeat" items="[[value]]">
-            <div style$="background-color:[[item.color]];margin-left:[[_calculatePosition(item.position)]]px;" marker-index$="[[index]]" draggable=true>
+            <div style$="background-color:[[item.color]];margin-left:[[_calculatePosition(item.position, min, max)]]px;" marker-index$="[[index]]" draggable=true>
             </div>
           </template>
         </div>
@@ -254,40 +254,43 @@ Example:
       },
 
       _renderColorBar: function(min, max, type) {
+        console.log('_renderColorBar', min, max, type, this.value)
         var self = this
 
-        if(this.type == 'gradient') {
-          var stopsStrings = (this.value || []).map(function(stop) {
-            var position = (stop.position - min) / (max - min)
-            return `${stop.color} ${position * 100}%`
-          })            
-        } else {
-          var stops = this.value || []
-          var last = null
-          var stopsStrings = stops.map(function(stop) {
-            var stop_position = (stop.position - min) / (max - min)
-            if(last) {
-              var last_position = (last.position - min) / (max - min)
-              var step = `${stop.color} ${last_position * 100}%, ${stop.color} ${stop_position * 100}%`
-            } else {
-              var step = `${stop.color} ${stop_position * 100}%`
-            }
-            last = stop
-            return step
-          })
-          if(last)
-            stopsStrings.push(`${last.color} ${last.position * 100}%, white ${last.position * 100}%, white 100%`)
-        }
+        if(this.value) {
+          if(this.type == 'gradient') {
+            var stopsStrings = (this.value || []).map(function(stop) {
+              var position = (stop.position - min) / (max - min)
+              return `${stop.color} ${position * 100}%`
+            })            
+          } else {
+            var stops = this.value || []
+            var last = null
+            var stopsStrings = stops.map(function(stop) {
+              var stop_position = (stop.position - min) / (max - min)
+              if(last) {
+                var last_position = (last.position - min) / (max - min)
+                var step = `${stop.color} ${last_position * 100}%, ${stop.color} ${stop_position * 100}%`
+              } else {
+                var step = `${stop.color} ${stop_position * 100}%`
+              }
+              last = stop
+              return step
+            })
+            if(last)
+              stopsStrings.push(`${last.color} ${last.position * 100}%, white ${last.position * 100}%, white 100%`)
+          }
 
-        var gradient = stopsStrings.join(',')
+          var gradient = stopsStrings.join(',')
+        } else {
+          var gradient = 'black 0%, black 100%'
+        }
 
         this.$.colorbar.style.background = `linear-gradient(to right, ${gradient})`
         /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 
         // `background: -webkit-linear-gradient(left, ${gradient});` /* Chrome10-25,Safari5.1-6 */
         // `background: -moz-linear-gradient(left, ${gradient});` /* FF3.6-15 */
-
-        this.$['markers-template'].render()
       },
 
       _onChangeProps: function(min, max, type) {
@@ -388,7 +391,7 @@ Example:
         }
       },
 
-      _calculatePosition: function(position) {
+      _calculatePosition: function(position, min, max) {
         /* TODO 7 ==> 마커 폭의 절반으로 계산해야함. */
         var calculated = position
         
