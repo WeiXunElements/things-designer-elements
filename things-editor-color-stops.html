@@ -286,12 +286,12 @@ Example:
 
         // `background: -webkit-linear-gradient(left, ${gradient});` /* Chrome10-25,Safari5.1-6 */
         // `background: -moz-linear-gradient(left, ${gradient});` /* FF3.6-15 */
+
+        this.$['markers-template'].render()
       },
 
       _onChangeProps: function(min, max, type) {
         this._renderColorBar(min, max, type)
-
-        this.$['markers-template'].render()
       },
 
       _onChangeValue: function(change) {
