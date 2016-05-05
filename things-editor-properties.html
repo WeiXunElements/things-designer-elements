@@ -49,6 +49,8 @@ Example:
 
   <script>
 
+    /* 모든 에디터들은 change 이벤트를 지원해야 한다. 또한, 모든 에디터들은 value속성에 값을 가져야 한다. */
+
     Polymer({
       is: 'things-editor-properties',
 
@@ -66,14 +68,11 @@ Example:
       ],
 
       listeners: {
-        /* 모든 에디터들은 change 이벤트를 지원해야 한다. */
         'change': '_onValueChanged'
       },
 
       _setValue: function(name) {
-        console.log('things-editor-property[name=' + name + ']')
         var prop = this.querySelector('things-editor-property[name=' + name + ']')
-        console.log('prop', prop)
         if(!prop)
           return
 
