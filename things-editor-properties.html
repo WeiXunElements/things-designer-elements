@@ -1,0 +1,67 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <things-editor-properties target="{{target}}">
+      <label>Center X</label>
+      <input type="number" value-as-number="{{target.cx::change}}">
+      <label>Width</label>
+      <input type="number" value-as-number="{{target.width::change}}">
+    </things-editor-properties>
+
+@demo demo/index-scene-properties.html
+@hero hero.svg
+-->
+
+<dom-module id="things-editor-properties">
+  <template>
+    <style>
+      :host {
+      }
+    </style>
+
+    <content></content>
+
+  </template>
+
+  <script>
+
+    Polymer({
+      is: 'things-editor-properties',
+
+      properties: {
+        target: {
+          type: Object,
+          notify: true
+        }
+      },
+
+      observers: [
+        '_onTargetChanged(target.*)'
+      ],
+
+      _onTargetChanged: function(change) {
+        if(change.path == 'target')
+          return
+        
+        // Sub Property가 변경되었을 때만, 이벤트를 발생시킨다.
+        this.fire('target-changed', change)
+      }
+
+    })
+  </script>
+</dom-module>
+

@@ -54,52 +54,48 @@ Example:
   </template>
 
   <script>
-    (function() {
-      'use strict';
 
-      Polymer({
-        is: 'things-editor-pattern',
+    Polymer({
+      is: 'things-editor-pattern',
 
-        properties: {
-          image: {
-            type: String,
-            notify: true
-          },
+      properties: {
+        image: {
+          type: String,
+          notify: true
+        },
 
-          offsetX: {
-            type: Number,
-            notify: true
-          },
+        offsetX: {
+          type: Number,
+          notify: true
+        },
 
-          offsetY: {
-            type: Number,
-            notify: true
-          },
+        offsetY: {
+          type: Number,
+          notify: true
+        },
 
-          width: {
-            type: Number,
-            notify: true
-          },
+        width: {
+          type: Number,
+          notify: true
+        },
 
-          height: {
-            type: Number,
-            notify: true
-          },
+        height: {
+          type: Number,
+          notify: true
+        },
 
-          align: {
-            type: String,
-            notify: true
-          },
+        align: {
+          type: String,
+          notify: true
+        },
 
-          fitPattern: {
-            type: Boolean,
-            notify: true
-          }
+        fitPattern: {
+          type: Boolean,
+          notify: true
         }
+      }
 
-      })
-
-    })();
+    })
 
   </script>
 </dom-module>
