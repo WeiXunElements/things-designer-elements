@@ -86,16 +86,13 @@ Example:
       input[type=number] {
         @apply(--things-editor-color-stops-input-position)
       }
-      [draggable=true] {
-        -khtml-user-drag: element;
-      }
     </style>
 
     <div id="color-stops">
       <div id="colorbar">
         <div id="markers">
           <template id="markers-template" is="dom-repeat" items="[[value]]">
-            <div style$="background-color:[[item.color]];margin-left:[[_calculatePosition(item.position, min, max)]]px;" marker-index$="[[index]]" draggable=true>
+            <div style$="background-color:[[item.color]];margin-left:[[_calculatePosition(item.position, min, max)]]px;" marker-index$="[[index]]" draggable=false>
             </div>
           </template>
         </div>
@@ -156,11 +153,9 @@ Example:
 
       listeners: {
         'colorbar.dblclick': '_onDblClickColorbar',
-        'markers.mousedown': '_onMouseDownMarkers',
+        'markers.down': '_onDownMarkers',
         'markers.dblclick': '_onDblClickMarkers',
-        'markers.dragstart': '_onDragStartMarkers',
-        'markers.drag': '_onDragMarkers',
-        'markers.dragend': '_onDragEndMarkers',
+        'markers.track': '_onTrackMarkers',
         'iron-resize': '_onIronResize'
       },
 
@@ -331,63 +326,49 @@ Example:
         this._setFocused(i)
       },
 
-      _onMouseDownMarkers: function(e) {
+      _onDownMarkers: function(e) {
         var marker = e.target
         var index = marker.getAttribute('marker-index')
 
         this._setFocused(index)
+
+        this.dragstart = {
+          position: this.focused.position,
+          x: e.detail.x
+        }
       },
 
       _onDblClickMarkers: function(e) {
         this.$["color-editor"].showPicker()
       },
 
-      _onDragStartMarkers: function(e) {
-        var img = document.createElement("img")
+      _onTrackMarkers: function(e) {
 
-        /* 빈 이미지. */
-        img.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
-        e.dataTransfer.setDragImage(img, 0, 0)
-        /* Firefox는 dataTransfer.setData를 해주지 않으면, drag 이벤트가 발생하지 않는다. */
-        e.dataTransfer.setData('Text', 'for firefox')
+        switch(e.detail.state) {
+        case 'track':
+          var width = this.$.colorbar.offsetWidth
 
-        this.dragstart = {
-          position: this.focused.position,
-          screenX: e.screenX,
-          screenY: e.screenY
-        }
-        // console.log('dragstart', e.screenX, e.pageX, e.offsetX, e.clientX)
-      },
+          var position = this.dragstart.position
+             + ((e.detail.x - this.dragstart.x) / width * (this.max - this.min))
 
-      _onDragMarkers: function(e) {
-        var width = this.$.colorbar.offsetWidth
+          if(position > this.max)
+            position = this.max
+          else if(position < this.min)
+            position = this.min
 
-        // TODO Firefox는 마우스 드래깅 이벤트에서 마우스 좌표를 주지 않는다. (Firefox 버그)
-        // 따라서, 부모 엘리먼트의 dragover 이벤트를 가지고 처리하는 방법으로 개선하자.
-        // console.log('ondrag', e.screenX, e.pageX, e.offsetX, e.clientX)
+          this.set('focused.position', position)
+          break;
 
-        // TODO 이유는 모르겠으나, 마지막 드래그 이벤트에서 e.screenX값이 0가 됨. 그래서, 이것을 스킵함.
-        if(e.screenX == 0)
-          return
+        case 'end':
+          /* 40 픽셀 이상 아래로 잡아당기면 삭제됨. */
+          if(e.detail.dy > 40) {
+            this.value.splice(this.focused.index, 1)
+            this.value = this.value.slice()
+          }
+          break;
 
-        var position = this.dragstart.position
-          + ((e.screenX - this.dragstart.screenX) / width * (this.max - this.min))
-
-        if(position > this.max)
-          position = this.max
-        else if(position < this.min)
-          position = this.min
-
-        this.set('focused.position', position)
-      },
-
-      _onDragEndMarkers: function(e) {
-        /* 40 픽셀 이상 아래로 잡아당기면 삭제됨. */
-        if(e.screenY - this.dragstart.screenY > 40) {
-          this.value.splice(this.focused.index, 1)
-          this.value = this.value.slice()
-
-          return
+        case 'start':
+          break;
         }
       },
 
