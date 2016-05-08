@@ -173,18 +173,13 @@ Example:
         /* 마커 템플릿을 다시 만든다. */
         this.$['markers-template'].render()
             
-        var marker = this.$$('#markers div[focused]')
-        if(marker)
-          marker.removeAttribute('focused')
-
         marker = this.$$(`#markers div[marker-index='${index}']`)
+        this.attributeFollows('focused', marker, this.$$('#markers div[focused]'))
 
         if(!marker) {
           this.focused = null
           return
         }
-
-        marker.setAttribute('focused', true)
 
         var colorStop = this.value[index]
 
