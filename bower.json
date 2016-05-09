@@ -1,6 +1,6 @@
 {
   "name": "things-designer-elements",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "authors": [
     "Hatio Lab. <heartyoh@hatiolab.com>"
   ],
@@ -22,7 +22,7 @@
     "iron-elements": "PolymerElements/iron-elements#^1.0.0",
     "paper-elements": "PolymerElements/paper-elements#^1.0.1",
     "things-angle-input": "ThingsElements/things-angle-input",
-    "juicy-ace-editor": "^1.1.1"
+    "ace-builds": "~1.2.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

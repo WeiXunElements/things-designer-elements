@@ -12,46 +12,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>things-editor-value Demo</title>
+    
+    <title>things-editor-script Demo</title>
+    
     <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
 
-    <link rel="import" href="../things-editor-value.html">
+    <link rel="import" href="../things-editor-script.html">
 
-    <style is="custom-style">
-    textarea {
-      width: 600px;
-      height: 300px;
-    }
-    </style>
   </head>
   <body unresolved>
 
     <template is="dom-bind" id="app">
-      <p>An example of <code>&lt;things-editor-value&gt;</code>:</p>
+      <style is="custom-style">
+      :root {
+        --things-editor-script: {
+          height: 300px;
+        }
+      }
+
+      textarea {
+        height: 100px;
+        width: 100%;
+      }
+      </style>
+
+      <p>An example of <code>&lt;things-editor-script&gt;</code>:</p>
+
+      <things-editor-script id="editor"
+                            value="{{text}}"
+                            fontsize="12"
+                            theme="ace/theme/monokai"
+                            mode="ace/mode/javascript">
+      </things-editor-script>
 
       <textarea value="[[text]]"></textarea>
 
-      <things-editor-value id="editor"
-                           mapping="{{mapping}}"
-                           type="[[type]]">
-      </things-editor-value>
     </template>
 
     <script>
       window.addEventListener('WebComponentsReady', function(e) {
         var app = document.querySelector('#app')
 
-        app.type = "string"
-        app.mapping = {
-          target: '#special',
-          property: 'text',
-          rule: 'eval',
-          param: 'return "blue"'
-        }
-
-        app.$.editor.addEventListener('value-change', function(e) {
-          app.text = JSON.stringify(app.mapping, null, "\t")
-        })
+        app.text = "Hello, World"
       })
     </script>
 
