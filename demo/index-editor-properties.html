@@ -75,8 +75,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }]
         }
 
-        app.$.properties.addEventListener('change', function() {
-          console.log('changed', app.value)
+        app.$.properties.addEventListener('change', function(e) {
+          console.log('changed', app.value, e)
         })
       })
     </script>

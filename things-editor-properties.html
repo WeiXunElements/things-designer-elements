@@ -13,7 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="./things-editor-property.html">
 
 <!--
-An element providing a solution to no problem in particular.
+모든 에디터들은 change 이벤트를 지원해야 한다. 또한, 모든 에디터들은 value속성에 값을 가져야 한다.
 
 Example:
 
@@ -48,8 +48,6 @@ Example:
   </template>
 
   <script>
-
-    /* 모든 에디터들은 change 이벤트를 지원해야 한다. 또한, 모든 에디터들은 value속성에 값을 가져야 한다. */
 
     Polymer({
       is: 'things-editor-properties',
@@ -111,7 +109,6 @@ Example:
       },
 
       _onValueChanged: function(e) {
-
         var prop = e.target
         while(prop && prop.tagName != 'THINGS-EDITOR-PROPERTY')
           prop = prop.parentNode
@@ -124,9 +121,10 @@ Example:
         this._changedOnThis = true
         this.set('target.' + name, prop.value)
         this._changedOnThis = false
+
+        console.log("changed", prop.value)
       }
 
     })
   </script>
 </dom-module>
-
