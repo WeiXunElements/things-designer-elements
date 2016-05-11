@@ -37,6 +37,10 @@ Example:
       <input type="number" value-as-number="{{value::change}}">
     </template>
 
+    <template is="dom-if" if="[[_isCheckboxType(type)]]">
+      <input type="checkbox" checked="{{value::change}}">
+    </template>
+
     <template is="dom-if" if="[[_isColorType(type)]]">
       <things-editor-color value="{{value}}"/>
     </template>
@@ -79,9 +83,12 @@ Example:
 
       _isNumberType(type) {
         return type == 'number'
+      },
+
+      _isCheckboxType(type) {
+        return type == 'checkbox'
       }
 
     })
   </script>
 </dom-module>
-

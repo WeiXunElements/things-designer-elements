@@ -23,6 +23,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <template is="dom-bind" id="app">
       <style is="custom-style">
+      textarea {
+          width: 600px;
+          height: 300px;
+      }
+
       #target {
         width: 300px;
         height: 300px;
@@ -31,6 +36,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </style>
 
       <p>An example of <code>&lt;things-editor-properties&gt;</code>:</p>
+      <div>
+        <textarea spellcheck="false">[[propertyValueText]]</textarea>
+      </div>
 
       <things-editor-properties id="properties"
                                 target="{{value}}"
@@ -48,6 +56,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           label: 'NUMBER',
           name: 'number',
           property: 'number'
+        }, {
+          type: 'checkbox',
+          label: 'CHECKBOX',
+          name: 'checkbox',
+          property: 'checkbox'
         }, {
           type: 'color',
           label: 'COLOR',
@@ -76,8 +89,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
         app.$.properties.addEventListener('change', function(e) {
-          console.log('changed', app.value, e)
+          app.propertyValueText = JSON.stringify(app.value, "null", "\t");
         })
+
+        app.$.properties.fire('change');
       })
     </script>
 
