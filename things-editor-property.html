@@ -37,6 +37,10 @@ Example:
       <input type="number" value-as-number="{{value::change}}">
     </template>
 
+    <template is="dom-if" if="[[_isStringType(type)]]">
+      <input type="text" value="{{value::change}}">
+    </template>
+
     <template is="dom-if" if="[[_isCheckboxType(type)]]">
       <input type="checkbox" checked="{{value::change}}">
     </template>
@@ -83,6 +87,10 @@ Example:
 
       _isNumberType(type) {
         return type == 'number'
+      },
+
+      _isStringType(type) {
+        return type == 'string'
       },
 
       _isCheckboxType(type) {
