@@ -95,6 +95,10 @@ Example:
           return
 
         var name = change.path.substr(7)
+        var dotIndex = name.indexOf('.')
+        if(dotIndex >= 0)
+          name = name.substr(0, name.indexOf('.'))
+
         this._setValue(name)
 
         // Sub Property가 변경되었을 때만, 이벤트를 발생시킨다.
@@ -109,6 +113,7 @@ Example:
       },
 
       _onValueChanged: function(e) {
+
         var prop = e.target
         while(prop && prop.tagName != 'THINGS-EDITOR-PROPERTY')
           prop = prop.parentNode
