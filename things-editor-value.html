@@ -25,41 +25,33 @@ Example:
   <template>
     <style>
       :host {
-        display: block;
-        max-width:229px;
-        min-width:229px;
-        background-color:rgba(255,255,255,.5);;
-        overflow:hidden;
-        margin:0 0 0 5px;
-        padding:0 0 5px 0;
-        border:1px solid rgba(0,0,0,.2);
-        border-width:0 1px 1px 1px;
+        @apply(--things-properties-varialbe-panel);
       }
-
-      :host .content{background-color:rgba(255,255,255,.5);}
-
-      paper-radio-button{padding:2px 2px 2px 5px !important;}
-      paper-radio-button::shadow #radioLabel{
-        margin-left:0 !important;
-        color:#607D8B !important;
-        font-size:12px;
+      label{
+        @apply(--things-label);
+        width:24%;
       }
+      input{
+        @apply(--things-input);
+        width:66%;
+      }
+      select{
+        @apply(--things-select);
+        background:url(/images/bg-input-select.png) 100% 50% no-repeat #fff;
+      }
+      paper-radio-group{
+        position:relative;
+        top:-3px;
+      }
+      paper-radio-button{
+        padding:2px 2px 2px 5px !important;
+      }
+      paper-radio-button:first-child{padding-left:0 !important;}
       paper-radio-button::shadow #offRadio.paper-radio-button{
-        border-color:#aaa;
         border-width:1px;
-        width:10px;height:10px;
-        top:2px;
-        left:2px;
       }
-      paper-radio-button::shadow #onRadio.paper-radio-button{background-color:#26A69A;}
-      paper-radio-button[checked]::shadow #offRadio.paper-radio-button{border-color:#26A69A;}
-
-      paper-radio-group{width:69%;float:left;}
-
-      things-editor-script{
-        width:94%;height:300px;
-        margin:7px 0 0 7px;
-        overflow:auto;
+      paper-radio-button::shadow #onRadio.paper-radio-button{
+        width:60%;height:60%;
       }
     </style>
 

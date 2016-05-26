@@ -19,33 +19,28 @@ Example:
   <template>
     <style>
       :host {
-        display: block;
-        width:94%;
-        overflow:hidden;
-        clear:both;
-        margin:7px 0 0 7px;
-        border:1px solid #ccc;
+        @apply(--things-variable-ruletype-container)
       }
       *{float:left;}
       input{
-        width:40%;
+        width:41%;
         margin:3px 0 3px 3px;
       }
-      input[data-value-type='color']{width:28%;}
-      input[type='color']{width:10%;}
-      div{border-bottom:1px solid #c0c0c0;}
-      div:last-child{border-bottom:none;}
+      input[type='color']{
+        @apply(--things-input-color);
+        height:15px;
+        top:2px;
+      }
+      input[type='color']::-webkit-color-swatch-wrapper{padding:0;}
+      input[type='color']::-webkit-color-swatch{border:0;}
+      div{
+        border-bottom:1px solid #c0c0c0;
+      }
+      div:last-child{
+        border-bottom:none;
+      }
       .record-action{
-        background-color:rgba(0,0,0,.5);
-        border-radius:50%;
-        border:none;
-        margin:5px 0 0 4px;
-        width:15px;height:15px;
-        cursor:pointer;
-        color:#fff;
-        font-size:14px;
-        line-height:0;
-        text-indent:-3px;
+        @apply(--things-record-action-button)
       }
     </style>
 
