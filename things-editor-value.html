@@ -71,6 +71,7 @@ Example:
       <option>fontColor</option>
       <option>rotation</option>
       <option>hidden</option>
+      <option>data</option>
     </select>
 
     <label>rule type</label>
@@ -155,6 +156,9 @@ Example:
         case 'fontColor':
           this.valueType = 'color'
           break
+        case 'data' :
+          this.valueType = 'object'
+          break;
         case 'text':
         default:
           this.valueType = 'string'
@@ -219,7 +223,7 @@ Example:
       onChangedRule: function(change) {
         if(!this.mapping)
           return
-        
+
         var param
 
         switch(this.mapping.rule) {
