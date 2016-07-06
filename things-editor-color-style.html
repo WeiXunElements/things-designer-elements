@@ -27,22 +27,16 @@ Example:
         display: block;
         @apply(--things-editor-color-style)
       }
-      paper-radio-button{padding:2px 2px 2px 5px !important;}
-      paper-radio-button::shadow #radioLabel{
-        margin-left:0 !important;
-        color:#607D8B !important;
-        font-size:12px;
+      paper-radio-button{padding:2px 1px 10px 7px !important;}
+      .icon-only-label{
+        @apply(--things-properties-icon-only-label);
+        background:url(/images/icon-properties-label.png) no-repeat;
+        float:left;margin-top:0;
       }
-      paper-radio-button::shadow #offRadio.paper-radio-button{
-        border-color:#aaa;
-        border-width:1px;
-        width:10px;height:10px;
-        top:2px;
-        left:2px;
+      .icon-only-label.color{background-position:70% -498px;}
+      things-editor-color::shadow #text{
+        width:71%;
       }
-      paper-radio-button::shadow #onRadio.paper-radio-button{background-color:#26A69A;}
-      paper-radio-button[checked]::shadow #offRadio.paper-radio-button{border-color:#26A69A;}
-
     </style>
 
     <paper-radio-group selected="{{fillType}}" on-change="onChangedFillType">
@@ -58,16 +52,13 @@ Example:
       </div>
 
       <div fill-type="solid">
-        <hr class="fieldset-hr"/>
-        <label>Color #</label>
+        <label class="icon-only-label color"></label>
         <things-editor-color value="{{solid}}">
         </things-editor-color>
 
       </div>
 
       <div fill-type="gradient">
-        <hr class="fieldset-hr"/>
-
         <things-editor-gradient type="{{gradient.type}}"
                                 rotation="{{gradient.rotation}}"
                                 center="{{gradient.center}}"
@@ -77,8 +68,6 @@ Example:
       </div>
 
       <div fill-type="pattern">
-        <hr class="fieldset-hr"/>
-
         <things-editor-pattern image="{{pattern.image}}"
                                offset-x="{{pattern.offsetX}}"
                                offset-y="{{pattern.offsetY}}"

@@ -21,36 +21,12 @@ Example:
   <template>
     <style>
       :host {
-        /*float:left;*/
-        width:100%;
-        margin-top:5px;
-        border:1px solid #ccc;
-        overflow:hidden;
-        display:flex;
-        display:-webkit-flex;
-
-        @apply(--things-editor-buttons-radio)
+        width:65%;
+        display:inline-block;
       }
       ::content > paper-button {
-        flex:1;-webkit-flex:1;
-        min-width:initial;
-        height:17px;
-        margin:0;
-        border-bottom:none !important;
-        border-right:1px solid rgba(0,0,0,.09);
-        opacity:.7;
-        background-color:rgba(0,0,0,.07);
-
         @apply(--things-editor-buttons-radio-button)
       }
-
-      ::content > paper-button[active] {
-        background-color:#fff;opacity:1;
-
-        @apply(--things-editor-buttons-radio-button-active)
-      }
-
-      ::content > paper-button:last-child{border-right:none;}
     </style>
 
     <content select="paper-button"></content>
