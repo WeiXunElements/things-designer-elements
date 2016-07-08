@@ -23,18 +23,35 @@ Example:
       :host {
         display: block;
       }
+      label{
+        @apply(--things-label);
+      }
+      input{
+        @apply(--things-input);
+      }
+      select{
+        @apply(--things-select);
+        background:url(/images/bg-input-select.png) 100% 50% no-repeat #fff;
+      }
+      div *{
+        float:left;
+      }
+      div label{
+        width:18%;
+        margin-right:3px;
+        top:4px;
+      }
+      div input{
+        width:24%;
+      }
+      input[type="checkbox"]{
+        width:15px;
+        margin-left:53px;
+      }
     </style>
     
     <label>image</label>
     <input type="text" value="{{image::change}}">
-    <label>offset-x</label>
-    <input type="number" value="{{offsetX::change}}">
-    <label>offset-y</label>
-    <input type="number" value="{{offsetY::change}}">
-    <label>width</label>
-    <input type="number" value="{{width::change}}">
-    <label>height</label>
-    <input type="number" value="{{height::change}}">
     <label>align</label>
     <select class="select-content" value="{{align::change}}">
       <option value="left-top">Left Top</option>
@@ -48,8 +65,17 @@ Example:
       <option value="right-bottom">Right Bottom</option>
     </select>
     <div>
-      <input type="checkbox" checked="{{fitPattern::change}}" required>Fit
+      <label>offsetX</label>
+      <input type="number" value="{{offsetX::change}}">
+      <label>offsetY</label>
+      <input type="number" value="{{offsetY::change}}">
+      <label>width</label>
+      <input type="number" value="{{width::change}}">
+      <label>height</label>
+      <input type="number" value="{{height::change}}">
     </div>
+    <input type="checkbox" checked="{{fitPattern::change}}" required>Fit
+
 
   </template>
 

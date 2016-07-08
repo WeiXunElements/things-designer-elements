@@ -44,15 +44,9 @@ Example:
         top:-3px;
       }
       paper-radio-button{
-        padding:2px 2px 2px 5px !important;
+        padding:2px 1px 2px 4px !important;
       }
       paper-radio-button:first-child{padding-left:0 !important;}
-      paper-radio-button::shadow #offRadio.paper-radio-button{
-        border-width:1px;
-      }
-      paper-radio-button::shadow #onRadio.paper-radio-button{
-        width:60%;height:60%;
-      }
       things-editor-script{
         width:94%;height:300px;
         margin:-7px 0 7px 7px;
@@ -60,27 +54,21 @@ Example:
       }
     </style>
 
-    <label>
-      <things-i18n-msg msgid="label.target" auto>target</things-i18n-msg>
-    </label>
+    <label>target</label>
     <input data-mapping-target type="text" value="{{mapping.target::change}}"/>
 
-    <label>
-      <things-i18n-msg msgid="label.property" auto>property</things-i18n-msg>
-    </label>
+    <label>property</label>
     <select value="{{mapping.property::change}}">
       <option><things-i18n-msg msgid="label.text" auto>text</things-i18n-msg></option>
       <option><things-i18n-msg msgid="label.fill-style" auto>fillStyle</things-i18n-msg></option>
       <option><things-i18n-msg msgid="label.stroke-style" auto>strokeStyle</things-i18n-msg></option>
       <option><things-i18n-msg msgid="label.font-color" auto>fontColor</things-i18n-msg></option>
-      <option><things-i18n-msg msgid="label.rotate" auto>rotate</things-i18n-msg></option>
+      <option><things-i18n-msg msgid="label.rotate" auto>rotation</things-i18n-msg></option>
       <option><things-i18n-msg msgid="label.hidden" auto>hidden</things-i18n-msg></option>
       <option><things-i18n-msg msgid="label.data" auto>data</things-i18n-msg></option>
     </select>
 
-    <label>
-      <things-i18n-msg msgid="label.rule-type" auto>data</things-i18n-msg>
-    </label>
+    <label>rule type</label>
     <paper-radio-group selected="{{mapping.rule}}">
       <paper-radio-button name="value">
         <things-i18n-msg msgid="label.value" auto>value</things-i18n-msg>
@@ -119,7 +107,6 @@ Example:
         </things-editor-script>
       </div>
     </iron-pages>
-
   </template>
 
   <script>
