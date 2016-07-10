@@ -40,10 +40,18 @@ Example:
     </style>
 
     <paper-radio-group selected="{{fillType}}" on-change="onChangedFillType">
-      <paper-radio-button name="no">no fill</paper-radio-button>
-      <paper-radio-button name="solid">solid</paper-radio-button>
-      <paper-radio-button name="gradient">gradient</paper-radio-button>
-      <paper-radio-button name="pattern">pattern</paper-radio-button>
+      <paper-radio-button name="no">
+        <things-i18n-msg msgid="label.no-fill" auto>no fill</things-i18n-msg>
+      </paper-radio-button>
+      <paper-radio-button name="solid">
+        <things-i18n-msg msgid="label.solid" auto>solid</things-i18n-msg>
+      </paper-radio-button>
+      <paper-radio-button name="gradient">
+        <things-i18n-msg msgid="label.gradient" auto>gradient</things-i18n-msg>
+      </paper-radio-button>
+      <paper-radio-button name="pattern">
+        <things-i18n-msg msgid="label.pattern" auto>pattern</things-i18n-msg>
+      </paper-radio-button>
     </paper-radio-group>
 
     <iron-pages attr-for-selected="fill-type"
