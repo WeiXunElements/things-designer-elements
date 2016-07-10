@@ -54,10 +54,14 @@ Example:
       }
     </style>
 
-    <label>target</label>
+    <label>
+      <things-i18n-msg msgid="label.target" auto>target</things-i18n-msg>
+    </label>
     <input data-mapping-target type="text" value="{{mapping.target::change}}"/>
 
-    <label>property</label>
+    <label>
+      <things-i18n-msg msgid="label.property" auto>target</things-i18n-msg>
+    </label>
     <select value="{{mapping.property::change}}">
       <option><things-i18n-msg msgid="label.text" auto>text</things-i18n-msg></option>
       <option><things-i18n-msg msgid="label.fill-style" auto>fillStyle</things-i18n-msg></option>
@@ -68,7 +72,9 @@ Example:
       <option><things-i18n-msg msgid="label.data" auto>data</things-i18n-msg></option>
     </select>
 
-    <label>rule type</label>
+    <label>
+      <things-i18n-msg msgid="label.rule-type" auto>rule type</things-i18n-msg>
+    </label>
     <paper-radio-group selected="{{mapping.rule}}">
       <paper-radio-button name="value">
         <things-i18n-msg msgid="label.value" auto>value</things-i18n-msg>
