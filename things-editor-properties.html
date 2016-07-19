@@ -38,11 +38,13 @@ Example:
     <content></content>
 
     <template is="dom-repeat" items="[[props]]">
-      <things-editor-property label="[[item.label]]"
-                              type="[[item.type]]"
-                              name$="[[item.name]]"
-                              property="[[item.property]]">
-      </things-editor-property>
+      <div>
+        <things-editor-property label="[[item.label]]"
+                                type="[[item.type]]"
+                                name$="[[item.name]]"
+                                property="[[item.property]]">
+        </things-editor-property>
+      </div>
     </template>
 
   </template>

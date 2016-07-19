@@ -72,6 +72,7 @@ Example:
 
         values: {
           type: Array,
+          value: [],
           notify: true
         }
       },
@@ -92,6 +93,7 @@ Example:
         this.values = []
         this.async(function(){
           this.values = values
+          this.fire('change', e)
         }, 1)
       },
 
@@ -107,6 +109,7 @@ Example:
         this.values = []
         this.async(function(){
           this.values = values
+          this.fire('change', e)
         }, 1)
       },
 

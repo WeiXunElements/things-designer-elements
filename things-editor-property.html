@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="./things-editor-color.html">
 <link rel="import" href="./things-editor-color-stops.html">
+<link rel="import" href="./things-editor-multiple-color.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -58,7 +59,7 @@ Example:
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'multiple-color')]]">
-      <things-editor-multiple-color value="{{value}}"/>
+      <things-editor-multiple-color values="{{value}}"/>
     </template>
 
   </template>
