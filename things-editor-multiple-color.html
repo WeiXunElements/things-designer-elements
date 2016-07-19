@@ -79,12 +79,16 @@ Example:
 
       listeners: {
         // 'iron-resize': '_onIronResize',
-
+        'change' : '_onValueChanged'
       },
 
       observers: [
 
       ],
+
+      _onValueChanged: function(e) {
+        this.set('values', this.values.splice(0))
+      },
 
       _appendEditorColor: function(e) {
         var values = this.values;
