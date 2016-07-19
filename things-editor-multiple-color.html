@@ -17,7 +17,7 @@
 
 Example:
 
-    <things-editor-multiple-color colors="{{colors}}">
+    <things-editor-multiple-color values="{{values}}">
     </things-editor-multiple-color>
 
 @demo demo/index-editor-multiple-color.html
@@ -40,7 +40,7 @@ Example:
 
     </style>
 
-    <template is="dom-repeat" items="[[colors]]">
+    <template is="dom-repeat" items="[[values]]">
       <div>
 
         <input type="button" value="+" on-click="_appendEditorColor" data-index="[[index]]">
@@ -70,7 +70,7 @@ Example:
          *
          */
 
-        colors: {
+        values: {
           type: Array,
           notify: true
         }
@@ -86,32 +86,32 @@ Example:
       ],
 
       _appendEditorColor: function(e) {
-        var colors = this.colors;
-        colors.splice(e.target.dataIndex + 1, 0, 'black')
+        var values = this.values;
+        values.splice(e.target.dataIndex + 1, 0, 'black')
 
-        this.colors = []
+        this.values = []
         this.async(function(){
-          this.colors = colors
+          this.values = values
         }, 1)
       },
 
       _removeEditorColor: function(e){
-        var colors = []
-        for(var i=0; i<this.colors.length; i++){
+        var values = []
+        for(var i=0; i<this.values.length; i++){
           if(i === e.target.dataIndex)
             continue;
           else
-            colors.push(this.colors[i])
+            values.push(this.values[i])
         }
 
-        this.colors = []
+        this.values = []
         this.async(function(){
-          this.colors = colors
+          this.values = values
         }, 1)
       },
 
       _isOnly: function(item, index){
-        if(this.colors.length === 1)
+        if(this.values.length === 1)
           return true
 
         return false

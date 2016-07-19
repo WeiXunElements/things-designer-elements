@@ -36,7 +36,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <p>An example of <code>&lt;things-editor-multiple-color&gt;</code>:</p>
 
-      <things-editor-multiple-color colors="{{colors}}">
+      <things-editor-multiple-color values="{{values}}">
       </things-editor-multiple-color>
 
       <textarea value="[[text]]"></textarea>
@@ -49,10 +49,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var app = document.querySelector('#app')
 
         app.$.btn.addEventListener('click', function() {
-          app.text = app.colors.join()
+          app.text = app.values.join()
         })
 
-        app.colors = ['blue', 'green', 'yellow', 'red', 'black']
+        app.values = ['blue', 'green', 'yellow', 'red', 'black']
       })
     </script>
 

@@ -33,28 +33,32 @@ Example:
 
     <label>[[label]]</label>
 
-    <template is="dom-if" if="[[_isNumberType(type)]]">
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'number')]]">
       <input type="number" value-as-number="{{value::change}}">
     </template>
 
-    <template is="dom-if" if="[[_isStringType(type)]]">
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'string')]]">
       <input type="text" value="{{value::change}}">
     </template>
 
-    <template is="dom-if" if="[[_isCheckboxType(type)]]">
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'checkbox')]]">
       <input type="checkbox" checked="{{value::change}}">
     </template>
 
-    <template is="dom-if" if="[[_isColorType(type)]]">
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'color')]]">
       <things-editor-color value="{{value}}"/>
     </template>
 
-    <template is="dom-if" if="[[_isSolidColorStopsType(type)]]">
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'solid-color-stops')]]">
       <things-editor-color-stops type="solid" value="{{value}}" min="[[property.min]]" max="[[property.max]]"/>
     </template>
 
-    <template is="dom-if" if="[[_isGradientColorStopsType(type)]]">
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'gradient-color-stops')]]">
       <things-editor-color-stops type="gradient" value="{{value}}" min="[[property.min]]" max="[[property.max]]"/>
+    </template>
+
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'multiple-color')]]">
+      <things-editor-multiple-color value="{{value}}"/>
     </template>
 
   </template>
@@ -73,28 +77,8 @@ Example:
         property: Object
       },
 
-      _isColorType(type) {
-        return type == 'color'
-      },
-
-      _isSolidColorStopsType(type) {
-        return type == 'solid-color-stops'
-      },
-
-      _isGradientColorStopsType(type) {
-        return type == 'gradient-color-stops'
-      },
-
-      _isNumberType(type) {
-        return type == 'number'
-      },
-
-      _isStringType(type) {
-        return type == 'string'
-      },
-
-      _isCheckboxType(type) {
-        return type == 'checkbox'
+      _isTypeofEditor: function(editorType, type) {
+        return editorType == type
       }
 
     })
