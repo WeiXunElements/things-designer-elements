@@ -1,0 +1,123 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+
+<link rel="import" href="./things-editor-color.html">
+
+<!--
+범위내에서 여러 컬러셋(포지션과 색깔) 배열을 편집하는 컴포넌트이다.
+
+미리보기 Bar에서는 gradient나, solid 형태의 컬러셋을 보여준다.
+
+새로운 컬러셋을 추가고자 할 때는 미리보기 Bar를 더블클릭한다.
+컬러셋을 제거하고자 할 때는 컬러셋 마커를 아래방향으로 드래깅한다.
+컬러셋의 위치를 옮기고자 할 때는, 컬러셋 마커를 좌우로 드래깅하여 이동시키거나,
+옮기고자하는 컬러셋 마커를 마우스로 선택하고, 포지션 입력 에디터에서 직접 수정한다.
+컬러셋의 색상을 바꾸고자 할 때는, 컬러셋 마커를 더블클릭하여 컬러파레트를 팝업시켜서 색상을 선택하거나, 색상 입력 에디터에서 직접 색상을 수정할 수 있다.
+
+Example:
+
+    <things-editor-multiple-color colors="{{colors}}">
+    </things-editor-multiple-color>
+
+@demo demo/index-editor-multiple-color.html
+@hero hero.svg
+-->
+
+<dom-module id="things-editor-multiple-color">
+  <template>
+    <style>
+      :host {
+        display: block;
+        @apply(--things-editor-multiple-color)
+      }
+
+      #multiple-color {
+        clear:both;
+        margin-bottom:-3px;
+        @apply(--things-editor-colorbar-container)
+      }
+
+    </style>
+
+    <template is="dom-repeat" items="[[colors]]">
+      <div>
+
+        <input type="button" value="+" on-click="_appendEditorColor" data-index="[[index]]">
+
+        <things-editor-color value="{{item}}">
+        </things-editor-color>
+
+        <template is="dom-if" if="[[!_isOnly(item, index)]]">
+          <input type="button" value="-" on-click="_removeEditorColor" data-index="[[index]]">
+        </template>
+      </div>
+    </template>
+
+  </template>
+
+  <script>
+
+    Polymer({
+      is: 'things-editor-multiple-color',
+
+      behaviors: [
+        Polymer.IronResizableBehavior
+      ],
+
+      properties: {
+        /**
+         *
+         */
+
+        colors: {
+          type: Array,
+          notify: true
+        }
+      },
+
+      listeners: {
+        // 'iron-resize': '_onIronResize',
+
+      },
+
+      observers: [
+
+      ],
+
+      _appendEditorColor: function(e) {
+        var colors = this.colors;
+        colors.splice(e.target.dataIndex + 1, 0, 'black')
+
+        this.colors = []
+        this.async(function(){
+          this.colors = colors
+        }, 1)
+      },
+
+      _removeEditorColor: function(e){
+        var colors = []
+        for(var i=0; i<this.colors.length; i++){
+          if(i === e.target.dataIndex)
+            continue;
+          else
+            colors.push(this.colors[i])
+        }
+
+        this.colors = []
+        this.async(function(){
+          this.colors = colors
+        }, 1)
+      },
+
+      _isOnly: function(item, index){
+        if(this.colors.length === 1)
+          return true
+
+        return false
+      }
+
+    })
+
+  </script>
+</dom-module>
