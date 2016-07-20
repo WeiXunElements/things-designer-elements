@@ -44,7 +44,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         app.value = "#FF0000"
 
         app.$.editor.addEventListener('change', function() {
-          app.$.target.style.background = app.value
+          app.$.target.style.background = app.$.editor.tinycolor(app.$.editor.value)
         })
       })
     </script>
