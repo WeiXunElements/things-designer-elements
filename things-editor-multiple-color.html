@@ -35,17 +35,29 @@ Example:
 
     </style>
 
-    <template is="dom-repeat" items="[[values]]">
+    <template is="dom-if" if="[[_isArray(values)]]">
+      <template is="dom-repeat" items="[[values]]">
+        <div>
+
+          <input type="button" value="+" on-click="_appendEditorColor" data-index="[[index]]">
+
+          <things-editor-color value="{{item}}">
+          </things-editor-color>
+
+          <template is="dom-if" if="[[!_isOnly(item, index)]]">
+            <input type="button" value="-" on-click="_removeEditorColor" data-index="[[index]]">
+          </template>
+        </div>
+      </template>
+    </template>
+    <template is="dom-if" if="[[!_isArray(values)]]">
       <div>
 
         <input type="button" value="+" on-click="_appendEditorColor" data-index="[[index]]">
 
-        <things-editor-color value="{{item}}">
+        <things-editor-color value="{{values}}">
         </things-editor-color>
 
-        <template is="dom-if" if="[[!_isOnly(item, index)]]">
-          <input type="button" value="-" on-click="_removeEditorColor" data-index="[[index]]">
-        </template>
       </div>
     </template>
 
@@ -82,15 +94,29 @@ Example:
       ],
 
       _onValueChanged: function(e) {
-        this.set('values', this.values.splice(0))
+
+        if(this._changedBySelf === true){
+          this._changedBySelf = false
+          return
+        }
+
+        var values = this.values
+
+        this.set('values', values)
       },
 
       _appendEditorColor: function(e) {
         var values = this.values;
-        values.splice(e.target.dataIndex + 1, 0, 'black')
+
+        if( typeof values == 'string')
+          values = [values]
+
+        var index = e.target.dataIndex || 0
+        values.splice(index + 1, 0, 'black')
 
         this.values = []
         this.async(function(){
+          this._changedBySelf = true
           this.values = values
           this.fire('change', e)
         }, 1)
@@ -107,6 +133,7 @@ Example:
 
         this.values = []
         this.async(function(){
+          this._changedBySelf = true
           this.values = values
           this.fire('change', e)
         }, 1)
@@ -114,6 +141,13 @@ Example:
 
       _isOnly: function(item, index){
         if(this.values.length === 1)
+          return true
+
+        return false
+      },
+
+      _isArray: function(items){
+        if(typeof items == 'object' && items.length > 0)
           return true
 
         return false
