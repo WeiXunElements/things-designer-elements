@@ -61,7 +61,7 @@ Example:
       display-full-url
       base-url-alias="$base_url"
       default-upload-storage="image"
-      value="{{image}}"
+      value="{{image::change}}"
       use-upload
       use-refresh>
     </things-image-selector>
@@ -132,6 +132,14 @@ Example:
           type: Boolean,
           notify: true
         }
+      },
+
+      listeners : {
+        'things-value-changed' : '_onThingsValueChanged'
+      },
+
+      _onThingsValueChanged : function(e) {
+        this.set('image', e.target.value)
       }
 
     })
