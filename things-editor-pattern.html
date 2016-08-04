@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../things-image-selector/things-image-selector.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -49,9 +50,21 @@ Example:
         margin-left:53px;
       }
     </style>
-    
+
     <label>image</label>
-    <input type="text" value="{{image::change}}">
+    <things-image-selector
+      id="image-selector"
+      on-things-value-changed="imageChanged"
+      label="Image src"
+      detail-fields=""
+      display-field="id"
+      display-full-url
+      base-url-alias="$base_url"
+      default-upload-storage="image"
+      value="{{image}}"
+      use-upload
+      use-refresh>
+    </things-image-selector>
     <label>align</label>
     <select class="select-content" value="{{align::change}}">
       <option value="left-top">Left Top</option>

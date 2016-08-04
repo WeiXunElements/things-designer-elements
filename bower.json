@@ -1,6 +1,6 @@
 {
   "name": "things-designer-elements",
-  "version": "0.0.45",
+  "version": "0.0.46",
   "authors": [
     "Hatio Lab. <heartyoh@hatiolab.com>"
   ],
@@ -24,7 +24,8 @@
     "things-angle-input": "ThingsElements/things-angle-input",
     "ace-builds": "~1.2.0",
     "TinyColor" : "bgrins/TinyColor",
-    "paper-color-picker" : "David-Mulder/paper-color-picker"
+    "paper-color-picker" : "David-Mulder/paper-color-picker",
+    "things-elements": "ThingsElements/things-elements"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
