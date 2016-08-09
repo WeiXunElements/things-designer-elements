@@ -69,6 +69,9 @@ Example:
       <option><things-i18n-msg msgid="label.font-color" auto>fontColor</things-i18n-msg></option>
       <option><things-i18n-msg msgid="label.rotate" auto>rotation</things-i18n-msg></option>
       <option><things-i18n-msg msgid="label.hidden" auto>hidden</things-i18n-msg></option>
+      <option><things-i18n-msg msgid="label.location" auto>location</things-i18n-msg></option>
+      <option><things-i18n-msg msgid="label.dimension" auto>dimension</things-i18n-msg></option>
+      <option><things-i18n-msg msgid="label.value" auto>value</things-i18n-msg></option>
       <option><things-i18n-msg msgid="label.data" auto>data</things-i18n-msg></option>
     </select>
 
@@ -156,6 +159,7 @@ Example:
           this.valueType = 'boolean'
           break
         case 'rotation':
+        case 'value':
           this.valueType = 'number'
           break
         case 'fillStyle':
@@ -163,7 +167,9 @@ Example:
         case 'fontColor':
           this.valueType = 'color'
           break
-        case 'data' :
+        case 'data':
+        case 'location':
+        case 'dimension':
           this.valueType = 'object'
           break;
         case 'text':
