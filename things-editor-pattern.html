@@ -51,11 +51,10 @@ Example:
       }
     </style>
 
-    <label>image</label>
     <things-image-selector
       id="image-selector"
-      on-things-value-changed="imageChanged"
-      label="Image src"
+      on-things-image-changed="_onThingsValueChanged"
+      label="Image"
       detail-fields=""
       display-field="id"
       display-full-url
@@ -132,10 +131,6 @@ Example:
           type: Boolean,
           notify: true
         }
-      },
-
-      listeners : {
-        'things-value-changed' : '_onThingsValueChanged'
       },
 
       _onThingsValueChanged : function(e) {
