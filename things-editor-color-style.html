@@ -77,6 +77,7 @@ Example:
 
       <div fill-type="pattern">
         <things-editor-pattern image="{{pattern.image}}"
+                               image-storage="[[imageStorage]]"
                                offset-x="{{pattern.offsetX}}"
                                offset-y="{{pattern.offsetY}}"
                                width="{{pattern.width}}"
@@ -96,7 +97,15 @@ Example:
       properties: {
         value: {
           notify: true
-        }
+        },
+
+        /**
+         * Default Search & Upload Storage
+         */
+        imageStorage: {
+          type: String,
+          value: 'image'
+        }        
       },
 
       listeners: {
