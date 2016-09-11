@@ -21,10 +21,10 @@
     "polymer": "Polymer/polymer#^1.2.0",
     "iron-elements": "PolymerElements/iron-elements#^1.0.0",
     "paper-elements": "PolymerElements/paper-elements#^1.0.1",
+    "paper-color-picker" : "ThingsElements/paper-color-picker",
     "things-angle-input": "ThingsElements/things-angle-input",
     "ace-builds": "~1.2.0",
     "TinyColor" : "bgrins/TinyColor",
-    "paper-color-picker" : "David-Mulder/paper-color-picker",
     "things-elements": "ThingsElements/things-elements"
   },
   "devDependencies": {
