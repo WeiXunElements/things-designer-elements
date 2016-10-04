@@ -36,7 +36,7 @@ Example:
     <label>[[label]]</label>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'number')]]">
-      <input is="things-editor-number-input" value="{{value::change}}">
+      <input is="things-editor-number-input" type="number" value="{{value::change}}">
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'string')]]">
