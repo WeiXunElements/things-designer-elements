@@ -22,9 +22,9 @@ Example:
 
       properties: {
         /**
-         * `value`는 각도의 degree값으로 input element의 입력값과 연동된다.
+         * `degree`는 각도의 degree값으로 input element의 입력값과 연동된다.
          */
-        value: {
+        degree: {
           type: String,
           notify: true,
           reflectToAttribute: true
@@ -44,7 +44,7 @@ Example:
       },
 
       observers: [
-        "_onChangeDegree(value)",
+        "_onChangeDegree(degree)",
         "_onChangeRadian(radian)"
       ],
 
@@ -56,7 +56,7 @@ Example:
       },
 
       _onChangeValue(value) {
-        this.set('value', this.valueAsNumber);
+        this.set('degree', this.valueAsNumber);
       },
 
       _onChangeRadian(radian) {
@@ -67,10 +67,10 @@ Example:
 
         if(isNaN(number)) {
           this.valueAsNumber = null;
-          this.value = undefined;
+          this.degree = undefined;
         } else {
           this.valueAsNumber = number;
-          this.set('value', String(this.valueAsNumber));
+          this.set('degree', String(this.valueAsNumber));
         }
       },
 
