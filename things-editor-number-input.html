@@ -43,6 +43,7 @@ Example:
 
         if(isNaN(Number(value))) {
           this.valueAsNumber = null;
+          this.set('value', this.valueAsNumber);
         } else {
           this.valueAsNumber = Number(value);
         }
@@ -50,11 +51,12 @@ Example:
 
       _onChangeValue() {
         /* 에디터에서 값을 바꾼 경우 */
+        
         var value = this.valueAsNumber;
 
         if(isNaN(value)) {
           this.valueAsNumber = null;
-          this.value = undefined;
+          this.set('value', this.valueAsNumber);
         } else {
           this.valueAsNumber = value;
           this.value = String(value);
