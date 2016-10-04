@@ -22,7 +22,7 @@ Example:
 
       properties: {
 
-        value: {
+        number: {
           type: Number,
           notify: true,
           reflectToAttribute: true,
@@ -43,23 +43,24 @@ Example:
 
         if(isNaN(Number(value))) {
           this.valueAsNumber = null;
-          this.value = this.valueAsNumber;
+          this.number = this.valueAsNumber;
         } else {
           this.valueAsNumber = Number(value);
+          this.number = this.valueAsNumber;
         }
       },
 
       _onChangeValue() {
         /* 에디터에서 값을 바꾼 경우 */
 
-        var value = this.valueAsNumber;
+        var number = this.valueAsNumber;
 
-        if(isNaN(value)) {
+        if(isNaN(number)) {
           this.valueAsNumber = null;
-          this.value = this.valueAsNumber;
+          this.number = this.valueAsNumber;
         } else {
-          this.valueAsNumber = value;
-          this.value = value;
+          this.valueAsNumber = number;
+          this.number = number;
         }
       }
     });
