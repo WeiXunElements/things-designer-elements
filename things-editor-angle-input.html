@@ -65,12 +65,19 @@ Example:
 
         var number = radian * 180 / Math.PI;
 
-        if(isNaN(number)) {
-          this.valueAsNumber = null;
-          this.degree = undefined;
-        } else {
-          this.valueAsNumber = number;
-          this.set('degree', String(this.valueAsNumber));
+        try {
+          /*
+            IE Edge에서 valueAsNumber assign시에 InvalidStateError 발생, 원인 모름.
+          */
+          if(isNaN(number)) {
+            this.valueAsNumber = null;
+            this.degree = undefined;
+          } else {
+            this.valueAsNumber = number;
+            this.set('degree', String(this.valueAsNumber));
+          }
+        } catch(e) {
+          console.error(e);
         }
       },
 
