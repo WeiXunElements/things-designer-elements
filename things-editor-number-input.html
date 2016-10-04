@@ -1,0 +1,66 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+Number 값이 undefined 또는 NaN인 경우에 Exception을 방지하기 위한 input의 확장 엘리먼트이다.
+
+Example:
+
+    <input is="things-editor-number-input" value="{{number}}">
+
+@demo demo/index-editor-number-input.html
+@hero hero.svg
+-->
+
+<dom-module id="things-editor-number-input">
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'things-editor-number-input',
+      extends: 'input',
+
+      properties: {
+
+        value: {
+          type: String,
+          notify: true,
+          reflectToAttribute: true,
+          observer: "_onValue"
+        }
+      },
+
+      listeners: {
+        'change': "_onChangeValue"
+      },
+
+      created() {
+        this.setAttribute('type', 'number')
+      },
+
+      _onValue(value) {
+        /* 외부에서 바인딩된 변수의 값을 바꾼 경우 */
+
+        if(isNaN(Number(value))) {
+          this.valueAsNumber = null;
+        } else {
+          this.valueAsNumber = Number(value);
+        }
+      },
+
+      _onChangeValue() {
+        /* 에디터에서 값을 바꾼 경우 */
+        var value = this.valueAsNumber;
+
+        if(isNaN(value)) {
+          this.valueAsNumber = null;
+          this.value = undefined;
+        } else {
+          this.valueAsNumber = value;
+          this.value = String(value);
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>
