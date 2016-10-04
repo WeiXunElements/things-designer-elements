@@ -5,7 +5,7 @@
 <link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../paper-item/paper-item.html">
 
-<link rel="import" href="../things-angle-input/things-angle-input.html">
+<link rel="import" href="./things-editor-angle-input.html">
 <link rel="import" href="./things-editor-color-stops.html">
 
 <!--
@@ -100,7 +100,7 @@ Example:
         <option>radial</option>
       </select>
       <label class="icon-only-label color"></label>
-      <input is="things-angle-input" radian="{{rotation}}">
+      <input is="things-editor-angle-input" radian="{{rotation}}">
     </div>
 
     <label>direction</label>
@@ -141,7 +141,7 @@ Example:
 
     <things-editor-color-stops type="gradient"
                                value="{{colorStops}}">
-    </things-editor-color-stops>                           
+    </things-editor-color-stops>
 
     <div class="merge-column">
       <input type="checkbox" checked="{{rotateWithShapes::change}}" required>
