@@ -21,7 +21,7 @@ Example:
     <style>
       :host {
         display: block;
-        @apply(--things-editor-stack)
+        @apply(--things-editor-stack);
       }
 
       #add-floor {
@@ -118,42 +118,42 @@ Example:
 
       _onClickToActive: function(e) {
         if(e.target.tagName != 'DIV')
-          return
+          return;
 
-        var model = e.model
+        var model = e.model;
 
-        this.activeIndex = this.stack.indexOf(model.item)
+        this.activeIndex = this.stack.indexOf(model.item);
 
-        this.classFollows('active', e.target, this.querySelector('div.active'))
+        this.classFollows('active', e.target, this.querySelector('div.active'));
       },
 
       _onClickRemoveFloor: function(e) {
         var model = e.model;
-        var idx = this.stack.indexOf(model.item)
+        var idx = this.stack.indexOf(model.item);
 
-        this.splice('stack', idx, 1)
+        this.splice('stack', idx, 1);
 
         if(this.activeIndex >= this.stack.length && this.activeIndex > 0)
-          this.activeIndex--
+          this.activeIndex--;
 
         this.async(function() {
-          var oldActive = this.querySelector('div.active')
-          var idx = this.stack.length - this.activeIndex - 1
-          var newActive = this.querySelector(`div:nth-of-type(${idx + 1})`)
+          var oldActive = this.querySelector('div.active');
+          var idx = this.stack.length - this.activeIndex - 1;
+          var newActive = this.querySelector('div:nth-of-type(' + (idx + 1) + ')');
 
           if(oldActive !== newActive)
-            this.classFollows('active', newActive, oldActive)
+            this.classFollows('active', newActive, oldActive);
         })
       },
 
       _sortReverse: function(a, b) {
-        return this.stack.indexOf(a) < this.stack.indexOf(b)
+        return this.stack.indexOf(a) < this.stack.indexOf(b);
       },
 
       _isActive: function(item) {
-        var index = this.stack.indexOf(item)
+        var index = this.stack.indexOf(item);
 
-        return index === this.activeIndex
+        return (index === this.activeIndex);
       }
 
     })
