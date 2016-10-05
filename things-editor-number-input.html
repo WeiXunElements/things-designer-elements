@@ -55,7 +55,7 @@ Example:
         this._onSelf = false;
       },
 
-      _onChangeValue(value) {
+      _onChangeValue(e) {
         if(this._onSelf)
           return;
 
@@ -63,10 +63,10 @@ Example:
 
         /* 에디터에서 값을 바꾼 경우 */
 
-        if(isNaN(Number(value))) {
+        if(isNaN(Number(this.value))) {
           this.number = undefined;
         } else {
-          this.number = this.valueAsNumber;
+          this.number = Number(this.value);
         }
 
         this._onSelf = false;
