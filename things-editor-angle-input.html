@@ -55,44 +55,38 @@ Example:
           this.setAttribute('placeholder', '°');
       },
 
-      _onChangeValue(value) {
-        this.set('degree', this.valueAsNumber);
+      _onChangeValue(e) {
+
+        /* 에디터에서 값을 바꾼 경우 */
+        this.set('degree', Number(this.value));
       },
 
       _onChangeRadian(radian) {
         if(this._dont_loop)
           return
 
-        var number = radian * 180 / Math.PI;
-
-        try {
-          /*
-            IE Edge에서 valueAsNumber assign시에 InvalidStateError 발생, 원인 모름.
-          */
-          if(isNaN(number)) {
-            this.valueAsNumber = null;
-            this.degree = undefined;
-          } else {
-            this.valueAsNumber = number;
-            this.set('degree', String(this.valueAsNumber));
-          }
-        } catch(e) {
-          console.error(e);
+        /* 외부에서 바인딩된 변수의 값을 바꾼 경우 */
+        if(isNaN(Number(radian))) {
+          this.value = undefined;
+          this.degree = undefined;
+        } else {
+          this.value = radian * 180 / Math.PI;
+          this.set('degree', Number(this.value));
         }
       },
 
       _onChangeDegree(degree) {
-        this._dont_loop = true
+        this._dont_loop = true;
 
-        var number = degree * (Math.PI / 180);
+        console.log('_onChangeDegree', degree);
 
-        if(isNaN(number)) {
+        if(isNaN(degree)) {
           this.set('radian', undefined);
         } else {
-          this.set('radian', number);
+          this.set('radian', degree * (Math.PI / 180));
         }
 
-        this._dont_loop = false
+        this._dont_loop = false;
       }
     });
   })();
