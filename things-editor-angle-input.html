@@ -78,8 +78,6 @@ Example:
       _onChangeDegree(degree) {
         this._dont_loop = true;
 
-        console.log('_onChangeDegree', degree);
-
         if(isNaN(degree)) {
           this.set('radian', undefined);
         } else {
