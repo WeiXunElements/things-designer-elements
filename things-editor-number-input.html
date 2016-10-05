@@ -26,7 +26,7 @@ Example:
           type: Number,
           notify: true,
           reflectToAttribute: true,
-          observer: "_onValue"
+          observer: "_onChangeNumber"
         }
       },
 
@@ -38,30 +38,38 @@ Example:
         this.setAttribute('type', 'number')
       },
 
-      _onValue(value) {
+      _onChangeNumber(number) {
+        if(this._onSelf)
+          return;
+
+        this._onSelf = true;
+
         /* 외부에서 바인딩된 변수의 값을 바꾼 경우 */
 
-        if(isNaN(Number(value))) {
-          this.valueAsNumber = null;
-          this.number = this.valueAsNumber;
+        if(isNaN(Number(number))) {
+          this.value = null;
         } else {
-          this.valueAsNumber = Number(value);
-          this.number = this.valueAsNumber;
+          this.value = Number(number);
         }
+
+        this._onSelf = false;
       },
 
-      _onChangeValue() {
+      _onChangeValue(value) {
+        if(this._onSelf)
+          return;
+
+        this._onSelf = true;
+
         /* 에디터에서 값을 바꾼 경우 */
 
-        var number = this.valueAsNumber;
-
-        if(isNaN(number)) {
-          this.valueAsNumber = null;
-          this.number = this.valueAsNumber;
+        if(isNaN(Number(value))) {
+          this.number = undefined;
         } else {
-          this.valueAsNumber = number;
-          this.number = number;
+          this.number = this.valueAsNumber;
         }
+
+        this._onSelf = false;
       }
     });
   })();
