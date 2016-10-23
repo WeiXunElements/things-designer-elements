@@ -1,0 +1,147 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../paper-menu/paper-menu.html">
+<link rel="import" href="../paper-item/paper-item.html">
+
+<link rel="import" href="../things-i18n-msg/things-i18n-msg.html">
+
+<link rel="import" href="./things-editor-buttons-radio.html">
+<link rel="import" href="./things-editor-color.html">
+<link rel="import" href="./things-editor-number-input.html">
+
+<!--
+테이블 셀의 좌,우,상,하 경계선의 스타일을 편집하는 컴포넌트이다.
+
+Example:
+
+    <things-editor-border value={{border}}>
+    </things-editor-border>
+
+@demo demo/index-editor-border.html
+@hero hero.svg
+-->
+
+<dom-module id="things-editor-border">
+  <template>
+    <style>
+      :host {
+        display: block;
+        @apply(--things-editor-border)
+      }
+    </style>
+
+    <div>
+      <things-editor-buttons-radio id="border-symbols" value="{{type}}" mandatory>
+        <paper-button data-value="out"></paper-button>
+        <paper-button data-value="in"></paper-button>
+        <paper-button data-value="all"></paper-button>
+        <paper-button data-value="left"></paper-button>
+        <paper-button data-value="center"></paper-button>
+        <paper-button data-value="right"></paper-button>
+        <paper-button data-value="top"></paper-button>
+        <paper-button data-value="middle"></paper-button>
+        <paper-button data-value="bottom"></paper-button>
+      </things-editor-buttons-radio>
+    </div>
+
+    <div>
+      <div>
+        <div>
+        <input id="line-width" is="things-editor-number-input" number="{{lineWidth::change}}"/>
+
+        <label class="icon-only-label color"></label>
+        <things-editor-color id="stroke-style" value="{{strokeStyle}}">
+        </things-editor-color>
+      </div>
+
+      <paper-dropdown-menu no-label-float="true" class="line-type solid">
+      <!-- solid는 선택된 항목 보여주기위한 class로 하위 paper-item의 class와 동일하게 -->
+        <paper-menu id="line-dash" class="dropdown-content" selected="{{lineDash}}" attr-for-selected="name" >
+          <paper-item class="solid" name="solid"></paper-item>
+          <paper-item class="dotted" name="dotted"></paper-item>
+          <paper-item class="dashed" name="dashed"></paper-item>
+          <paper-item class="double" name="double"></paper-item>
+          <paper-item class="groove" name="groove"></paper-item>
+          <paper-item class="ridge" name="ridge"></paper-item>
+          <paper-item class="inset" name="inset"></paper-item>
+          <paper-item class="outset" name="outset"></paper-item>
+          <paper-item class="none" name="none"></paper-item>
+          <paper-item class="hidden" name="hidden"></paper-item>
+          <!-- <paper-item class="solid" name="solid"></paper-item>
+          <paper-item class="round-dot" name="round-dot"></paper-item>
+          <paper-item class="square-dot" name="square-dot"></paper-item>
+          <paper-item class="dash" name="dash"></paper-item>
+          <paper-item class="dash-dot" name="dash-dot"></paper-item>
+          <paper-item class="long-dash" name="long-dash"></paper-item>
+          <paper-item class="long-dash-dot" name="long-dash-dot"></paper-item>
+          <paper-item class="long-dash-dot-dot" name="long-dash-dot-dot"></paper-item> -->
+        </paper-menu>
+      </paper-dropdown-menu>
+    </div>
+
+  </template>
+
+  <script>
+
+    Polymer({
+      is: 'things-editor-border',
+
+      behaviors: [
+        Polymer.IronResizableBehavior
+      ],
+
+      properties: {
+        type: {
+          type: String,
+          notify: true,
+          value: 'out'
+        },
+        lineWidth: {
+          type: Number,
+          notify: true
+        },
+        strokeStyle: {
+          type: String,
+          notify: true
+        },
+        lineDash: {
+          type: String,
+          notify: true
+        }
+      },
+
+      listeners: {
+        change: '_onChange',
+        'line-dash.iron-select': '_onChange'
+      },
+
+      _onChange: function(e) {
+        var value = {};
+
+        switch(e.srcElement.id) {
+        case 'border-symbols':
+          value.type = this.type;
+          break;
+        case 'line-width':
+          value.lineWidth = this.lineWidth;
+          break;
+        case 'line-dash':
+          value.lineDash = this.lineDash;
+          break;
+        case 'stroke-style':
+          value.strokeStyle = this.strokeStyle;
+          break;
+        default:
+          e.stopPropagation();
+          return;
+        }
+        this.fire('border-change', value);
+        e.stopPropagation();
+      }
+
+    })
+
+  </script>
+</dom-module>

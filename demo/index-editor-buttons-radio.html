@@ -77,7 +77,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <p>An example of <code>&lt;things-editor-buttons-radio&gt;</code>:</p>
 
-      <things-editor-buttons-radio id="editor1" value="{{text}}">
+      <things-editor-buttons-radio id="editor1" value="{{text}}" mandatory>
         <paper-button data-value="bold"></paper-button>
         <paper-button data-value="italic"></paper-button>
         <paper-button data-value="underline"></paper-button>
@@ -101,11 +101,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-button data-value="bottom"></paper-button>
       </things-editor-buttons-radio>
 
+      <textarea value="[[value]]"></textarea>
+
     </template>
 
     <script>
       window.addEventListener('WebComponentsReady', function(e) {
         var app = document.querySelector('#app')
+
+        this.addEventListener('click', function(e) {
+          app.value = JSON.stringify({
+            text: app.text,
+            align: app.align,
+            baseline: app.baseline
+          }, null, "\t")
+        })
 
         app.text = "uppercase"
         app.align = "center"

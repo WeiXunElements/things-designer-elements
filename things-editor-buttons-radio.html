@@ -46,6 +46,10 @@ Example:
           type: Object,
           notify: true,
           observer: '_onValueChanged'
+        },
+
+        mandatory: {
+          type: Boolean
         }
       },
 
@@ -54,9 +58,11 @@ Example:
       },
 
       ready: function() {
-        Array.from(this.querySelectorAll('paper-button')).forEach(function(button) {
-          button.toggleAttribute('toggles', true)
-        })
+        if(!this.mandatory) {
+          Array.from(this.querySelectorAll('paper-button')).forEach(function(button) {
+            button.toggleAttribute('toggles', true)
+          })
+        }
       },
 
       _onValueChanged: function(value) {
@@ -75,13 +81,22 @@ Example:
         if(target.tagName !== 'PAPER-BUTTON')
           return
 
-        if(target.active)
+        var old = this.value
+
+        if(!this.mandatory) {
+          if(target.active)
+            this.value = target.getAttribute('data-value')
+          else
+            this.value = null
+        } else {
           this.value = target.getAttribute('data-value')
-        else
-          this.value = null
+          target.active = true
+        }
+
+        if(old !== this.value)
+          this.fire('change', this.value)
       }
     });
-    
+
   </script>
 </dom-module>
-
