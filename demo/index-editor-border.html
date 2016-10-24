@@ -40,9 +40,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <things-editor-border id="border"
                             type="{{border.type}}"
-                            line-width="{{border.lineWidth}}"
-                            stroke-style="{{border.strokeStyle}}"
-                            line-dash="{{border.lineDash}}"
+                            border-width="{{border.borderWidth}}"
+                            border-color="{{border.borderColor}}"
+                            border-style="{{border.borderStyle}}"
                             on-border-change="onChange">
       </things-editor-border>
 
@@ -72,7 +72,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <script>
       window.addEventListener('WebComponentsReady', function(e) {
-        var app = document.querySelector('#app')
+        var app = document.querySelector('#app');
 
         app.onChange = function(e) {
           var changes = e.detail;
@@ -91,9 +91,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           if(changes.type) {
             app.border = changes;
 
+            let borderWidth, borderStyle, borderColor;
+            let width;
+
             switch(changes.type) {
             case 'all':
               // 만일 모든 td의 스타일 값이 같으면 그 값으로 app.border를 설정한다.
+              borderWidth = all[0].style['border-width'];
+              borderStyle = all[0].style['border-style'];
+              borderColor = all[0].style['border-color'];
+
+              console.log(borderWidth, borderStyle, borderColor);
+
+              for(let i = 1;i < all.length;i++) {
+                if(borderWidth && all[i].style['border-width'] !== borderWidth)
+                  borderWidth = undefined;
+                if(borderStyle && all[i].style['border-style'] !== borderStyle)
+                  borderStyle = undefined;
+                if(borderColor && all[i].style['border-color'] !== borderColor)
+                  borderColor = undefined;
+              }
+
+              if(borderWidth)
+                width = borderWidth.split(' ')[0];
+
+              app.border = {
+                type: 'all',
+                borderWidth: (width || undefined) && Number(width.substr(0, width.length - 2)),
+                borderStyle: (borderStyle || undefined) && borderStyle.split(' ')[0],
+                borderColor: (borderColor || undefined) && borderColor.split(' ')[0]
+              }
+
               break;
             case 'in':
               // 만일 모든 ins의 td 스타일 값이 같으면 그 값으로 app.border를 설정한다.
@@ -103,6 +131,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               break;
             case 'left':
               // 만일 모든 left의 td 스타일 값이 같으면 그 값으로 app.border를 설정한다.
+              borderWidth = lefts[0].style['border-left-width'];
+              borderStyle = lefts[0].style['border-left-style'];
+              borderColor = lefts[0].style['border-left-color'];
+
+              console.log(borderWidth, borderStyle, borderColor);
+
+              for(let i = 1;i < lefts.length;i++) {
+                if(borderWidth && lefts[i].style['border-left-width'] !== borderWidth)
+                  borderWidth = undefined;
+                if(borderStyle && lefts[i].style['border-left-style'] !== borderStyle)
+                  borderStyle = undefined;
+                if(borderColor && lefts[i].style['border-left-color'] !== borderColor)
+                  borderColor = undefined;
+              }
+
+              if(borderWidth)
+                width = borderWidth.split(' ')[0];
+
+              app.border = {
+                type: 'left',
+                borderWidth: (width || undefined) && Number(width.substr(0, width.length - 2)),
+                borderStyle: (borderStyle || undefined) && borderStyle.split(' ')[0],
+                borderColor: (borderColor || undefined) && borderColor.split(' ')[0]
+              }
+
               break;
             case 'right':
               // 만일 모든 right의 td 스타일 값이 같으면 그 값으로 app.border를 설정한다.
@@ -123,10 +176,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
 
           var border = app.border;
-          if(border.lineWidth === undefined || border.lineDash === undefined || border.strokeStyle === undefined)
+          if(border.borderWidth === undefined || border.borderStyle === undefined || border.borderColor === undefined)
             return;
 
-          var border_style = [(border.lineWidth || 0) + 'px', border.lineDash || 'solid', border.strokeStyle].filter(function(val) {
+          var border_style = [(border.borderWidth || 0) + 'px', border.borderStyle || 'solid', border.borderColor].filter(function(val) {
             return !!val;
           }).join(' ');
 

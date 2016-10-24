@@ -33,7 +33,7 @@ Example:
     </style>
 
     <div>
-      <things-editor-buttons-radio id="border-symbols" value="{{type}}" mandatory>
+      <things-editor-buttons-radio id="border-set" value="{{type}}" mandatory>
         <paper-button data-value="out"></paper-button>
         <paper-button data-value="in"></paper-button>
         <paper-button data-value="all"></paper-button>
@@ -49,16 +49,16 @@ Example:
     <div>
       <div>
         <div>
-        <input id="line-width" is="things-editor-number-input" number="{{lineWidth::change}}"/>
+        <input id="border-width" is="things-editor-number-input" number="{{borderWidth::change}}"/>
 
         <label class="icon-only-label color"></label>
-        <things-editor-color id="stroke-style" value="{{strokeStyle}}">
+        <things-editor-color id="border-color" value="{{borderColor}}">
         </things-editor-color>
       </div>
 
-      <paper-dropdown-menu no-label-float="true" class="line-type solid">
+      <paper-dropdown-menu no-label-float="true" class="border-style solid">
       <!-- solid는 선택된 항목 보여주기위한 class로 하위 paper-item의 class와 동일하게 -->
-        <paper-menu id="line-dash" class="dropdown-content" selected="{{lineDash}}" attr-for-selected="name" >
+        <paper-menu id="border-style" class="dropdown-content" selected="{{borderStyle}}" attr-for-selected="name" >
           <paper-item class="solid" name="solid"></paper-item>
           <paper-item class="dotted" name="dotted"></paper-item>
           <paper-item class="dashed" name="dashed"></paper-item>
@@ -98,15 +98,15 @@ Example:
           notify: true,
           value: 'out'
         },
-        lineWidth: {
+        borderWidth: {
           type: Number,
           notify: true
         },
-        strokeStyle: {
+        borderColor: {
           type: String,
           notify: true
         },
-        lineDash: {
+        borderStyle: {
           type: String,
           notify: true
         }
@@ -114,24 +114,24 @@ Example:
 
       listeners: {
         change: '_onChange',
-        'line-dash.iron-select': '_onChange'
+        'border-style.iron-select': '_onChange'
       },
 
       _onChange: function(e) {
         var value = {};
 
         switch(e.srcElement.id) {
-        case 'border-symbols':
+        case 'border-set':
           value.type = this.type;
           break;
-        case 'line-width':
-          value.lineWidth = this.lineWidth;
+        case 'border-width':
+          value.borderWidth = this.borderWidth;
           break;
-        case 'line-dash':
-          value.lineDash = this.lineDash;
+        case 'border-style':
+          value.borderStyle = this.borderStyle;
           break;
-        case 'stroke-style':
-          value.strokeStyle = this.strokeStyle;
+        case 'border-color':
+          value.borderColor = this.borderColor;
           break;
         default:
           e.stopPropagation();
