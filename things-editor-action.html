@@ -1,0 +1,72 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+  <things-editor-action mapping="{{mapping}}"
+                       type="[[type]]">
+  </things-editor-action>
+
+@demo demo/index-editor-action.html
+@hero hero.svg
+-->
+
+<dom-module id="things-editor-action">
+  <template>
+    <style>
+      :host {
+        @apply(--things-properties-varialbe-panel);
+      }
+      label{
+        @apply(--things-label);
+        width:24%;
+      }
+      input{
+        @apply(--things-input);
+        width:66%;
+      }
+      select{
+        @apply(--things-select);
+        background:url(/images/bg-input-select.png) 100% 50% no-repeat #fff;
+      }
+      paper-radio-group{
+        position:relative;
+        top:-3px;
+      }
+      paper-radio-button{
+        padding:2px 1px 2px 4px !important;
+      }
+      paper-radio-button:first-child{padding-left:0 !important;}
+      things-editor-script{
+        width:94%;height:300px;
+        margin:-7px 0 7px 7px;
+        overflow:auto;
+      }
+    </style>
+
+    <paper-icon-button icon$="[[icon]]" on-click="_onClick"></paper-icon-button>
+  </template>
+
+  <script>
+
+    Polymer({
+      is: 'things-editor-action',
+
+      properties: {
+        icon: String,
+        onClickAction: {
+          type: Function
+        }
+      },
+
+      _onClick: function(e) {
+        this.fire('action-editor-clicked')
+      }
+    })
+
+  </script>
+</dom-module>

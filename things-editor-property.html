@@ -10,10 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../polymer/polymer.html">
 
-<link rel="import" href="./things-editor-color.html">
-<link rel="import" href="./things-editor-color-stops.html">
-<link rel="import" href="./things-editor-multiple-color.html">
-<link rel="import" href="./things-editor-number-input.html">
+<link rel="import" href="./elements.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -77,6 +74,10 @@ Example:
       <things-editor-chartjs-properties model="{{target}}" values="{{value}}" data="{{target.data}}"/>
     </template>
 
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'action')]]">
+      <things-editor-action icon="[[property.icon]]" on-action-editor-clicked="_onActionClick" />
+    </template>
+
   </template>
 
   <script>
@@ -106,6 +107,7 @@ Example:
       },
 
       _isTypeofEditor: function(editorType, type) {
+        console.log(this.property, this.property.action);
         return editorType == type
       },
 
@@ -130,6 +132,15 @@ Example:
 
         value = JSON.parse(JSON.stringify(value))
         this.set("value", value)
+      },
+
+      _onActionClick: function(e) {
+        if(!this.property)
+          return
+
+        var selected = this.parentElement.parentElement.parentElement.parentElement.parentElement.selected
+
+        this.property.action(selected[0])
       }
 
     })
