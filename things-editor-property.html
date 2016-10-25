@@ -33,7 +33,9 @@ Example:
       }
     </style>
 
-    <label>[[label]]</label>
+    <template is="dom-if" if="[[_isExist(label)]]">
+      <label>[[label]]</label>
+    </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'number')]]">
       <input is="things-editor-number-input" type="number" number="{{value::change}}">
@@ -45,6 +47,14 @@ Example:
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'checkbox')]]">
       <input type="checkbox" checked="{{value::change}}">
+    </template>
+
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'select')]]">
+      <select>
+        <template is="dom-repeat" items="[[property.options]]">
+          <option value$="[[item]]">[[item]]</option>
+        </template>
+      </select>
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'color')]]">
@@ -63,6 +73,10 @@ Example:
       <things-editor-multiple-color values="{{value}}"/>
     </template>
 
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'chartjs-properties')]]">
+      <things-editor-chartjs-properties model="{{target}}" values="{{value}}" data="{{target.data}}"/>
+    </template>
+
   </template>
 
   <script>
@@ -76,11 +90,46 @@ Example:
         },
         type: String,
         label: String,
-        property: Object
+        property: Object,
+        target: {
+          type: Object,
+          notify: true
+        },
+        data: {
+          type: Object,
+          notify: true
+        }
+      },
+
+      listeners: {
+        "change": "_onChange"
       },
 
       _isTypeofEditor: function(editorType, type) {
         return editorType == type
+      },
+
+      _isExist: function(label) {
+
+        var str = String(label || "")
+        return label != ""
+
+      },
+
+      _onChange: function(e) {
+
+        var value
+        switch (this.type) {
+          case "checkbox":
+            value = e.target.checked
+            break;
+          default:
+            value = this.get('value') || e.target.value
+            break;
+        }
+
+        value = JSON.parse(JSON.stringify(value))
+        this.set("value", value)
       }
 
     })

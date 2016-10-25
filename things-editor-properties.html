@@ -33,19 +33,41 @@ Example:
     <style>
       :host {
       }
+      label{
+        @apply(--things-label);
+      }
+      input{
+        @apply(--things-input);
+      }
+      .unit input{
+        @apply(--things-input);
+        width:55%;
+      }
+      fieldset{
+        @apply(--things-fieldset);
+      }
+      legend{
+        @apply(--things-fieldset-legend);
+      }
+      input[type="checkbox"]{width:15px;}
     </style>
 
     <content></content>
 
-    <template is="dom-repeat" items="[[props]]">
-      <div>
+    <fieldset>
+      <template is="dom-repeat" items="[[props]]">
+        <!-- <label>
+          <things-i18n-msg msgid="label.[[item.label]]" msg="{{item.label}}" auto hidden>[[item.label]]</things-i18n-msg>
+        </label> -->
         <things-editor-property label="[[item.label]]"
                                 type="[[item.type]]"
                                 name$="[[item.name]]"
-                                property="[[item.property]]">
+                                property="[[item.property]]"
+                                target="{{target}}"
+                                >
         </things-editor-property>
-      </div>
-    </template>
+      </template>
+    </fieldset>
 
   </template>
 
@@ -85,6 +107,7 @@ Example:
           var name = prop.getAttribute('name')
           prop.value = self.target[name]
         })
+        this.notifyPath('target')
       },
 
       _onTargetChanged: function(change) {
@@ -125,9 +148,7 @@ Example:
 
         var name = prop.getAttribute('name')
 
-        this._changedOnThis = true
         this.set('target.' + name, prop.value)
-        this._changedOnThis = false
       }
 
     })
