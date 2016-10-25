@@ -70,8 +70,8 @@ Example:
           this.value = undefined;
           this.degree = undefined;
         } else {
-          this.value = radian * 180 / Math.PI;
-          this.set('degree', Number(this.value));
+          this.value = Math.round(radian * 180 / Math.PI);
+          this.set('degree', this.value);
         }
       },
 
