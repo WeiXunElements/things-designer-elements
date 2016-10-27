@@ -5,6 +5,8 @@
 <link rel="import" href="../paper-menu/paper-menu.html">
 <link rel="import" href="../paper-item/paper-item.html">
 
+<link rel="import" href="../iron-icons/editor-icons.html">
+
 <link rel="import" href="../things-i18n-msg/things-i18n-msg.html">
 
 <link rel="import" href="./things-editor-buttons-radio.html">
@@ -32,17 +34,18 @@ Example:
       }
     </style>
 
-    <div>
+    <div class="border-style-btn">
       <things-editor-buttons-radio id="border-set" value="{{type}}" mandatory>
-        <paper-button data-value="out"></paper-button>
-        <paper-button data-value="in"></paper-button>
-        <paper-button data-value="all"></paper-button>
-        <paper-button data-value="left"></paper-button>
-        <paper-button data-value="center"></paper-button>
-        <paper-button data-value="right"></paper-button>
-        <paper-button data-value="top"></paper-button>
-        <paper-button data-value="middle"></paper-button>
-        <paper-button data-value="bottom"></paper-button>
+        <paper-button data-value="out"><iron-icon icon="editor:border-outer"></iron-icon></paper-button>
+        <paper-button data-value="in"><iron-icon icon="editor:border-inner"></iron-icon></paper-button>
+        <paper-button data-value="all"><iron-icon icon="editor:border-all"></iron-icon></paper-button>
+        <paper-button data-value="left"><iron-icon icon="editor:border-left"></iron-icon></paper-button>
+        <paper-button data-value="center"><iron-icon icon="editor:border-vertical"></iron-icon></paper-button>
+        <paper-button data-value="right"><iron-icon icon="editor:border-right"></iron-icon></paper-button>
+        <paper-button data-value="top"><iron-icon icon="editor:border-top"></iron-icon></paper-button>
+        <paper-button data-value="middle"><iron-icon icon="editor:border-horizontal"></iron-icon></paper-button>
+        <paper-button data-value="bottom"><iron-icon icon="editor:border-bottom"></iron-icon></paper-button>
+        <paper-button data-value="clear"><iron-icon icon="editor:border-clear"></iron-icon></paper-button>
       </things-editor-buttons-radio>
     </div>
 
