@@ -102,11 +102,16 @@ Example:
 
       properties: {
         value: {
-          notify: true
+          notify: true,
+          observer: '_valueChanged'
         },
         type: String,
         label: String,
-        property: Object,
+        property: {
+          type: Object,
+          notify: true,
+          value: {}
+        },
         target: {
           type: Object,
           notify: true
@@ -120,6 +125,10 @@ Example:
       listeners: {
         "change": "_onChange"
       },
+
+      observers: [
+        // "_onPropertyChanged(property.*)"
+      ],
 
       _isTypeofEditor: function(editorType, type) {
         return editorType == type
@@ -146,6 +155,26 @@ Example:
 
         value = JSON.parse(JSON.stringify(value))
         this.set("value", value)
+      },
+
+      _onPropertyChanged: function(property) {
+        if(!property.value)
+          return
+
+        for (var key in property.value) {
+          if (property.value.hasOwnProperty(key)) {
+            if(typeof property.value[key] == 'function') {
+              this.set(`property.${key}`,property.value[key].call(this))
+            }
+          }
+        }
+      },
+
+      _valueChanged: function(value) {
+        if(!this.get('observe'))
+          return
+
+        this.get('observe').call(this, value)
       },
 
       _onActionClick: function(e) {

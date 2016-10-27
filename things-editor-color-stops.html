@@ -176,6 +176,7 @@ Example:
       },
 
       listeners: {
+        'change' : '_onChange',
         'colorbar.dblclick': '_onDblClickColorbar',
         'markers.down': '_onDownMarkers',
         'markers.dblclick': '_onDblClickMarkers',
@@ -306,6 +307,11 @@ Example:
 
         // `background: -webkit-linear-gradient(left, ${gradient});` /* Chrome10-25,Safari5.1-6 */
         // `background: -moz-linear-gradient(left, ${gradient});` /* FF3.6-15 */
+      },
+
+      _onChange: function(e) {
+        // things-editor-property의 _onChange에서 value를 수정하는 것 방지.
+        e.stopPropagation()
       },
 
       _onChangeProps: function(min, max, type) {
