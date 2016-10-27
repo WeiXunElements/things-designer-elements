@@ -34,19 +34,17 @@ Example:
       }
     </style>
 
-    <div class="border-style-btn">
-      <things-editor-buttons-radio id="border-set" value="{{type}}" mandatory>
-        <paper-button data-value="out"><iron-icon icon="editor:border-outer"></iron-icon></paper-button>
-        <paper-button data-value="in"><iron-icon icon="editor:border-inner"></iron-icon></paper-button>
-        <paper-button data-value="all"><iron-icon icon="editor:border-all"></iron-icon></paper-button>
-        <paper-button data-value="left"><iron-icon icon="editor:border-left"></iron-icon></paper-button>
-        <paper-button data-value="center"><iron-icon icon="editor:border-vertical"></iron-icon></paper-button>
-        <paper-button data-value="right"><iron-icon icon="editor:border-right"></iron-icon></paper-button>
-        <paper-button data-value="top"><iron-icon icon="editor:border-top"></iron-icon></paper-button>
-        <paper-button data-value="middle"><iron-icon icon="editor:border-horizontal"></iron-icon></paper-button>
-        <paper-button data-value="bottom"><iron-icon icon="editor:border-bottom"></iron-icon></paper-button>
-        <paper-button data-value="clear"><iron-icon icon="editor:border-clear"></iron-icon></paper-button>
-      </things-editor-buttons-radio>
+    <div id="border-set" class="border-style-btn">
+      <paper-button data-value="out"><iron-icon icon="editor:border-outer"></iron-icon></paper-button>
+      <paper-button data-value="in"><iron-icon icon="editor:border-inner"></iron-icon></paper-button>
+      <paper-button data-value="all"><iron-icon icon="editor:border-all"></iron-icon></paper-button>
+      <paper-button data-value="left"><iron-icon icon="editor:border-left"></iron-icon></paper-button>
+      <paper-button data-value="center"><iron-icon icon="editor:border-vertical"></iron-icon></paper-button>
+      <paper-button data-value="right"><iron-icon icon="editor:border-right"></iron-icon></paper-button>
+      <paper-button data-value="top"><iron-icon icon="editor:border-top"></iron-icon></paper-button>
+      <paper-button data-value="middle"><iron-icon icon="editor:border-horizontal"></iron-icon></paper-button>
+      <paper-button data-value="bottom"><iron-icon icon="editor:border-bottom"></iron-icon></paper-button>
+      <paper-button data-value="clear"><iron-icon icon="editor:border-clear"></iron-icon></paper-button>
     </div>
 
     <div>
@@ -62,7 +60,7 @@ Example:
       <paper-dropdown-menu no-label-float="true" class="border-style solid">
       <!-- solid는 선택된 항목 보여주기위한 class로 하위 paper-item의 class와 동일하게 -->
         <paper-menu id="border-style" class="dropdown-content" selected="{{borderStyle}}" attr-for-selected="name" >
-          <paper-item class="solid" name="solid"></paper-item>
+          <!-- <paper-item class="solid" name="solid"></paper-item>
           <paper-item class="dotted" name="dotted"></paper-item>
           <paper-item class="dashed" name="dashed"></paper-item>
           <paper-item class="double" name="double"></paper-item>
@@ -71,15 +69,15 @@ Example:
           <paper-item class="inset" name="inset"></paper-item>
           <paper-item class="outset" name="outset"></paper-item>
           <paper-item class="none" name="none"></paper-item>
-          <paper-item class="hidden" name="hidden"></paper-item>
-          <!-- <paper-item class="solid" name="solid"></paper-item>
+          <paper-item class="hidden" name="hidden"></paper-item> -->
+          <paper-item class="solid" name="solid"></paper-item>
           <paper-item class="round-dot" name="round-dot"></paper-item>
           <paper-item class="square-dot" name="square-dot"></paper-item>
           <paper-item class="dash" name="dash"></paper-item>
           <paper-item class="dash-dot" name="dash-dot"></paper-item>
           <paper-item class="long-dash" name="long-dash"></paper-item>
           <paper-item class="long-dash-dot" name="long-dash-dot"></paper-item>
-          <paper-item class="long-dash-dot-dot" name="long-dash-dot-dot"></paper-item> -->
+          <paper-item class="long-dash-dot-dot" name="long-dash-dot-dot"></paper-item>
         </paper-menu>
       </paper-dropdown-menu>
     </div>
@@ -96,11 +94,6 @@ Example:
       ],
 
       properties: {
-        type: {
-          type: String,
-          notify: true,
-          value: 'out'
-        },
         borderWidth: {
           type: Number,
           notify: true
@@ -117,16 +110,26 @@ Example:
 
       listeners: {
         change: '_onChange',
+        'border-set.tap': '_onTapType',
         'border-style.iron-select': '_onChange'
+      },
+
+      _onTapType: function(e) {
+        var target = e.target;
+
+        while (!target.hasAttribute('data-value') && target !== this)
+          target = target.parentElement;
+
+        if(target === this)
+          return;
+
+        this.fire('border-type-click', target.getAttribute('data-value'));
       },
 
       _onChange: function(e) {
         var value = {};
 
         switch(e.srcElement.id) {
-        case 'border-set':
-          value.type = this.type;
-          break;
         case 'border-width':
           value.borderWidth = this.borderWidth;
           break;
