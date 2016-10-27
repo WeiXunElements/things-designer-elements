@@ -311,7 +311,8 @@ Example:
 
       _onChange: function(e) {
         // things-editor-property의 _onChange에서 value를 수정하는 것 방지.
-        e.stopPropagation()
+        if(e.target.tagName != 'THINGS-EDITOR-COLOR-STOPS')
+          e.stopPropagation()
       },
 
       _onChangeProps: function(min, max, type) {
