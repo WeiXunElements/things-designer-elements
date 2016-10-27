@@ -47,7 +47,7 @@ Example:
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'select')]]">
-      <select>
+      <select value="{{value::change}}">
         <template is="dom-repeat" items="[[property.options]]">
           <option value$="[[item]]">[[item]]</option>
         </template>
