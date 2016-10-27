@@ -78,8 +78,11 @@ Example:
       _onTapButton: function(e) {
         var target = e.target;
 
-        if(target.tagName !== 'PAPER-BUTTON')
-          return
+        while (!target.hasAttribute('data-value') && target !== this)
+          target = target.parentElement;
+
+        if(target === this)
+          return;
 
         var old = this.value
 
