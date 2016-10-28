@@ -143,14 +143,10 @@ Example:
 
       _onChange: function(e) {
 
-        var value
-        switch (this.type) {
-          case "checkbox":
-            value = e.target.checked
-            break;
-          default:
-            value = this.get('value') || e.target.value
-            break;
+        var value = this.get('value')
+
+        if(value == undefined) {
+           value = e.target.value
         }
 
         value = JSON.parse(JSON.stringify(value))
