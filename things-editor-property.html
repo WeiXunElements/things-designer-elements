@@ -93,6 +93,15 @@ Example:
       </things-image-selector>
     </template>
 
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'editor-border')]]">
+      <things-editor-border type="{{border.type}}"
+                            border-width="{{border.borderWidth}}"
+                            border-color="{{border.borderColor}}"
+                            border-style="{{border.borderStyle}}"
+                            on-border-type-click="_onBorderTypeClick">
+      </things-editor-border>
+    </template>
+
   </template>
 
   <script>
@@ -188,6 +197,25 @@ Example:
 
         this.set("value", e.detail)
         this.fire("change")
+      },
+
+      _onBorderTypeClick: function(e) {
+        if(!this.target)
+          return;
+
+        let {
+          borderWidth, borderStyle, borderColor
+        } = this.border;
+
+        let table = this.selected[0].parent;
+        if(table.get('type') !== 'table')
+          return;
+
+        table.setCellsStyle(this.selected, {
+          strokeStyle: borderColor,
+          lineDash: borderStyle,
+          lineWidth: borderWidth
+        }, e.detail);
       }
 
     })
