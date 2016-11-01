@@ -170,8 +170,12 @@ Example:
            value = e.target.value
         }
 
-        value = JSON.parse(JSON.stringify(value))
-        this.set("value", value)
+        if(value === undefined) {
+          this.set("value", value)
+        } else {
+          value = JSON.parse(JSON.stringify(value))
+          this.set("value", value)
+        }
       },
 
       _onPropertyChanged: function(property) {
