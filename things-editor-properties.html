@@ -33,23 +33,34 @@ Example:
     <style>
       :host {
       }
-      label{
-        @apply(--things-label);
-      }
-      input{
-        @apply(--things-input);
-      }
-      .unit input{
-        @apply(--things-input);
-        width:55%;
-      }
       fieldset{
         @apply(--things-fieldset);
       }
-      legend{
-        @apply(--things-fieldset-legend);
+      ::shadow label{
+        @apply(--things-label);
+        width:35%
       }
-      input[type="checkbox"]{width:15px;}
+      ::shadow input{
+        @apply(--things-input);
+        width:55%
+      }
+      ::shadow .unit input{
+        @apply(--things-input);
+        width:55%;
+      }
+      ::shadow legend{
+        @apply(--things-fieldset-legend);
+        padding-bottom:7px
+      }
+      ::shadow input[type="checkbox"]{
+        width:15px;
+      }
+      ::shadow things-editor-color{
+        width:170px
+      }
+      ::shadow things-editor-color input.things-editor-color{
+        width:75% !important
+      }
     </style>
 
     <content></content>
