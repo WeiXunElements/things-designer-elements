@@ -34,6 +34,10 @@ Example:
       <label>[[label]]</label>
     </template>
 
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'legend')]]">
+      <legend>[[property.label]]</legend>
+    </template>
+
     <template is="dom-if" if="[[_isTypeofEditor(type, 'number')]]">
       <input is="things-editor-number-input" type="number" number="{{value::change}}">
     </template>
