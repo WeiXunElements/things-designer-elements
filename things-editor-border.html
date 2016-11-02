@@ -34,6 +34,9 @@ Example:
       }
     </style>
 
+<fieldset>
+  <legend>border style</legend>
+    <label>borders</label>
     <div id="border-set" class="border-style-btn">
       <paper-button data-value="out"><iron-icon icon="editor:border-outer"></iron-icon></paper-button>
       <paper-button data-value="in"><iron-icon icon="editor:border-inner"></iron-icon></paper-button>
@@ -47,40 +50,42 @@ Example:
       <paper-button data-value="clear"><iron-icon icon="editor:border-clear"></iron-icon></paper-button>
     </div>
 
-    <div>
-      <div>
-        <div>
+
+    <div class="full-width">
+        <label class="iicon-only-label linewidth"></label>
         <input id="border-width" is="things-editor-number-input" number="{{borderWidth::change}}"/>
 
         <label class="icon-only-label color"></label>
         <things-editor-color id="border-color" value="{{borderColor}}">
         </things-editor-color>
-      </div>
-
-      <paper-dropdown-menu no-label-float="true" class="border-style solid">
-      <!-- solid는 선택된 항목 보여주기위한 class로 하위 paper-item의 class와 동일하게 -->
-        <paper-menu id="border-style" class="dropdown-content" selected="{{borderStyle}}" attr-for-selected="name" >
-          <!-- <paper-item class="solid" name="solid"></paper-item>
-          <paper-item class="dotted" name="dotted"></paper-item>
-          <paper-item class="dashed" name="dashed"></paper-item>
-          <paper-item class="double" name="double"></paper-item>
-          <paper-item class="groove" name="groove"></paper-item>
-          <paper-item class="ridge" name="ridge"></paper-item>
-          <paper-item class="inset" name="inset"></paper-item>
-          <paper-item class="outset" name="outset"></paper-item>
-          <paper-item class="none" name="none"></paper-item>
-          <paper-item class="hidden" name="hidden"></paper-item> -->
-          <paper-item class="solid" name="solid"></paper-item>
-          <paper-item class="round-dot" name="round-dot"></paper-item>
-          <paper-item class="square-dot" name="square-dot"></paper-item>
-          <paper-item class="dash" name="dash"></paper-item>
-          <paper-item class="dash-dot" name="dash-dot"></paper-item>
-          <paper-item class="long-dash" name="long-dash"></paper-item>
-          <paper-item class="long-dash-dot" name="long-dash-dot"></paper-item>
-          <paper-item class="long-dash-dot-dot" name="long-dash-dot-dot"></paper-item>
-        </paper-menu>
-      </paper-dropdown-menu>
     </div>
+
+    <label>border type</label>
+    <paper-dropdown-menu no-label-float="true" class="border-style solid">
+    <!-- solid는 선택된 항목 보여주기위한 class로 하위 paper-item의 class와 동일하게 -->
+      <paper-menu id="border-style" class="dropdown-content" selected="{{borderStyle}}" attr-for-selected="name" >
+        <!-- <paper-item class="solid" name="solid"></paper-item>
+        <paper-item class="dotted" name="dotted"></paper-item>
+        <paper-item class="dashed" name="dashed"></paper-item>
+        <paper-item class="double" name="double"></paper-item>
+        <paper-item class="groove" name="groove"></paper-item>
+        <paper-item class="ridge" name="ridge"></paper-item>
+        <paper-item class="inset" name="inset"></paper-item>
+        <paper-item class="outset" name="outset"></paper-item>
+        <paper-item class="none" name="none"></paper-item>
+        <paper-item class="hidden" name="hidden"></paper-item> -->
+        <paper-item class="solid" name="solid"></paper-item>
+        <paper-item class="round-dot" name="round-dot"></paper-item>
+        <paper-item class="square-dot" name="square-dot"></paper-item>
+        <paper-item class="dash" name="dash"></paper-item>
+        <paper-item class="dash-dot" name="dash-dot"></paper-item>
+        <paper-item class="long-dash" name="long-dash"></paper-item>
+        <paper-item class="long-dash-dot" name="long-dash-dot"></paper-item>
+        <paper-item class="long-dash-dot-dot" name="long-dash-dot-dot"></paper-item>
+      </paper-menu>
+    </paper-dropdown-menu>
+
+  </fieldset>
 
   </template>
 
