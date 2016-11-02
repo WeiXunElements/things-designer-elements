@@ -32,11 +32,33 @@ Example:
         display: block;
         @apply(--things-editor-border)
       }
+      fieldset{
+        padding:0
+      }
+      label{
+        @apply(--things-label);
+      }
+      .icon-only-label{
+        @apply(--things-properties-icon-only-label);
+      }
+      things-editor-color{
+        width:95px;
+      }
+      things-editor-color::shadow input{
+        width:83% !important;
+      }
+      paper-dropdown-menu::shadow .underline .unfocused-line{background-color:#ccc}
+      paper-dropdown-menu::shadow .underline .focused-line{background-color:var(--things-secondary-color)}
+      paper-dropdown-menu::shadow input{margin-bottom:0px}
+      #border-set paper-button{
+        margin:0 0 3px 0;
+        padding:5px 2px;
+        min-width:35px;
+      }
     </style>
 
 <fieldset>
   <legend>border style</legend>
-    <label>borders</label>
     <div id="border-set" class="border-style-btn">
       <paper-button data-value="out"><iron-icon icon="editor:border-outer"></iron-icon></paper-button>
       <paper-button data-value="in"><iron-icon icon="editor:border-inner"></iron-icon></paper-button>
@@ -52,16 +74,16 @@ Example:
 
 
     <div class="full-width">
-        <label class="icon-only-label linewidth"></label>
+        <label class="icon-only-label linewidth">size</label>
         <input id="border-width" is="things-editor-number-input" number="{{borderWidth::change}}"/>
 
-        <label class="icon-only-label color"></label>
+        <label class="icon-only-label color">color</label>
         <things-editor-color id="border-color" value="{{borderColor}}">
         </things-editor-color>
     </div>
 
     <label>border type</label>
-    <paper-dropdown-menu no-label-float="true" class="border-style solid">
+    <paper-dropdown-menu no-label-float="true" class="line-type solid">
     <!-- solid는 선택된 항목 보여주기위한 class로 하위 paper-item의 class와 동일하게 -->
       <paper-menu id="border-style" class="dropdown-content" selected="{{borderStyle}}" attr-for-selected="name" >
         <!-- <paper-item class="solid" name="solid"></paper-item>

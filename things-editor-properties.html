@@ -32,8 +32,9 @@ Example:
   <template>
     <style>
       :host {
+        display: block;
       }
-      fieldset{
+      fieldset,::shadow fieldset{
         @apply(--things-fieldset);
       }
       ::shadow label{
@@ -55,12 +56,8 @@ Example:
       ::shadow input[type="checkbox"]{
         width:15px;
       }
-      ::shadow things-editor-color{
-        width:170px
-      }
-      ::shadow things-editor-color input.things-editor-color{
-        width:75% !important
-      }
+      ::shadow .full-width *{float:left;}
+      ::shadow .full-width input{width:32.4%;}
     </style>
 
     <content></content>
