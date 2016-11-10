@@ -23,16 +23,29 @@ Example:
   <template>
     <style>
       :host {
-        display: block;
+        display: inline-block;
         @apply(--things-editor-multiple-color)
       }
-
-      #multiple-color {
-        clear:both;
-        margin-bottom:-3px;
-        @apply(--things-editor-colorbar-container)
+      things-editor-color{
+        width:90px
       }
-
+      things-editor-color::shadow input[type="text"]{
+        width:87%
+      }
+      things-editor-color::shadow a#color{
+        float:right;
+        margin:-31px 4px 0 0;
+      }
+      input[type="button"]{
+        width:22px;height:25px;
+        border:1px solid rgba(0,0,0,.15);
+        position:relative;
+        top:-2px;
+        padding-top:0px;padding-bottom:2px;
+        background-color:#f1f2f4;
+        color:#8f9192;
+        font-size:16px;
+      }
     </style>
 
     <template is="dom-repeat" items="[[values]]">
