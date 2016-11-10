@@ -63,7 +63,7 @@ Example:
     <content></content>
 
     <fieldset>
-      <template is="dom-repeat" items="[[props]]">
+      <template id="dom-repeater" is="dom-repeat" items="[[_props]]">
         <!-- <label>
           <things-i18n-msg msgid="label.[[item.label]]" msg="{{item.label}}" auto hidden>[[item.label]]</things-i18n-msg>
         </label> -->
@@ -90,7 +90,14 @@ Example:
           type: Object,
           notify: true
         },
-        props: Array
+        props: {
+          type: Array,
+          value: []
+        },
+        _props: {
+          type: Array,
+          value: []
+        }
       },
 
       observers: [
@@ -99,54 +106,68 @@ Example:
       ],
 
       listeners: {
-        'change': '_onValueChanged'
+        'change': '_onValueChanged',
+        'dom-repeater.dom-change': '_onDomBuilt'
       },
 
-      _setValue: function(name) {
-        var prop = this.querySelector('things-editor-property[name=' + name + ']')
-        if(!prop)
-          return
+      _onPropsChanged: function() {
+        if(this._asyncher) {
+          this.cancelAsync(this._asyncher)
+          delete this._asyncher
+        }
 
-        prop.value = this.target[name]
+        this._asyncher = this.async(function() {
+          this._props = this.props
+        }, 100)
+      },
+
+      _onDomBuilt: function() {
+        // DOM이 build 되었으니, 모델을 적용한다.
+        this.async(function() {
+          this._setValues()
+          delete this._asyncher
+        })
       },
 
       _setValues: function() {
-        var self = this
-        Array.from(this.querySelectorAll('things-editor-property')).forEach(function(prop) {
-          var name = prop.getAttribute('name')
-          prop.value = self.target[name]
-        })
-        this.notifyPath('target')
+          this._changedOnThis = true
+          let self = this
+          Array.from(this.querySelectorAll('things-editor-property')).forEach(function(prop) {
+            let name = prop.getAttribute('name')
+            prop.value = self.target[name]
+          })
+          this._changedOnThis = false
       },
 
       _onTargetChanged: function(change) {
         if(change.path == 'target') {
-          this._setValues()
+          // props의 변화에 의한 dom-repeat 작업이 완료된 후에, 값을 변경하여야 하므로, async로 한 사이클이 지난 후에 처리한다.
+          // 반응 속도에 대한 문제가 있으므로, properties DOM 빌드 성능을 개선하는 방향으로 개선하여여 한다.
+
+          if(!this._asyncher)
+            this._setValues()
+
           return
         }
-
-        if(this._changedOnThis)
-          return
 
         var name = change.path.substr(7)
         var dotIndex = name.indexOf('.')
         if(dotIndex >= 0)
           name = name.substr(0, name.indexOf('.'))
 
-        this._setValue(name)
+        var prop = this.querySelector('things-editor-property[name=' + name + ']')
+        if(!prop)
+          return
 
-        // Sub Property가 변경되었을 때만, 이벤트를 발생시킨다.
-        this.fire('target-changed', change)
-      },
-
-      _onPropsChanged: function(change) {
-
-        this.async(function() {
-          this._setValues()
-        }, 1)
+        this._changedOnThis = true
+        prop.value = this.target[name]
+        this._changedOnThis = false
       },
 
       _onValueChanged: function(e) {
+
+        if(this._changedOnThis)
+          return
 
         var prop = e.target
         while(prop && prop.tagName != 'THINGS-EDITOR-PROPERTY')
