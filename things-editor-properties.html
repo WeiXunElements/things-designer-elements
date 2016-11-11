@@ -140,13 +140,14 @@ Example:
       },
 
       _onTargetChanged: function(change) {
+        if(this._asyncher)
+          return
+
         if(change.path == 'target') {
           // props의 변화에 의한 dom-repeat 작업이 완료된 후에, 값을 변경하여야 하므로, async로 한 사이클이 지난 후에 처리한다.
           // 반응 속도에 대한 문제가 있으므로, properties DOM 빌드 성능을 개선하는 방향으로 개선하여여 한다.
 
-          if(!this._asyncher)
-            this._setValues()
-
+          this._setValues()
           return
         }
 

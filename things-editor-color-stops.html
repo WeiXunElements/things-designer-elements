@@ -110,7 +110,7 @@ Example:
     <div id="color-stops">
       <div id="colorbar">
         <div id="markers">
-          <template id="markers-template" is="dom-repeat" items="[[value]]">
+          <template id="markers-template" is="dom-repeat" items="[[_refinedValue(value)]]">
             <div style$="background-color:[[item.color]];margin-left:[[_calculatePosition(item.position, min, max)]]px;" marker-index$="[[index]]" draggable=false>
             </div>
           </template>
@@ -190,6 +190,10 @@ Example:
         '_onChangeValue(value.*)',
         '_onChangeProps(min, max, type)'
       ],
+
+      _refinedValue: function(value) {
+        return value instanceof Array ? value : []
+      },
 
       _setFocused: function(index) {
 
@@ -271,16 +275,16 @@ Example:
 
       _renderColorBar: function(min, max, type) {
 
-        var self = this
+        var value = this._refinedValue(this.value)
 
-        if(this.value && this.value.length > 0) {
+        if(value instanceof Array && value.length > 0) {
           if(this.type == 'gradient') {
-            var stopsStrings = (this.value || []).map(function(stop) {
+            var stopsStrings = (value || []).map(function(stop) {
               var position = (stop.position - min) / (max - min)
               return `${stop.color} ${position * 100}%`
             })
           } else {
-            var stops = this.value || []
+            var stops = value || []
             var last = null
             var stopsStrings = stops.map(function(stop) {
               var stop_position = (stop.position - min) / (max - min)
