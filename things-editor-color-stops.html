@@ -436,7 +436,7 @@ Example:
           var template = this.$['markers-template']
           template.items = []
           template.render()
-          template.items = this.value
+          template.items = this._refinedValue(this.value)
 
           /* hide => show 시에 resize 이벤트를 발생시키지 못한다.
             그래서, 사이즈가 0 이상일 때(즉 show상태일 때) 값을 가지고 있다가,
