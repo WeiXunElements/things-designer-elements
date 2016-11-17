@@ -57,7 +57,7 @@ Example:
     <label>
       <things-i18n-msg msgid="label.target" auto>target</things-i18n-msg>
     </label>
-    <input data-mapping-target type="text" value="{{mapping.target::change}}"/>
+    <input id="target-input" data-mapping-target type="text" value="{{mapping.target::change}}"/>
 
     <label>
       <things-i18n-msg msgid="label.property" auto>property</things-i18n-msg>
@@ -228,6 +228,12 @@ Example:
           }
 
           this.set('mapping.param', param)
+        } else if(change.path == 'mapping.target') {
+          let target = this.mapping.target
+          if(target.length > 1 && !target.startsWith('.') && !target.startsWith('#')) {
+            this.mapping.target = '#' + target
+            this.$['target-input'].value = this.mapping.target
+          }
         }
 
         this.fire('value-change', this.mapping)
