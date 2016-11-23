@@ -1,0 +1,292 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>things-editor-table Demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+
+    <link rel="import" href="../things-editor-table.html">
+
+  </head>
+  <body unresolved>
+
+    <template is="dom-bind" id="app">
+      <style is="custom-style">
+      :root {
+        --things-editor-table: {
+          background: lightgray;
+        }
+      };
+
+      textarea {
+        width: 600px;
+        height: 300px;
+      }
+      </style>
+
+      <p>An example of <code>&lt;things-editor-table&gt;</code>:</p>
+
+      <p>Border Style</p>
+
+      <things-editor-table id="border"
+                            type="{{border.type}}"
+                            border-width="{{border.borderWidth}}"
+                            border-color="{{border.borderColor}}"
+                            border-style="{{border.borderStyle}}"
+                            on-border-type-click="onChange"
+                            on-table-delete="onDelete"
+                            on-table-insert-above="onInsertAbove">
+      </things-editor-table>
+
+      <p></p>
+
+      <textarea class="xx" value="[[text]]"></textarea>
+
+      <table>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>5</td>
+          <td>6</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>8</td>
+          <td>9</td>
+        </tr>
+      </table>
+
+    </template>
+
+    <script>
+      window.addEventListener('WebComponentsReady', function(e) {
+        var app = document.querySelector('#app');
+
+        app.onDelete = function(e) {
+          console.log("onDelete")
+        }
+
+        app.onInsertAbove = function(e) {
+          console.log("onInsertAbove")
+        }
+
+        app.onChange = function(e) {
+          var changes = e.detail;
+          console.log(changes)
+
+          app.text = JSON.stringify(app.border, null, "\t");
+
+          var lefts = document.querySelectorAll('td:nth-child(1)');
+          var centers = document.querySelectorAll('td:nth-child(2)');
+          var rights = document.querySelectorAll('td:nth-child(3)');
+          var tops = document.querySelectorAll('tr:nth-child(1) td');
+          var middles = document.querySelectorAll('tr:nth-child(2) td');
+          var bottoms = document.querySelectorAll('tr:nth-child(3) td');
+          var all = document.querySelectorAll('td');
+
+          // app.border 값을 클리어시킴.
+          changes.type = 'all';
+          if(changes.type) {
+            app.border = changes;
+
+            let borderWidth, borderStyle, borderColor;
+            let width;
+
+            switch(changes.type) {
+            case 'all':
+              // 만일 모든 td의 스타일 값이 같으면 그 값으로 app.border를 설정한다.
+              borderWidth = all[0].style['border-width'];
+              borderStyle = all[0].style['border-style'];
+              borderColor = all[0].style['border-color'];
+
+              console.log(borderWidth, borderStyle, borderColor);
+
+              for(let i = 1;i < all.length;i++) {
+                if(borderWidth && all[i].style['border-width'] !== borderWidth)
+                  borderWidth = undefined;
+                if(borderStyle && all[i].style['border-style'] !== borderStyle)
+                  borderStyle = undefined;
+                if(borderColor && all[i].style['border-color'] !== borderColor)
+                  borderColor = undefined;
+              }
+
+              if(borderWidth)
+                width = borderWidth.split(' ')[0];
+
+              app.border = {
+                type: 'all',
+                borderWidth: (width || undefined) && Number(width.substr(0, width.length - 2)),
+                borderStyle: (borderStyle || undefined) && borderStyle.split(' ')[0],
+                borderColor: (borderColor || undefined) && borderColor.split(' ')[0]
+              }
+
+              break;
+            case 'in':
+              // 만일 모든 ins의 td 스타일 값이 같으면 그 값으로 app.border를 설정한다.
+              break;
+            case 'out':
+              // 만일 모든 out의 td 스타일 값이 같으면 그 값으로 app.border를 설정한다.
+              break;
+            case 'left':
+              // 만일 모든 left의 td 스타일 값이 같으면 그 값으로 app.border를 설정한다.
+              borderWidth = lefts[0].style['border-left-width'];
+              borderStyle = lefts[0].style['border-left-style'];
+              borderColor = lefts[0].style['border-left-color'];
+
+              console.log(borderWidth, borderStyle, borderColor);
+
+              for(let i = 1;i < lefts.length;i++) {
+                if(borderWidth && lefts[i].style['border-left-width'] !== borderWidth)
+                  borderWidth = undefined;
+                if(borderStyle && lefts[i].style['border-left-style'] !== borderStyle)
+                  borderStyle = undefined;
+                if(borderColor && lefts[i].style['border-left-color'] !== borderColor)
+                  borderColor = undefined;
+              }
+
+              if(borderWidth)
+                width = borderWidth.split(' ')[0];
+
+              app.border = {
+                type: 'left',
+                borderWidth: (width || undefined) && Number(width.substr(0, width.length - 2)),
+                borderStyle: (borderStyle || undefined) && borderStyle.split(' ')[0],
+                borderColor: (borderColor || undefined) && borderColor.split(' ')[0]
+              }
+
+              break;
+            case 'right':
+              // 만일 모든 right의 td 스타일 값이 같으면 그 값으로 app.border를 설정한다.
+              break;
+            case 'center':
+              // 만일 모든 center의 td 스타일 값이 같으면 그 값으로 app.border를 설정한다.
+              break;
+            case 'middle':
+              // 만일 모든 middle의 td 스타일 값이 같으면 그 값으로 app.border를 설정한다.
+              break;
+            case 'top':
+              // 만일 모든 top의 td 스타일 값이 같으면 그 값으로 app.border를 설정한다.
+              break;
+            case 'bottom':
+              // 만일 모든 bottom의 td 스타일 값이 같으면 그 값으로 app.border를 설정한다.
+              break;
+            }
+          }
+
+          var border = app.border;
+          if(border.borderWidth === undefined || border.borderStyle === undefined || border.borderColor === undefined)
+            return;
+
+          var border_style = [(border.borderWidth || 0) + 'px', border.borderStyle || 'solid', border.borderColor].filter(function(val) {
+            return !!val;
+          }).join(' ');
+
+          switch(border.type) {
+          case 'all':
+            all.forEach(function(td) {
+              td.style['border'] = border_style;
+            });
+            break;
+          case 'in':
+            centers.forEach(function(td) {
+              td.style['border-left'] = border_style;
+              td.style['border-right'] = border_style;
+            });
+            middles.forEach(function(td) {
+              td.style['border-top'] = border_style;
+              td.style['border-bottom'] = border_style;
+            });
+            lefts.forEach(function(td) {
+              td.style['border-right'] = border_style;
+            });
+            rights.forEach(function(td) {
+              td.style['border-left'] = border_style;
+            });
+            tops.forEach(function(td) {
+              td.style['border-bottom'] = border_style;
+            });
+            bottoms.forEach(function(td) {
+              td.style['border-top'] = border_style;
+            });
+            break;
+          case 'out':
+            lefts.forEach(function(td) {
+              td.style['border-left'] = border_style;
+            });
+            rights.forEach(function(td) {
+              td.style['border-right'] = border_style;
+            });
+            tops.forEach(function(td) {
+              td.style['border-top'] = border_style;
+            });
+            bottoms.forEach(function(td) {
+              td.style['border-bottom'] = border_style;
+            });
+            break;
+          case 'left':
+            lefts.forEach(function(td) {
+              td.style['border-left'] = border_style;
+            });
+            break;
+          case 'right':
+            rights.forEach(function(td) {
+              td.style['border-right'] = border_style;
+            });
+            break;
+          case 'center':
+            centers.forEach(function(td) {
+              td.style['border-left'] = border_style;
+              td.style['border-right'] = border_style;
+            });
+            lefts.forEach(function(td) {
+              td.style['border-right'] = border_style;
+            });
+            rights.forEach(function(td) {
+              td.style['border-left'] = border_style;
+            });
+            break;
+          case 'middle':
+            middles.forEach(function(td) {
+              td.style['border-top'] = border_style;
+              td.style['border-bottom'] = border_style;
+            });
+            tops.forEach(function(td) {
+              td.style['border-bottom'] = border_style;
+            });
+            bottoms.forEach(function(td) {
+              td.style['border-top'] = border_style;
+            });
+            break;
+          case 'top':
+            tops.forEach(function(td) {
+              td.style['border-top'] = border_style;
+            });
+            break;
+          case 'bottom':
+            bottoms.forEach(function(td) {
+              td.style['border-bottom'] = border_style;
+            });
+            break;
+          }
+        }
+
+        app.border = {}
+      })
+    </script>
+
+  </body>
+</html>
