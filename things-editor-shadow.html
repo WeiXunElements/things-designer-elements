@@ -1,0 +1,148 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<link rel="import" href="../iron-pages/iron-pages.html">
+<link rel="import" href="../things-i18n-msg/things-i18n-msg.html">
+<link rel="import" href="./things-editor-color.html">
+<link rel="import" href="./things-editor-number-input.html">
+
+<!--
+컴포넌트의 그림자를 주는 속성이다.
+
+Example:
+
+    <things-editor-shadow value={{shadow}}>
+    </things-editor-shadow>
+
+@demo demo/index-editor-shadow.html
+@hero hero.svg
+-->
+
+
+<dom-module id="things-editor-shadow">
+  <template>
+    <style>
+      :host {
+        display: block;
+        @apply(--things-editor-shadow)
+      }
+      paper-radio-button{padding:2px 1px 10px 7px !important;}
+      .icon-only-label{
+        @apply(--things-properties-icon-only-label);
+        background:url(/images/icon-properties.png) no-repeat;
+        float:left;margin-top:0;
+      }
+      .icon-only-label.color{background-position:70% -498px;}
+      things-editor-color::shadow #text{
+        width:71%;
+      }
+    </style>
+
+    <fieldset>
+      <legend>shadow</legend>
+
+      <label><things-i18n-msg msgid="label.opacity" auto>opacity</things-i18n-msg></label>
+      <paper-slider id='alpha' min="0" max="1" step="0.1" value="{{shadow.alpha::change}}"  editable></paper-slider>
+
+      <label>
+        <things-i18n-msg msgid="label.shadowOffsetX" auto>offset-X</things-i18n-msg>
+      </label>
+      <input id='left' is="things-editor-number-input" number="{{shadow.left::change}}">
+
+      <label>
+        <things-i18n-msg msgid="label.shadowOffsetY" auto>offset-Y</things-i18n-msg>
+      </label>
+      <input id='top' is="things-editor-number-input" number="{{shadow.top::change}}">
+
+      <label>
+        <things-i18n-msg msgid="label.shadowSize" auto>shadow-Size</things-i18n-msg>
+      </label>
+      <input id='blurSize' is="things-editor-number-input" number="{{shadow.blurSize::change}}">
+
+      <label class="icon-only-label color"></label>
+      <things-editor-color id='color' value="{{shadow.color::change}}">
+      </things-editor-color>
+
+    </fieldset>
+
+
+  </template>
+
+  <script>
+  Polymer({
+    is: 'things-editor-shadow',
+
+    properties: {
+      value: {
+        notify: true
+      }
+    },
+
+    listeners: {
+      'value-changed': 'onChangedValue'
+    },
+
+    observers: [
+      'onChangedShadow(shadow.*)'
+    ],
+
+    onChangedValue: function(changed, after) {
+
+      if(this.changedOnThis){
+        return
+      }
+
+      var value = after.value
+
+      if(!value){
+        this.shadow.left = 0
+        this.shadow.top = 0
+        this.shadow.color = 'black'
+        this.shadow.alpha = 1
+        this.shadow.blurSize = 20
+        return
+      }
+
+      this.shadow = {
+        blurSize: value.blurSize || 20,
+        left: value.left || 0,
+        top: value.top || 0,
+        color: value.color || 'black',
+        alpha: value.alpha || 1
+      }
+
+      this.changedOnThis = true
+    },
+
+    onChangedShadow: function(changed) {
+      this.changedOnThis = true
+
+      name = changed.path
+      value = changed.value
+
+      switch(name){
+        case 'shadow':
+          this.value = value
+          break;
+        case 'shadow.left':
+          this.value.left = value
+          break;
+        case 'shadow.top':
+          this.value.top = value
+          break;
+        case 'shadow.color':
+          this.value.color = value
+          break;
+        case 'shadow.blurSize':
+          this.value.blurSize = value
+          break;
+        case 'shadow.alpha':
+          this.value.alpha = value
+          break;
+      }
+
+      this.changedOnThis = false
+    }
+
+  });
+  </script>
+</dom-module>
