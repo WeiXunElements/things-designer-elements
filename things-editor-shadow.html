@@ -94,23 +94,11 @@ Example:
       var value = after.value
 
       if(!value){
-        this.shadow.left = 0
-        this.shadow.top = 0
-        this.shadow.color = 'black'
-        this.shadow.alpha = 1
-        this.shadow.blurSize = 20
+        this.shadow = {}
         return
       }
 
-      this.shadow = {
-        blurSize: value.blurSize || 20,
-        left: value.left || 0,
-        top: value.top || 0,
-        color: value.color || 'black',
-        alpha: value.alpha || 1
-      }
-
-      this.changedOnThis = true
+      this.shadow = Object.assign({alpha:1}, value);
     },
 
     onChangedShadow: function(changed) {
@@ -120,23 +108,20 @@ Example:
       value = changed.value
 
       switch(name){
-        case 'shadow':
-          this.value = value
-          break;
         case 'shadow.left':
-          this.value.left = value
+          this.set('value.left', value)
           break;
         case 'shadow.top':
-          this.value.top = value
+          this.set('value.top', value)
           break;
         case 'shadow.color':
-          this.value.color = value
+          this.set('value.color', value)
           break;
         case 'shadow.blurSize':
-          this.value.blurSize = value
+          this.set('value.blurSize', value)
           break;
         case 'shadow.alpha':
-          this.value.alpha = value
+          this.set('value.alpha', value)
           break;
       }
 
