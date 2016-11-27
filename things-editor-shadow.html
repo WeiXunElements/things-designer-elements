@@ -40,9 +40,6 @@ Example:
     <fieldset>
       <legend>shadow</legend>
 
-      <label><things-i18n-msg msgid="label.opacity" auto>opacity</things-i18n-msg></label>
-      <paper-slider id='alpha' min="0" max="1" step="0.1" value="{{shadow.alpha::change}}"  editable></paper-slider>
-
       <label>
         <things-i18n-msg msgid="label.shadowOffsetX" auto>offset-X</things-i18n-msg>
       </label>
@@ -98,7 +95,7 @@ Example:
         return
       }
 
-      this.shadow = Object.assign({alpha:1}, value);
+      this.shadow = Object.assign({}, value);
     },
 
     onChangedShadow: function(changed) {
@@ -119,9 +116,6 @@ Example:
           break;
         case 'shadow.blurSize':
           this.set('value.blurSize', value)
-          break;
-        case 'shadow.alpha':
-          this.set('value.alpha', value)
           break;
       }
 
