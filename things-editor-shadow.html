@@ -20,22 +20,34 @@ Example:
 
 <dom-module id="things-editor-shadow">
   <template>
-    <style>
-      :host {
-        display: block;
-        @apply(--things-editor-shadow)
-      }
-      paper-radio-button{padding:2px 1px 10px 7px !important;}
-      .icon-only-label{
-        @apply(--things-properties-icon-only-label);
-        background:url(/images/icon-properties.png) no-repeat;
-        float:left;margin-top:0;
-      }
-      .icon-only-label.color{background-position:70% -498px;}
-      things-editor-color::shadow #text{
-        width:71%;
-      }
-    </style>
+  <style>
+    :host {
+      display: block;
+      @apply(--things-editor-shadow)
+    }
+    paper-radio-button{padding:2px 1px 10px 7px !important;}
+    .icon-only-label{
+      @apply(--things-properties-icon-only-label);
+      float:left;
+      margin-top:2px;margin-left:40px;
+    }
+    .icon-only-label.color{background-position:70% -498px;}
+    things-editor-color::shadow #text{
+      width:71%;
+    }
+    label{
+      @apply(--things-label);
+    }
+    input{
+      @apply(--things-input);
+    }
+    fieldset{
+      @apply(--things-fieldset);
+    }
+    legend{
+      @apply(--things-fieldset-legend);
+    }
+  </style>
 
     <fieldset>
       <legend>shadow</legend>
