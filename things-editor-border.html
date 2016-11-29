@@ -114,14 +114,17 @@ Example:
       properties: {
         borderWidth: {
           type: Number,
+          value: 1,
           notify: true
         },
         borderColor: {
           type: String,
+          value: 'black',
           notify: true
         },
         borderStyle: {
           type: String,
+          value: 'solid',
           notify: true
         }
       },
@@ -141,7 +144,14 @@ Example:
         if(target === this)
           return;
 
-        this.fire('border-type-click', target.getAttribute('data-value'));
+        this.fire('border-type-click', {
+          type: target.getAttribute('data-value'),
+          borderWidth: this.borderWidth,
+          borderStyle: this.borderStyle,
+          borderColor: this.borderColor
+        });
+
+        e.stopPropagation();
       },
 
       _onChange: function(e) {
@@ -161,7 +171,6 @@ Example:
           e.stopPropagation();
           return;
         }
-        this.fire('border-change', value);
         e.stopPropagation();
       }
 

@@ -144,22 +144,25 @@ Example:
       properties: {
         borderWidth: {
           type: Number,
+          value: 1,
           notify: true
         },
         borderColor: {
           type: String,
+          value: 'black',
           notify: true
         },
         borderStyle: {
           type: String,
+          value: 'solid',
           notify: true
         }
       },
 
       listeners: {
         'border-fieldset.change': '_onBorderChange',
-        'border-set.tap': '_onTapType',
         'border-style.iron-select': '_onBorderChange',
+        'border-set.tap': '_onTapType',
         'cell-fieldset.tap': '_onTapCell'
       },
 
@@ -186,7 +189,14 @@ Example:
         if(target === this)
           return;
 
-        this.fire('border-type-click', target.getAttribute('data-value'));
+        this.fire('table-cell-border-set', {
+          type: target.getAttribute('data-value'),
+          borderWidth: this.borderWidth,
+          borderStyle: this.borderStyle,
+          borderColor: this.borderColor
+        });
+
+        e.stopPropagation();
       },
 
       _onBorderChange: function(e) {

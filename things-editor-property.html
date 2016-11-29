@@ -79,7 +79,7 @@ Example:
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'action')]]">
-      <things-editor-action icon="[[property.icon]]" on-action-editor-clicked="_onActionClick" />
+      <things-editor-action icon="[[property.icon]]" action="[[property.action]]"/>
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'image-selector')]]">
@@ -97,13 +97,8 @@ Example:
       </things-image-selector>
     </template>
 
-    <template is="dom-if" if="[[_isTypeofEditor(type, 'editor-border')]]">
-      <things-editor-border type="{{border.type}}"
-                            border-width="{{border.borderWidth}}"
-                            border-color="{{border.borderColor}}"
-                            border-style="{{border.borderStyle}}"
-                            on-border-type-click="_onBorderTypeClick">
-      </things-editor-border>
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'editor-table')]]">
+      <things-editor-table></things-editor-table>
     </template>
 
   </template>
@@ -132,14 +127,6 @@ Example:
         data: {
           type: Object,
           notify: true
-        },
-        border: {
-          type: Object,
-          value: {
-            borderColor: '#999',
-            borderStyle: 'solid',
-            borderWidth: 1
-          }
         }
       },
 
@@ -182,18 +169,18 @@ Example:
         this._changedOnThis = false
       },
 
-      _onPropertyChanged: function(property) {
-        if(!property.value)
-          return
-
-        for (var key in property.value) {
-          if (property.value.hasOwnProperty(key)) {
-            if(typeof property.value[key] == 'function') {
-              this.set(`property.${key}`,property.value[key].call(this))
-            }
-          }
-        }
-      },
+      // _onPropertyChanged: function(property) {
+      //   if(!property.value)
+      //     return
+      //
+      //   for (var key in property.value) {
+      //     if (property.value.hasOwnProperty(key)) {
+      //       if(typeof property.value[key] == 'function') {
+      //         this.set(`property.${key}`,property.value[key].call(this))
+      //       }
+      //     }
+      //   }
+      // },
 
       _valueChanged: function(value) {
         if(!this.get('observe'))
@@ -202,42 +189,12 @@ Example:
         this.get('observe').call(this, value)
       },
 
-      _onActionClick: function(e) {
-        if(!this.property)
-          return
-
-        var selected = this.parentElement.parentElement.parentElement.parentElement.parentElement.selected
-
-        this.property.action(selected[0])
-      },
-
       _onThingsImageChanged: function(e) {
         if(!this.property)
           return
 
         this.set("value", e.detail)
         this.fire("change")
-      },
-
-      _onBorderTypeClick: function(e) {
-        if(!this.target)
-          return;
-
-        let {
-          borderWidth, borderStyle, borderColor
-        } = this.border;
-
-        var selected = this.parentElement.parentElement.parentElement.parentElement.parentElement.selected
-
-        let table = selected[0].parent;
-        if(table.get('type') !== 'table')
-          return;
-
-        table.setCellsStyle(selected, {
-          strokeStyle: borderColor,
-          lineDash: borderStyle,
-          lineWidth: borderWidth
-        }, e.detail);
       }
 
     })

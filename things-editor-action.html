@@ -57,14 +57,11 @@ Example:
       is: 'things-editor-action',
 
       properties: {
-        icon: String,
-        onClickAction: {
-          type: Function
-        }
+        icon: String
       },
 
       _onClick: function(e) {
-        this.fire('action-editor-clicked')
+        this.fire('action-editor-clicked', this.action)
       }
     })
 
