@@ -1,10 +1,10 @@
 {
   "name": "things-designer-elements",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "authors": [
     "Hatio Lab. <heartyoh@hatiolab.com>"
   ],
-  "description": "An element providing a solution to no problem in particular.",
+  "description": "Elements for property editing",
   "keywords": [
     "web-component",
     "polymer",
