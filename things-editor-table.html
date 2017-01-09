@@ -56,6 +56,14 @@ Example:
         min-width:35px;
       }
       .full-width things-editor-color::shadow #detail *{float:none !important}
+      #cell-fieldset{
+        padding:0 10px !important;
+      }
+      #cell-fieldset paper-button{
+        display:inline-block;
+        width:65px;
+        margin:0 10px 10px 0;
+      }
     </style>
 
     <fieldset id='border-fieldset'>
@@ -100,37 +108,16 @@ Example:
     </fieldset>
 
     <fieldset id="cell-fieldset">
-
-      <label>delete row</label>
-      <paper-button id="delete-row" table-event></paper-button>
-
-      <label>delete column</label>
-      <paper-button id="delete-column" table-event></paper-button>
-
-      <label>insert above</label>
-      <paper-button id="insert-above" table-event></paper-button>
-
-      <label>insert below</label>
-      <paper-button id="insert-below" table-event></paper-button>
-
-      <label>insert left</label>
-      <paper-button id="insert-left" table-event></paper-button>
-
-      <label>insert right</label>
-      <paper-button id="insert-right" table-event></paper-button>
-
-      <label>merge cells</label>
-      <paper-button id="merge-cells" table-event></paper-button>
-
-      <label>split cells</label>
-      <paper-button id="split-cells" table-event></paper-button>
-
-      <label>distribute horizontal</label>
-      <paper-button id="distribute-horizontal" table-event></paper-button>
-
-      <label>distribute vertical</label>
-      <paper-button id="distribute-vertical" table-event></paper-button>
-
+        <paper-button id="merge-cells" table-event>merge cells</paper-button>
+        <paper-button id="split-cells" table-event>split cells</paper-button>
+        <paper-button id="delete-row" table-event>delete row</paper-button>
+        <paper-button id="delete-column" table-event>delete column</paper-button>
+        <paper-button id="insert-above" table-event>insert above</paper-button>
+        <paper-button id="insert-below" table-event>insert below</paper-button>
+        <paper-button id="insert-left" table-event>insert left</paper-button>
+        <paper-button id="insert-right" table-event>insert right</paper-button>
+        <paper-button id="distribute-horizontal" table-event>distribute horizontal</paper-button>
+        <paper-button id="distribute-vertical" table-event>distribute vertical</paper-button>
     </fieldset>
 
   </template>
