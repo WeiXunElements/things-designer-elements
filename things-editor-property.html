@@ -59,23 +59,23 @@ Example:
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'color')]]">
-      <things-editor-color value="{{value}}"/>
+      <things-editor-color value="{{value::change}}"/>
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'solid-color-stops')]]">
-      <things-editor-color-stops type="solid" value="{{value}}" min="[[property.min]]" max="[[property.max]]"/>
+      <things-editor-color-stops type="solid" value="{{value::change}}" min="[[property.min]]" max="[[property.max]]"/>
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'gradient-color-stops')]]">
-      <things-editor-color-stops type="gradient" value="{{value}}" min="[[property.min]]" max="[[property.max]]"/>
+      <things-editor-color-stops type="gradient" value="{{value::change}}" min="[[property.min]]" max="[[property.max]]"/>
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'multiple-color')]]">
-      <things-editor-multiple-color values="{{value}}"/>
+      <things-editor-multiple-color values="{{value::change}}"/>
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'chartjs-properties')]]">
-      <things-editor-chartjs-properties model="{{target}}" values="{{value}}" data="{{target.data}}"/>
+      <things-editor-chartjs-properties values="{{value}}"/>
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'action')]]">
@@ -90,7 +90,7 @@ Example:
         display-field="[[property.displayField]]"
         display-full-url="[[property.displayFullUrl]]"
         base-url-alias="[[property.baseUrlAlias]]"
-        value="{{value}}"
+        value="{{value::change}}"
         default-storage="[[property.defaultStorage]]"
         storage-filters="[[property.storageFilters]]"
         use-upload="[[property.useUpload]]">
@@ -123,20 +123,8 @@ Example:
         target: {
           type: Object,
           notify: true
-        },
-        data: {
-          type: Object,
-          notify: true
         }
       },
-
-      listeners: {
-        "change": "_onChange"
-      },
-
-      observers: [
-        // "_onPropertyChanged(property.*)"
-      ],
 
       _isTypeofEditor: function(editorType, type) {
         return editorType == type
@@ -148,39 +136,6 @@ Example:
         return label != ""
 
       },
-
-      _onChange: function(e) {
-
-        if(this._changedOnThis)
-          return
-
-        var value = this.get('value')
-
-        if(value === undefined)
-           value = e.target.value
-
-        this._changedOnThis = true
-        if(value === undefined) {
-          this.set("value", value)
-        } else {
-          value = JSON.parse(JSON.stringify(value))
-          this.set("value", value)
-        }
-        this._changedOnThis = false
-      },
-
-      // _onPropertyChanged: function(property) {
-      //   if(!property.value)
-      //     return
-      //
-      //   for (var key in property.value) {
-      //     if (property.value.hasOwnProperty(key)) {
-      //       if(typeof property.value[key] == 'function') {
-      //         this.set(`property.${key}`,property.value[key].call(this))
-      //       }
-      //     }
-      //   }
-      // },
 
       _valueChanged: function(value) {
         if(!this.get('observe'))

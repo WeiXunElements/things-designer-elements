@@ -150,19 +150,6 @@ Example:
           this._setValues()
           return
         }
-
-        var name = change.path.substr(7)
-        var dotIndex = name.indexOf('.')
-        if(dotIndex >= 0)
-          name = name.substr(0, name.indexOf('.'))
-
-        var prop = this.querySelector('things-editor-property[name=' + name + ']')
-        if(!prop)
-          return
-
-        this._changedOnThis = true
-        prop.value = this.target[name]
-        this._changedOnThis = false
       },
 
       _onValueChanged: function(e) {
