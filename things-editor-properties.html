@@ -166,6 +166,7 @@ Example:
 
         var name = prop.getAttribute('name')
 
+        this.set('target.' + name, null)
         this.set('target.' + name, prop.value)
       }
 
