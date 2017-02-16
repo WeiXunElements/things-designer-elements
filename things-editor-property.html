@@ -39,15 +39,15 @@ Example:
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'number')]]">
-      <input is="things-editor-number-input" type="number" number="{{value::change}}">
+      <input is="things-editor-number-input" type="number" number="{{value::change}}" placeholder="[[placeholder]]">
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'string')]]">
-      <input type="text" value="{{value::change}}">
+      <input type="text" value="{{value::change}}" placeholder="[[placeholder]]">
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'checkbox')]]">
-      <input type="checkbox" checked="{{value::change}}">
+      <input type="checkbox" checked="{{value::change}}" placeholder="[[placeholder]]">
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'select')]]">
@@ -59,7 +59,7 @@ Example:
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'color')]]">
-      <things-editor-color value="{{value::change}}"/>
+      <things-editor-color value="{{value::change}}" placeholder="[[placeholder]]"/>
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'solid-color-stops')]]">
