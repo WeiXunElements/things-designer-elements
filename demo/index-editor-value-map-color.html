@@ -17,11 +17,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <link rel="import" href="../things-editor-value-map.html">
 
-  </head>
-  <body unresolved>
+    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
 
-    <template is="dom-bind" id="app">
-      <style is="custom-style">
+    <style is="custom-style" include="things-point-theme">
       :host {
         display: block;
       }
@@ -30,7 +28,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 600px;
         height: 300px;
       }
-      </style>
+    </style>
+  </head>
+  <body unresolved>
+
+    <template is="dom-bind" id="app">
       <p>An example of <code>&lt;things-editor-value-map&gt;</code>:</p>
 
       <textarea value="[[text]]"></textarea>

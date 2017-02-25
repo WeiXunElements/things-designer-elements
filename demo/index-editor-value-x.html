@@ -12,50 +12,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>things-editor-multiple-color Demo</title>
+    <title>things-editor-value-x Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
-
-    <link rel="import" href="../things-editor-multiple-color.html">
 
     <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
 
-    <style is="custom-style" include="things-point-theme">
-      :root {
-        --things-editor-multiple-color: {
-          background: lightgray;
-        }
-      };
+    <link rel="import" href="../things-editor-value-x.html">
 
-      textarea {
-        width: 600px;
-        height: 300px;
-      }
+    <style is="custom-style" include="things-point-theme">
+    textarea {
+      width: 600px;
+      height: 300px;
+    }
     </style>
+
   </head>
   <body unresolved>
 
     <template is="dom-bind" id="app">
-
-      <p>An example of <code>&lt;things-editor-multiple-color&gt;</code>:</p>
-
-      <things-editor-multiple-color values="{{values}}">
-      </things-editor-multiple-color>
+      <p>An example of <code>&lt;things-editor-value-x&gt;</code>:</p>
 
       <textarea value="[[text]]"></textarea>
 
-      <input id="btn" type="button" value="색상값 확인">
+      <things-editor-value-x id="editor"
+                           mapping="{{mapping}}">
+      </things-editor-value-x>
     </template>
 
     <script>
       window.addEventListener('WebComponentsReady', function(e) {
         var app = document.querySelector('#app')
 
-        app.$.btn.addEventListener('click', function() {
-          app.text = app.values.join()
-        })
+        app.type = "string"
+        app.mapping = {
+          target: '#special',
+          property: 'text',
+          rule: 'eval',
+          param: 'return "blue"'
+        }
 
-        // app.values = 'blue'
-        app.values = ['blue', 'green', 'yellow', 'red', 'black']
+        app.$.editor.addEventListener('value-change', function(e) {
+          app.text = JSON.stringify(app.mapping, null, "\t")
+        })
       })
     </script>
 

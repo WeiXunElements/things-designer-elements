@@ -17,11 +17,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <link rel="import" href="../things-editor-action.html">
 
-  </head>
-  <body unresolved>
+    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
+    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
 
-    <template is="dom-bind" id="app">
-      <style is="custom-style">
+    <style is="custom-style" include="things-point-theme">
       :root {
         --things-editor-action: {
           background: lightgray;
@@ -32,7 +31,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 600px;
         height: 300px;
       }
-      </style>
+    </style>
+  </head>
+  <body unresolved>
+
+    <template is="dom-bind" id="app">
 
       <p>An example of <code>&lt;things-editor-action&gt;</code>:</p>
 

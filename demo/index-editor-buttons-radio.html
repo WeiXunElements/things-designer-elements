@@ -17,11 +17,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <link rel="import" href="../things-editor-buttons-radio.html">
 
-  </head>
-  <body unresolved>
+    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
 
-    <template is="dom-bind" id="app">
-      <style is="custom-style">
+    <style is="custom-style" include="things-point-theme">
       :root {
         --things-editor-buttons-radio-button: {
           background:url(../images/icon-properties.png) 85% 2px no-repeat;
@@ -73,7 +71,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       paper-button[data-value=subscript] {
         background-position:50% -1795px
       }
-      </style>
+    </style>
+  </head>
+  <body unresolved>
+
+    <template is="dom-bind" id="app">
 
       <p>An example of <code>&lt;things-editor-buttons-radio&gt;</code>:</p>
 

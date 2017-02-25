@@ -18,11 +18,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <link rel="import" href="../things-editor-color-stops.html">
     <link rel="import" href="../things-editor-properties.html">
 
-  </head>
-  <body unresolved>
+    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
 
-    <template is="dom-bind" id="app">
-      <style is="custom-style">
+    <style is="custom-style" include="things-point-theme">
       :root {
         --things-editor-color-stops: {
           background: lightgray;
@@ -33,7 +31,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 600px;
         height: 300px;
       }
-      </style>
+    </style>
+  </head>
+  <body unresolved>
+
+    <template is="dom-bind" id="app">
 
       <p>An example of <code>&lt;things-editor-color-stops&gt;</code>:</p>
 
@@ -46,7 +48,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                    min="[[xx.min]]"
                                    max="[[xx.max]]">
         </things-editor-color-stops>
-        
+
         <p>Gradient</p>
 
         <things-editor-color-stops type="gradient"

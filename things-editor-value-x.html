@@ -13,15 +13,14 @@ An element providing a solution to no problem in particular.
 
 Example:
 
-  <things-editor-value mapping="{{mapping}}"
-                       type="[[type]]">
-  </things-editor-value>
+  <things-editor-value-x mapping="{{mapping}}">
+  </things-editor-value-x>
 
-@demo demo/index-editor-value.html
+@demo demo/index-editor-value-x.html
 @hero hero.svg
 -->
 
-<dom-module id="things-editor-value">
+<dom-module id="things-editor-value-x">
   <template>
     <style>
       :host {
@@ -55,9 +54,18 @@ Example:
     </style>
 
     <label>
+      <things-i18n-msg msgid="label.index" auto>index</things-i18n-msg>
+    </label>
+    <input id="index" type="number" data-mapping-index value="{{mapping.index::change}}"/>
+    <label>
+      <things-i18n-msg msgid="label.key" auto>key</things-i18n-msg>
+    </label>
+    <input id="key" type="text" value="{{mapping.key::change}}"/>
+
+    <label>
       <things-i18n-msg msgid="label.target" auto>target</things-i18n-msg>
     </label>
-    <input id="target-input" data-mapping-target type="text" value="{{mapping.target::change}}"/>
+    <input id="target-input" type="text" value="{{mapping.target::change}}"/>
 
     <label>
       <things-i18n-msg msgid="label.property" auto>property</things-i18n-msg>
@@ -98,13 +106,11 @@ Example:
                 class="content">
       <things-editor-value-map data-rule-type="map"
                                map="{{rule.map}}"
-                               key-type="[[type]]"
                                value-type="[[valueType]]">
       </things-editor-value-map>
 
       <things-editor-value-range data-rule-type="range"
                                  range="{{rule.range}}"
-                                 range-type="[[type]]"
                                  value-type="[[valueType]]">
       </things-editor-value-range>
 
@@ -121,14 +127,11 @@ Example:
   <script>
 
     Polymer({
-      is: 'things-editor-value',
+      is: 'things-editor-value-x',
 
       properties: {
         mapping: {
           type: Object,
-          notify: true
-        },
-        type: {
           notify: true
         }
       },
@@ -201,7 +204,7 @@ Example:
 
           this.set('rule', rule)
 
-          this.querySelector('[data-mapping-target]').focus()
+          this.querySelector('[data-mapping-index]').focus()
 
           return
         }
