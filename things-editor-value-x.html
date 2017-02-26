@@ -54,13 +54,9 @@ Example:
     </style>
 
     <label>
-      <things-i18n-msg msgid="label.index" auto>index</things-i18n-msg>
+      <things-i18n-msg msgid="label.accessor" auto>accessor</things-i18n-msg>
     </label>
-    <input id="index" type="number" data-mapping-index value="{{mapping.index::change}}"/>
-    <label>
-      <things-i18n-msg msgid="label.key" auto>key</things-i18n-msg>
-    </label>
-    <input id="key" type="text" value="{{mapping.key::change}}"/>
+    <input id="accessor" type="number" data-mapping-accessor value="{{mapping.accessor::change}}"/>
 
     <label>
       <things-i18n-msg msgid="label.target" auto>target</things-i18n-msg>
@@ -205,7 +201,7 @@ Example:
 
           this.set('rule', rule)
 
-          this.querySelector('[data-mapping-index]').focus()
+          this.querySelector('[data-mapping-accessor]').focus()
 
           return
         }
@@ -243,6 +239,7 @@ Example:
       },
 
       onChangedRule: function(change) {
+
         if(!this.mapping)
           return
 
