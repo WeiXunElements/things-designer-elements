@@ -55,6 +55,11 @@ Example:
     </style>
 
     <label>
+      <things-i18n-msg msgid="label.accessor" auto>accessor</things-i18n-msg>
+    </label>
+    <input id="accessor" type="text" data-mapping-accessor value="{{mapping.accessor::change}}"/>
+
+    <label>
       <things-i18n-msg msgid="label.target" auto>target</things-i18n-msg>
     </label>
     <input id="target-input" data-mapping-target type="text" value="{{mapping.target::change}}"/>
@@ -202,7 +207,7 @@ Example:
 
           this.set('rule', rule)
 
-          this.querySelector('[data-mapping-target]').focus()
+          this.querySelector('[data-mapping-accessor]').focus()
 
           return
         }
