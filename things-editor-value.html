@@ -13,11 +13,10 @@ An element providing a solution to no problem in particular.
 
 Example:
 
-  <things-editor-value mapping="{{mapping}}"
-                       type="[[type]]">
+  <things-editor-value mapping="{{mapping}}">
   </things-editor-value>
 
-@demo demo/index-editor-value.html
+@demo demo/index-editor-value-x.html
 @hero hero.svg
 -->
 
@@ -62,7 +61,7 @@ Example:
     <label>
       <things-i18n-msg msgid="label.target" auto>target</things-i18n-msg>
     </label>
-    <input id="target-input" data-mapping-target type="text" value="{{mapping.target::change}}"/>
+    <input id="target-input" type="text" value="{{mapping.target::change}}"/>
 
     <label>
       <things-i18n-msg msgid="label.property" auto>property</things-i18n-msg>
@@ -84,7 +83,7 @@ Example:
     <label>
       <things-i18n-msg msgid="label.rule-type" auto>rule type</things-i18n-msg>
     </label>
-    <paper-radio-group selected="{{mapping.rule}}">
+    <paper-radio-group selected="{{mapping.rule::change}}">
       <paper-radio-button name="value">
         <things-i18n-msg msgid="label.value" auto>value</things-i18n-msg>
       </paper-radio-button>
@@ -100,17 +99,15 @@ Example:
     </paper-radio-group>
 
     <iron-pages attr-for-selected="data-rule-type"
-                selected="{{mapping.rule}}"
+                selected="[[mapping.rule]]"
                 class="content">
       <things-editor-value-map data-rule-type="map"
                                map="{{rule.map}}"
-                               key-type="[[type]]"
                                value-type="[[valueType]]">
       </things-editor-value-map>
 
       <things-editor-value-range data-rule-type="range"
                                  range="{{rule.range}}"
-                                 range-type="[[type]]"
                                  value-type="[[valueType]]">
       </things-editor-value-range>
 
@@ -132,9 +129,6 @@ Example:
       properties: {
         mapping: {
           type: Object,
-          notify: true
-        },
-        type: {
           notify: true
         }
       },
@@ -187,8 +181,10 @@ Example:
 
       onChangedMapping: function(change) {
 
+        this._not_changed_actually = (change.path === 'mapping')
+
         /* 사용자가 선택한 컴포넌트가 바뀐 경우도 호출되므로, 이 경우는 제외한다. */
-        if(change.path === 'mapping') {
+        if(this._not_changed_actually) {
           var rule = {}
 
           if(this.mapping) {
@@ -207,7 +203,7 @@ Example:
 
           this.set('rule', rule)
 
-          this.querySelector('[data-mapping-accessor]').focus()
+          this.$$('[data-mapping-accessor]').select()
 
           return
         }
@@ -235,7 +231,7 @@ Example:
           this.set('mapping.param', param)
         } else if(change.path == 'mapping.target') {
           let target = this.mapping.target
-          if(target.length > 1 && !target.startsWith('.') && !target.startsWith('#')) {
+          if(target.length > 0 && !target.startsWith('.') && !target.startsWith('#')) {
             this.mapping.target = '#' + target
             this.$['target-input'].value = this.mapping.target
           }
@@ -245,7 +241,8 @@ Example:
       },
 
       onChangedRule: function(change) {
-        if(!this.mapping)
+
+        if(!this.mapping || this._not_changed_actually)
           return
 
         var param
