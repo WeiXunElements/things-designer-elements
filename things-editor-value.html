@@ -235,6 +235,12 @@ Example:
             this.mapping.target = '#' + target
             this.$['target-input'].value = this.mapping.target
           }
+        } else if(change.path == 'mapping.accessor') {
+          let accessor = this.mapping.accessor
+          if(accessor) {
+            this.mapping.accessor = accessor.trim()
+            this.$['accessor'].value = this.mapping.accessor
+          }
         }
 
         this.fire('value-change', this.mapping)
