@@ -231,7 +231,7 @@ Example:
           this.set('mapping.param', param)
         } else if(change.path == 'mapping.target') {
           let target = this.mapping.target
-          if(target.length > 0 && !target.startsWith('.') && !target.startsWith('#')) {
+          if(target.length > 0 && !target.startsWith('.') && !target.startsWith('#') && !target.startsWith('(')) {
             this.mapping.target = '#' + target
             this.$['target-input'].value = this.mapping.target
           }
