@@ -10,8 +10,8 @@ Example:
                            value-type="[[valueType]]">
   </things-editor-value-map>
 
-@demo demo/index-editor-value-map-color.html
 @demo demo/index-editor-value-map.html
+@demo demo/index-editor-value-map-color.html
 @hero hero.svg
 -->
 
@@ -47,17 +47,27 @@ Example:
      <template is="dom-repeat" items="{{_toArray(map)}}">
       <div data-record>
         <input type="text" data-key placeholder="key" value="{{item.key}}"/>
-        <input type="text" data-value placeholder="value" value="{{item.value}}" data-value-type$="[[valueType]]"/>
+        <template is="dom-if" if="[[_isBooleanType(valueType)]]">
+          <input type="checkbox" data-value checked="{{item.value::change}}" data-value-type$="[[valueType]]"/>
+        </template>
+        <template is="dom-if" if="[[!_isBooleanType(valueType)]]">
+          <input type="text" data-value placeholder="value" value="{{item.value}}" data-value-type$="[[valueType]]"/>
+        </template>
         <template is="dom-if" if="[[_isColorType(valueType)]]">
           <input type="color" data-value value="{{item.value}}" tabindex="-1"/>
         </template>
         <button class="record-action" on-tap="_delete" tabindex="-1">-</button>
       </div>
     </template>
- 
+
      <div data-record-new>
       <input type="text" data-key placeholder="key" value=""/>
-      <input type="text" data-value placeholder="value" value="" data-value-type$="[[valueType]]"/>
+      <template is="dom-if" if="[[_isBooleanType(valueType)]]">
+        <input type="checkbox" data-value data-value-type$="[[valueType]]"/>
+      </template>
+      <template is="dom-if" if="[[!_isBooleanType(valueType)]]">
+        <input type="text" data-value placeholder="value" value="" data-value-type$="[[valueType]]"/>
+      </template>
       <template is="dom-if" if="[[_isColorType(valueType)]]">
         <input type="color" data-value value="" tabindex="-1"/>
       </template>
@@ -66,7 +76,12 @@ Example:
 
     <div data-record>
       <input type="text" data-key value="default" disabled/>
-      <input type="text" data-value value="{{map.default}}" placeholder="value" data-value-type$="[[valueType]]"/>
+      <template is="dom-if" if="[[_isBooleanType(valueType)]]">
+        <input type="checkbox" data-value checked="{{map.default::change}}" data-value-type$="[[valueType]]"/>
+      </template>
+      <template is="dom-if" if="[[!_isBooleanType(valueType)]]">
+        <input type="text" data-value value="{{map.default}}" placeholder="value" data-value-type$="[[valueType]]"/>
+      </template>
       <template is="dom-if" if="[[_isColorType(valueType)]]">
         <input type="color" data-value value="{{map.default}}" tabindex="-1"/>
       </template>
@@ -104,13 +119,23 @@ Example:
         return type === 'color'
       },
 
+      _isBooleanType: function(type) {
+        return type === 'boolean'
+      },
+
       _onChange: function(e) {
         var input = e.target
-        var value = e.target.value
+        var value
+
+        if(input.type == 'checkbox')
+          value = Boolean(input.checked)
+        else
+          value = input.value
+
         var div = input.parentElement
 
         if(input.hasAttribute('data-value')) {
-          var dataList = div.querySelectorAll('[data-value]')
+          var dataList = div.querySelectorAll('[data-value]:not([hidden])')
           for(var i = 0;i < dataList.length;i++)
             if(dataList[i] !== input)
               dataList[i].value = value
@@ -134,7 +159,13 @@ Example:
           var record = records[i]
 
           var key = record.querySelector('[data-key]').value
-          var value = record.querySelector('[data-value]').value
+          var input = record.querySelector('[data-value]:not([hidden])')
+          var value
+
+          if(input.type == 'checkbox')
+            value = Boolean(input.checked)
+          else
+            value = input.value
 
           if(key)
             newmap[key] = value
