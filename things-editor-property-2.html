@@ -99,19 +99,26 @@ Example:
             placeholder: this.placeholder || '',
             value: this.value
           });
+          this._valueTargetProperty = 'checked'
           break;
         case 'select':
           this.child = this.create('select', {
             value: this.value
           });
 
-          this.property.options.forEach(function(option) {
-            let opt = self.create('option', {
-              value: option
-            });
-            opt.innerText = option;
-            this.child.appendChild(opt);
-          })
+          for (var key in this.property.options) {
+            if (this.property.options.hasOwnProperty(key)) {
+              var desc = this.property.options[key];
+              var selected = this.value == key ? true : false;
+
+              let opt = self.create('option', {
+                value: key,
+                selected: selected
+              });
+              opt.innerText = desc;
+              self.child.appendChild(opt);
+            }
+          }
           break;
         case 'color':
           this.child = this.create('things-editor-color', {
@@ -124,7 +131,7 @@ Example:
           this.child = this.create('things-editor-color-stops', {
             type: 'solid',
             placeholder: this.placeholder || '',
-            value: [],
+            value: this.value,
             min: this.property.min,
             max: this.property.max
           });
@@ -134,7 +141,7 @@ Example:
           this.child = this.create('things-editor-color-stops', {
             type: 'gradient',
             placeholder: this.placeholder || '',
-            value: [],
+            value: this.value,
             min: this.property.min,
             max: this.property.max
           });
@@ -176,7 +183,7 @@ Example:
         }
 
         this.child && this.child.addEventListener('change', function(e) {
-          self.value = e.target.value;
+          self.set('value', e.target[self._valueTargetProperty || 'value']);
         });
 
         this.child && this.appendChild(this.child);
@@ -199,17 +206,18 @@ Example:
           return
         }
 
-        console.log('value changed', value, this.child)
-        try {
-          this.child.value = value;
-        } catch(e) {
-          console.log(e, this.child)
-        }
+        // console.log('value changed', value, this.child)
+        // try {
+        //   this.child[this._valueTargetProperty || 'value'] = value;
+        //   // this.child.value = value;
+        // } catch(e) {
+        //   console.log(e, this.child)
+        // }
 
-        if(!this.get('observe'))
-          return
+        // if(!this.get('observe'))
+        //   return
 
-        this.get('observe').call(this, value)
+        // this.get('observe').call(this, value)
       },
 
       _onThingsImageChanged: function(e) {

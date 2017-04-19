@@ -9,91 +9,150 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>things-editor-property-2 Demo</title>
-    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
 
-    <link rel="import" href="../things-editor-properties-2.html">
-    <link rel="import" href="../things-editor-property-2.html">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>things-editor-property-2 Demo</title>
+  <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
 
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
+  <link rel="import" href="../things-editor-properties-2.html">
+  <link rel="import" href="../things-editor-property-2.html">
 
-    <style is="custom-style" include="things-point-theme">
-      #target {
-        width: 300px;
-        height: 300px;
-        background: var(--theme-color, red);
-      }
-    </style>
-  </head>
-  <body unresolved>
+  <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
 
-    <template is="dom-bind" id="app">
+  <style is="custom-style" include="things-point-theme">
+     :host {
+      position: relative;
+    }
+    
+    #target {
+      width: 300px;
+      height: 300px;
+      background: var(--theme-color, red);
+    }
+    
+    #property-area {
+      width: 80%;
+    }
+    
+    #info-area {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      bottom: 10px;
+      width: 19%;
+    }
+    
+    #textarea {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    
+    things-editor-property-2 {
+      display: block;
+    }
+  </style>
+</head>
 
-      <p>An example of <code>&lt;things-editor-property-2&gt;</code>:</p>
+<body unresolved>
 
-      <things-editor-properties-2 id="properties"
-                                target="{{value}}"
-                                props="[[props]]">
-        <things-editor-property-2 label="NUMBER"
-                                type="number"
-                                value="{{value.number}}"
-                                property="[[property]]">
+  <template is="dom-bind" id="app">
+
+    <p>An example of <code>&lt;things-editor-property-2&gt;</code>:</p>
+
+    <div id="property-area">
+      <things-editor-properties-2 id="properties" target="{{value}}" props="[[props]]">
+        <things-editor-property-2 label="NUMBER" type="number" value="{{value.number}}" property="[[property]]">
         </things-editor-property-2>
 
-        <things-editor-property-2 label="TEXT"
-                                type="string"
-                                value="{{value.text}}"
-                                property="[[property]]">
+        <things-editor-property-2 label="TEXT" type="string" value="{{value.text}}" property="[[property]]">
         </things-editor-property-2>
 
-        <things-editor-property-2 label="COLOR"
-                                type="color"
-                                value="{{value.color}}"
-                                property="[[property]]">
+        <things-editor-property-2 label="CHECKBOX" type="checkbox" value="{{value.check}}" property="[[property]]">
+        </things-editor-property-2>
+        <things-editor-property-2 label="SELECT" type="select" value="{{value.select}}" property="[[property.select]]">
         </things-editor-property-2>
 
-        <things-editor-property-2 label="COLOR STOPS"
-                                type="solid-color-stops"
-                                value="{{value.solidColorStops}}"
-                                property="[[property]]">
+        <things-editor-property-2 label="COLOR" type="color" value="{{value.color}}" property="[[property]]">
         </things-editor-property-2>
 
-        <things-editor-property-2 label="COLOR STOPS"
-                                type="gradient-color-stops"
-                                value="{{value.gradientColorStops}}"
-                                property="[[property]]">
+        <things-editor-property-2 label="SOLID COLOR STOPS" type="solid-color-stops" value="{{value.solidColorStops}}" property="[[property.solidColorStops]]">
+        </things-editor-property-2>
+
+        <things-editor-property-2 label="GRADIENT COLOR STOPS" type="gradient-color-stops" value="{{value.gradientColorStops}}" property="[[property.gradientColorStops]]">
         </things-editor-property-2>
       </things-editor-properties-2>
+    </div>
+    <div id="info-area">
+      <textarea id="textarea" disabled>[[valueString]]</textarea>
+    </div>
 
-    </template>
+  </template>
 
-    <script>
-      window.addEventListener('WebComponentsReady', function(e) {
-        var app = document.querySelector('#app')
+  <script>
+    var app = document.querySelector('#app')
 
-        app.props = []
+    app.props = []
 
-        app.property = {
-          min: 0,
-          max: 500
+    app.value = {
+      number: 100.9,
+      text: 'hahaha',
+      check: true,
+      select: 'c',
+      color: 'red',
+      solidColorStops: [],
+      gradientColorStops: []
+    }
+
+    app.property = {
+      select: {
+        options: {
+          'a': 'A', 
+          'b': 'B',
+          'c': 'C'
         }
+      },
+      solidColorStops: {
+        min: 0,
+        max: 100
+      },
+      gradientColorStops: {
+        min: 0,
+        max: 100
+      }
+    }
 
-        app.value = {
-          number: 100.9,
-          text: 'hahaha',
-          color: 'red',
-          solidColorStops: [],
-          gradientColorStops: []
-        }
+    app.listeners = {
+      'dom-change': 'viewValues',
+      'change': 'viewValues'
+    }
 
-        app.$.properties.addEventListener('change', function() {
-          console.log('changed', app.value)
-        })
+    app.viewValues = function() {
+      viewValues();
+    }
+
+    function viewValues() {
+      var values = {};
+      document.querySelectorAll('things-editor-property-2').forEach(function (element) {
+        values[element.label] = element.value
+      }, this);
+
+      app.set('valueString', JSON.stringify(values, null, ' '));
+
+      // app.set('valueString', JSON.stringify(app.value, null, ' '));
+    }
+
+    window.addEventListener('WebComponentsReady', function (e) {
+
+      app.$.properties.addEventListener('change', function () {
+        viewValues()
       })
-    </script>
 
-  </body>
+    })
+  </script>
+
+</body>
+
 </html>

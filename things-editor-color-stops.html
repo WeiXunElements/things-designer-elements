@@ -355,6 +355,8 @@ Example:
 
         this.focused = null
         this._setFocused(i)
+
+        this.fire('change')
       },
 
       _onDownMarkers: function(e) {
@@ -397,6 +399,8 @@ Example:
             this.value.splice(this.focused.index, 1)
             this.value = this.value.slice()
           }
+
+          this.fire('change')
           break;
 
         case 'start':
