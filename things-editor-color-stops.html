@@ -277,6 +277,7 @@ Example:
       _renderColorBar: function(min, max, type) {
 
         var value = this._refinedValue(this.value)
+        var gradient = ''
 
         if(value instanceof Array && value.length > 0) {
           if(this.type == 'gradient') {
@@ -287,10 +288,11 @@ Example:
           } else {
             var stops = value || []
             var last = null
+            var last_position = 0
             var stopsStrings = stops.map(function(stop) {
               var stop_position = (stop.position - min) / (max - min)
               if(last) {
-                var last_position = (last.position - min) / (max - min)
+                last_position = (last.position - min) / (max - min)
                 var step = `${stop.color} ${last_position * 100}%, ${stop.color} ${stop_position * 100}%`
               } else {
                 var step = `${stop.color} ${stop_position * 100}%`
@@ -298,20 +300,19 @@ Example:
               last = stop
               return step
             })
-            if(last)
-              stopsStrings.push(`${last.color} ${last.position * 100}%, white ${last.position * 100}%, white 100%`)
+            if(last) {
+              last_position = (last.position - min) / (max - min)
+              stopsStrings.push(`${last.color} ${last_position * 100}%, white ${last_position * 100}%, white 100%`)
+            }
           }
 
-          var gradient = stopsStrings.join(',')
+          gradient = stopsStrings.join(',')
         } else {
-          var gradient = 'black 0%, black 100%'
+          gradient = 'black 0%, black 100%'
         }
 
         this.$.colorbar.style.background = `linear-gradient(to right, ${gradient})`
         /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-
-        // `background: -webkit-linear-gradient(left, ${gradient});` /* Chrome10-25,Safari5.1-6 */
-        // `background: -moz-linear-gradient(left, ${gradient});` /* FF3.6-15 */
       },
 
       _onChangeSubComponent: function(e) {

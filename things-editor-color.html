@@ -201,8 +201,8 @@ Example:
     </style>
 
     <input id="text" type="text" value="{{value}}">
-    <a id="color" type="button"  on-click="showPicker">
-      <span style="background-color:[[tinycolor(value)]]"></span>
+    <a id="color" type="button" on-click="showPicker">
+      <span id="color-thumbnail"></span>
     </a>
 
     <paper-color-picker shape="huebox" color={{valueAsObject}} color-as-string={{colorString}} allow-alpha always-show-alpha type="hsl"></paper-color-picker>
@@ -265,6 +265,8 @@ Example:
             alpha: 1
           }
         }
+
+        this.$["color-thumbnail"].style.backgroundColor = value
       },
 
       _onColorStringChanged: function(valueAsObject){
