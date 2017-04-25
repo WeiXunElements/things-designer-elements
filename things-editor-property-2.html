@@ -1,0 +1,233 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../polymer/polymer.html">
+
+<link rel="import" href="./elements.html">
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+
+
+@demo demo/index-editor-property-2.html
+@hero hero.svg
+-->
+
+<dom-module id="things-editor-property-2">
+  <template>
+    <style>
+      :host {
+      }
+    </style>
+
+
+  </template>
+
+  <script>
+
+    Polymer({
+      is: 'things-editor-property-2',
+
+      properties: {
+        value: {
+          notify: true,
+          observer: '_valueChanged'
+        },
+        type: String,
+        label: String,
+        property: {
+          type: Object,
+          notify: true,
+          value: {}
+        },
+        target: {
+          type: Object,
+          notify: true
+        }
+      },
+
+      attached: function() {
+        console.log('attached', this.type)
+
+        var label;
+
+        if(this._isExist(this.label)) {
+          label = this.create('label');
+          label.innerText = this.label;
+        }
+
+        label && this.appendChild(label);
+
+        var self = this;
+
+        console.log('value', this.value)
+
+        switch(this.type) {
+        case 'legend':
+          this.child = this.create('legend');
+          this.child.innerText = this.property.label;
+          break;
+        case 'number':
+          this.child = this.create('input', {
+            is: 'things-editor-number-input',
+            type: 'number',
+            placeholder: this.placeholder || '',
+            value: this.value
+          });
+          break;
+        case 'string':
+          this.child = this.create('input', {
+            type: 'text',
+            placeholder: this.placeholder || '',
+            value: this.value
+          });
+          break;
+        case 'checkbox':
+          this.child = this.create('input', {
+            type: 'checkbox',
+            checked: this.value,
+            placeholder: this.placeholder || '',
+            value: this.value
+          });
+          this._valueTargetProperty = 'checked'
+          break;
+        case 'select':
+          this.child = this.create('select', {
+            value: this.value
+          });
+
+          for (var key in this.property.options) {
+            if (this.property.options.hasOwnProperty(key)) {
+              var desc = this.property.options[key];
+              var selected = this.value == key ? true : false;
+
+              let opt = self.create('option', {
+                value: key,
+                selected: selected
+              });
+              opt.innerText = desc;
+              self.child.appendChild(opt);
+            }
+          }
+          break;
+        case 'color':
+          this.child = this.create('things-editor-color', {
+            type: 'number',
+            placeholder: this.placeholder || '',
+            value: this.value
+          });
+          break;
+        case 'solid-color-stops':
+          this.child = this.create('things-editor-color-stops', {
+            type: 'solid',
+            placeholder: this.placeholder || '',
+            value: this.value,
+            min: this.property.min,
+            max: this.property.max
+          });
+          this.child.value = [];
+          break;
+        case 'gradient-color-stops':
+          this.child = this.create('things-editor-color-stops', {
+            type: 'gradient',
+            placeholder: this.placeholder || '',
+            value: this.value,
+            min: this.property.min,
+            max: this.property.max
+          });
+          this.child.value = [];
+          break;
+        case 'multiple-color':
+          this.child = this.create('things-editor-multiple-color', {
+            value: this.value
+          });
+          break;
+        case 'chartjs-properties':
+          this.child = this.create('things-editor-chartjs-properties', {
+            value: this.value
+          });
+          break;
+        case 'action':
+          this.child = this.create('things-editor-action', {
+            icon: this.property.icon,
+            action: this.property.action
+          });
+          break;
+        case 'image-selector':
+          this.child = this.create('things-image-selector', {
+            onThingsImageChanged: "_onThingsImageChanged",
+            label: this.label,
+            detailFields: "",
+            displayField: this.property.displayField,
+            displayFullUrl: this.property.displayFullUrl,
+            baseUrlAlias: this.property.baseUrlAlias,
+            value: this.value,
+            defaultStorage: this.property.defaultStorage,
+            storageFilters: this.property.storageFilters,
+            useUpload: this.property.useUpload
+          });
+          break;
+        case 'editor-table':
+          this.child = this.create('things-editor-table');
+          break;
+        }
+
+        this.child && this.child.addEventListener('change', function(e) {
+          self.set('value', e.target[self._valueTargetProperty || 'value']);
+        });
+
+        this.child && this.appendChild(this.child);
+      },
+
+      _isTypeofEditor: function(editorType, type) {
+        return editorType == type
+      },
+
+      _isExist: function(label) {
+
+        var str = String(label || "")
+        return label != ""
+
+      },
+
+      _valueChanged: function(value) {
+        if(!value) {
+          // console.log(Error().stack)
+          return
+        }
+
+        // console.log('value changed', value, this.child)
+        // try {
+        //   this.child[this._valueTargetProperty || 'value'] = value;
+        //   // this.child.value = value;
+        // } catch(e) {
+        //   console.log(e, this.child)
+        // }
+
+        // if(!this.get('observe'))
+        //   return
+
+        // this.get('observe').call(this, value)
+      },
+
+      _onThingsImageChanged: function(e) {
+        if(!this.property)
+          return
+
+        this.set("value", e.detail)
+        this.fire("change")
+      }
+
+    })
+  </script>
+</dom-module>
