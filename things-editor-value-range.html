@@ -122,6 +122,8 @@ Example:
           this._build()
         else if(div.hasAttribute('data-record-new') && input.hasAttribute('data-value'))
           this._add()
+
+        e.stopPropagation()
       },
 
       _build: function(includeNewRecord) {
@@ -141,7 +143,7 @@ Example:
 
           if(from) {
             if(from === 'default')
-              newrange['default'] = value
+              newrange['default'] = value || (this.valueType == 'color' ? '#000000': '')
             else
               newrange[`${from}~${to}`] = value
           }
@@ -195,8 +197,10 @@ Example:
 
         var inputs = this.querySelectorAll('[data-record-new] input')
 
-        for (var i = 0;i < inputs.length;i++)
-          inputs[i].value = ''
+        for (var i = 0;i < inputs.length;i++) {
+          let input = inputs[i]
+          input.value = (input.type == 'color') ? '#000000' : ''
+        }
 
         inputs[0].focus()
       },
