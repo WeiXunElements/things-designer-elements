@@ -49,6 +49,9 @@ Example:
     }
   </style>
 
+    <label><things-i18n-msg msgid="label.delay" auto>지연</things-i18n-msg></label>
+    <input is="things-editor-number-input" number="{{animation.delay::change}}" value="0">
+
     <template is='dom-if' if='[[_isRotation(value._type)]]'>
       <label><things-i18n-msg msgid="label.duration" auto>시간</things-i18n-msg></label>
       <input is="things-editor-number-input" number="{{animation.duration::change}}" value="2000">
@@ -151,6 +154,9 @@ Example:
       value = changed.value
 
       switch(name){
+        case 'animation.delay':
+          this.set('value.delay', value)
+          break;
         case 'animation.x':
           this.set('value.x', value)
           break;
