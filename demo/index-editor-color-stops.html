@@ -67,7 +67,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       window.addEventListener('WebComponentsReady', function(e) {
         var app = document.querySelector('#app')
 
-        app.$.properties.addEventListener('target-changed', function() {
+        app.$.properties.addEventListener('change', function() {
           app.text = JSON.stringify(app.xx.colorStops, null, "\t")
         })
 

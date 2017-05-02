@@ -49,30 +49,24 @@ Example:
     }
   </style>
 
-    <fieldset>
-      <legend>shadow</legend>
+    <label>
+      <things-i18n-msg msgid="label.shadowOffsetX" auto>offset-X</things-i18n-msg>
+    </label>
+    <input id='left' is="things-editor-number-input" number="{{shadow.left::change}}">
 
-      <label>
-        <things-i18n-msg msgid="label.shadowOffsetX" auto>offset-X</things-i18n-msg>
-      </label>
-      <input id='left' is="things-editor-number-input" number="{{shadow.left::change}}">
+    <label>
+      <things-i18n-msg msgid="label.shadowOffsetY" auto>offset-Y</things-i18n-msg>
+    </label>
+    <input id='top' is="things-editor-number-input" number="{{shadow.top::change}}">
 
-      <label>
-        <things-i18n-msg msgid="label.shadowOffsetY" auto>offset-Y</things-i18n-msg>
-      </label>
-      <input id='top' is="things-editor-number-input" number="{{shadow.top::change}}">
+    <label>
+      <things-i18n-msg msgid="label.shadowSize" auto>Size</things-i18n-msg>
+    </label>
+    <input id='blurSize' is="things-editor-number-input" number="{{shadow.blurSize::change}}">
 
-      <label>
-        <things-i18n-msg msgid="label.shadowSize" auto>Size</things-i18n-msg>
-      </label>
-      <input id='blurSize' is="things-editor-number-input" number="{{shadow.blurSize::change}}">
-
-      <label class="icon-only-label color"></label>
-      <things-editor-color id='color' value="{{shadow.color::change}}">
-      </things-editor-color>
-
-    </fieldset>
-
+    <label class="icon-only-label color"></label>
+    <things-editor-color id='color' value="{{shadow.color::change}}">
+    </things-editor-color>
 
   </template>
 

@@ -201,11 +201,11 @@ Example:
     </style>
 
     <input id="text" type="text" value="{{value}}">
-    <a id="color" type="button"  on-click="showPicker">
-      <span style="background-color:[[tinycolor(value)]]"></span>
+    <a id="color" type="button" on-click="showPicker">
+      <span id="color-thumbnail"></span>
     </a>
 
-    <paper-color-picker shape="huebox" color={{valueAsObject}} allow-alpha always-show-alpha type="hsl"></paper-color-picker>
+    <paper-color-picker shape="huebox" color={{valueAsObject}} color-as-string={{colorString}} allow-alpha always-show-alpha type="hsl"></paper-color-picker>
 
   </template>
 
@@ -232,12 +232,12 @@ Example:
       },
 
       listeners: {
-        'change': '_onInputChanged'
+        'text.change': '_onInputChanged'
       },
 
       observers: [
         '_onValueChanged(value)',
-        '_onValueAsObjectChanged(valueAsObject.*)'
+        '_onColorStringChanged(colorString)'
       ],
 
       _onValueChanged: function(v) {
@@ -252,7 +252,6 @@ Example:
             && this.valueAsObject.alpha == rgbValue.a)
 
           if(isChanged) {
-            this._changedBySelf = true;
             this.valueAsObject = {
               red: rgbValue.r,
               green: rgbValue.g,
@@ -262,26 +261,15 @@ Example:
           }
 
         } else {
-          this._changedBySelf = true;
           this.valueAsObject = {
-            red: undefined,
-            green: undefined,
-            blue: undefined,
             alpha: 1
           }
         }
 
-        this._changedBySelf = true;
-        this.fire("change")
-
+        this.$["color-thumbnail"].style.backgroundColor = value
       },
 
-      _onValueAsObjectChanged: function(valueAsObject){
-        if(this._changedBySelf) {
-          this._changedBySelf = false;
-          return
-        }
-
+      _onColorStringChanged: function(valueAsObject){
         var color = tinycolor({
           r: this.valueAsObject.red,
           g: this.valueAsObject.green,
@@ -291,20 +279,16 @@ Example:
 
         if(color.isValid()) {
           this.set("value", color.toString())
+          this.fire('change')
         }
       },
 
       _onInputChanged: function(e) {
-        // e.stopPropagation()
-        if(this._changedBySelf) {
-          this._changedBySelf = false;
-          return
-        }
-
         var color = this.$.text.value
 
         this.set('value', color)
-
+        e.stopPropagation()
+        this.fire('change')
       },
 
       tinycolor: function(color){

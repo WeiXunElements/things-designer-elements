@@ -1,0 +1,214 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<link rel="import" href="../iron-pages/iron-pages.html">
+<link rel="import" href="../things-i18n-msg/things-i18n-msg.html">
+<link rel="import" href="./things-editor-number-input.html">
+<link rel="import" href="./things-editor-value.html">
+
+<!--
+컴포넌트의 그림자를 주는 속성이다.
+
+Example:
+
+    <things-editor-animation value={{animation}}>
+    </things-editor-animation>
+
+@demo demo/index-editor-animation.html
+@hero hero.svg
+-->
+
+
+<dom-module id="things-editor-animation">
+  <template>
+  <style>
+    :host {
+      display: block;
+      @apply(--things-editor-animation)
+    }
+    paper-radio-button{padding:2px 1px 10px 7px !important;}
+    .icon-only-label{
+      @apply(--things-properties-icon-only-label);
+      float:left;
+      margin-top:2px;margin-left:40px;
+    }
+    .icon-only-label.color{background-position:70% -498px;}
+    things-editor-color::animation #text{
+      width:71%;
+    }
+    label{
+      @apply(--things-label);
+    }
+    input{
+      @apply(--things-input);
+    }
+    fieldset{
+      @apply(--things-fieldset);
+    }
+    legend{
+      @apply(--things-fieldset-legend);
+    }
+  </style>
+
+    <label><things-i18n-msg msgid="label.delay" auto>지연</things-i18n-msg></label>
+    <input is="things-editor-number-input" number="{{animation.delay::change}}" value="0">
+
+    <template is='dom-if' if='[[_isRotation(value._type)]]'>
+      <label><things-i18n-msg msgid="label.duration" auto>시간</things-i18n-msg></label>
+      <input is="things-editor-number-input" number="{{animation.duration::change}}" value="2000">
+
+      <label><things-i18n-msg msgid="label.rotate" auto>회전</things-i18n-msg></label>
+      <input is="things-editor-number-input" number="{{animation.theta::change}}" value="1">
+
+      <label><things-i18n-msg msgid="label.repeat" auto>반복</things-i18n-msg></label>
+      <input type="checkbox" checked="{{animation.repeat::change}}"></input>
+    </template>
+
+    <template is='dom-if' if='[[_isVibration(value._type)]]'>
+      <label><things-i18n-msg msgid="label.cycle" auto>주기</things-i18n-msg></label>
+      <input is="things-editor-number-input" number="{{animation.cycle::change}}" value="1000">
+
+      <label><things-i18n-msg msgid="label.tilt" auto>기울기</things-i18n-msg></label>
+      <input is="things-editor-number-input" number="{{animation.tilt::change}}" value="15">
+
+      <label><things-i18n-msg msgid="label.repeat" auto>반복</things-i18n-msg></label>
+      <input type="checkbox" checked="{{animation.repeat::change}}"></input>
+    </template>
+
+    <template is='dom-if' if='[[_isHeartbeat(value._type)]]'>
+      <label><things-i18n-msg msgid="label.cycle" auto>속도</things-i18n-msg></label>
+      <input is="things-editor-number-input" number="{{animation.cycle::change}}" value="2000">
+
+      <label><things-i18n-msg msgid="label.scale" auto>크기</things-i18n-msg></label>
+      <input is="things-editor-number-input" number="{{animation.scale::change}}" value="1.3">
+
+      <label><things-i18n-msg msgid="label.repeat" auto>반복</things-i18n-msg></label>
+      <input type="checkbox" checked="{{animation.repeat::change}}"></input>
+    </template>
+
+    <template is='dom-if' if='[[_isMoving(value._type)]]'>
+      <label><things-i18n-msg msgid="label.duration" auto>시간</things-i18n-msg></label>
+      <input is="things-editor-number-input" number="{{animation.duration::change}}" value="2000">
+
+      <label><things-i18n-msg msgid="label.x-axes" auto>X 축</things-i18n-msg></label>
+      <input is="things-editor-number-input" number="{{animation.x::change}}" value="100">
+
+      <label><things-i18n-msg msgid="label.y-axes" auto>Y 축</things-i18n-msg></label>
+      <input is="things-editor-number-input" number="{{animation.y::change}}" value="0">
+
+      <label><things-i18n-msg msgid="label.repeat" auto>반복</things-i18n-msg></label>
+      <input type="checkbox" checked="{{animation.repeat::change}}"></input>
+    </template>
+
+    <template is='dom-if' if='[[_isOutLine(value._type)]]'>
+      <label><things-i18n-msg msgid="label.duration" auto>시간</things-i18n-msg></label>
+      <input is="things-editor-number-input" number="{{animation.duration::change}}" value="2000">
+
+      <label><things-i18n-msg msgid="label.target" auto>대상</things-i18n-msg></label>
+      <input required value="{{animation.rideOn::change}}">
+
+      <label><things-i18n-msg msgid="label.repeat" auto>반복</things-i18n-msg></label>
+      <input type="checkbox" checked="{{animation.repeat::change}}"></input>
+    </template>
+
+
+  </template>
+
+  <script>
+  Polymer({
+    is: 'things-editor-animation',
+
+    properties: {
+      value: {
+        notify: true
+      }
+    },
+
+    listeners: {
+      'value-changed': 'onChangedValue'
+    },
+
+    observers: [
+      'onChangedAnimation(animation.*)'
+    ],
+
+    onChangedValue: function(changed, after) {
+
+      if(this.changedOnThis){
+        return
+      }
+
+      var value = after.value
+
+      if(!value){
+        this.animation = {}
+        return
+      }
+
+      this.animation = Object.assign({}, value);
+    },
+
+    onChangedAnimation: function(changed) {
+      this.changedOnThis = true
+
+      name = changed.path
+      value = changed.value
+
+      switch(name){
+        case 'animation.delay':
+          this.set('value.delay', value)
+          break;
+        case 'animation.x':
+          this.set('value.x', value)
+          break;
+        case 'animation.y':
+          this.set('value.y', value)
+          break;
+        case 'animation.duration':
+          this.set('value.duration', value)
+          break;
+        case 'animation.theta':
+          this.set('value.theta', value)
+          break;
+        case 'animation.repeat':
+          this.set('value.repeat', value)
+          break;
+        case 'animation.tilt':
+          this.set('value.tilt', value)
+          break;
+        case 'animation.cycle':
+          this.set('value.cycle', value)
+          break;
+        case 'animation.scale':
+          this.set('value.scale', value)
+          break;
+        case 'animation.rideOn':
+          this.set('value.rideOn', value)
+          break;
+      }
+
+      this.changedOnThis = false
+    },
+
+    _isOutLine: function(type){
+      return type == 'out-line'
+    },
+
+    _isRotation: function(type){
+      return type == 'rotation'
+    },
+
+    _isVibration: function(type){
+      return type == 'vibration'
+    },
+
+    _isHeartbeat: function(type){
+      return type == 'heartbeat'
+    },
+
+    _isMoving: function(type){
+      return type == 'moving'
+    }
+
+  });
+  </script>
+</dom-module>
