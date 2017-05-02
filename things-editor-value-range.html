@@ -10,8 +10,8 @@ Example:
                              value-type="[[valueType]]">
   </things-editor-value-range>
 
-@demo demo/index-editor-value-range-color.html
 @demo demo/index-editor-value-range.html
+@demo demo/index-editor-value-range-color.html
 @hero hero.svg
 -->
 
@@ -46,7 +46,12 @@ Example:
       <div data-record>
         <input type="text" data-from placeholder="from" value="{{item.from}}"/>
         <input type="text" data-to placeholder="to" value="{{item.to}}"/>
-        <input type="text" data-value placeholder="value" value="{{item.value}}" data-value-type$="[[valueType]]"/>
+        <template is="dom-if" if="[[_isBooleanType(valueType)]]">
+          <input type="checkbox" data-value checked="{{item.value::change}}" data-value-type$="[[valueType]]"/>
+        </template>
+        <template is="dom-if" if="[[!_isBooleanType(valueType)]]">
+          <input type="text" data-value placeholder="value" value="{{item.value}}" data-value-type$="[[valueType]]"/>
+        </template>
         <template is="dom-if" if="[[_isColorType(valueType)]]">
           <input data-value type="color" value="{{item.value}}" tabindex="-1"/>
         </template>
@@ -57,7 +62,12 @@ Example:
     <div data-record-new>
       <input type="text" data-from placeholder="from" value=""/>
       <input type="text" data-to placeholder="to" value=""/>
-      <input type="text" data-value placeholder="value" value="" data-value-type$="[[valueType]]"/>
+      <template is="dom-if" if="[[_isBooleanType(valueType)]]">
+        <input type="checkbox" data-value data-value-type$="[[valueType]]"/>
+      </template>
+      <template is="dom-if" if="[[!_isBooleanType(valueType)]]">
+        <input type="text" data-value placeholder="value" value="" data-value-type$="[[valueType]]"/>
+      </template>
       <template is="dom-if" if="[[_isColorType(valueType)]]">
         <input data-value type="color" tabindex="-1"/>
       </template>
@@ -67,7 +77,12 @@ Example:
     <div data-record>
       <input type="text" data-from data-default disabled value="default"/>
       <input type="text" data-to placeholder="to" value="" hidden/>
-      <input type="text" data-value value="{{range.default}}" placeholder="value" class="default-value" data-value-type$="[[valueType]]"/>
+      <template is="dom-if" if="[[_isBooleanType(valueType)]]">
+        <input type="checkbox" data-value checked="{{range.default::change}}" class="default-value" data-value-type$="[[valueType]]"/>
+      </template>
+      <template is="dom-if" if="[[!_isBooleanType(valueType)]]">
+        <input type="text" data-value value="{{range.default}}" placeholder="value" class="default-value" data-value-type$="[[valueType]]"/>
+      </template>
       <template is="dom-if" if="[[_isColorType(valueType)]]">
         <input data-value type="color" value="{{range.default}}" tabindex="-1"/>
       </template>
@@ -105,14 +120,36 @@ Example:
         return type === 'color'
       },
 
+      _isBooleanType: function(type) {
+        return type === 'boolean'
+      },
+
+      _defaultValue: function(type) {
+        switch(type || this.valueType) {
+        case 'color':
+          return '#000000';
+        case 'boolean':
+        case 'checkbox':
+          return false;
+        default:
+          return ''
+        }
+      },
+
       _onChange: function(e) {
 
         var input = e.target
-        var value = e.target.value
+        var value
+
+        if(input.type == 'checkbox')
+          value = Boolean(input.checked)
+        else
+          value = input.value
+
         var div = input.parentElement
 
         if(input.hasAttribute('data-value')) {
-          var dataList = div.querySelectorAll('[data-value]')
+          var dataList = div.querySelectorAll('[data-value]:not([hidden])')
           for(var i = 0;i < dataList.length;i++)
             if(dataList[i] !== input)
               dataList[i].value = value
@@ -139,7 +176,13 @@ Example:
 
           var from = record.querySelector('[data-from]').value
           var to = record.querySelector('[data-to]').value
-          var value = record.querySelector('[data-value]').value
+          var input = record.querySelector('[data-value]:not([hidden])')
+          var value
+
+          if(input.type == 'checkbox')
+            value = Boolean(input.checked)
+          else
+            value = input.value
 
           if(from) {
             if(from === 'default')
@@ -199,7 +242,10 @@ Example:
 
         for (var i = 0;i < inputs.length;i++) {
           let input = inputs[i]
-          input.value = (input.type == 'color') ? '#000000' : ''
+          if(input.type == 'checkbox')
+            input.checked = false
+          else
+            input.value = this._defaultValue(input.type)
         }
 
         inputs[0].focus()

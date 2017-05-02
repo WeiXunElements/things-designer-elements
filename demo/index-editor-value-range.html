@@ -34,7 +34,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <textarea value="[[text]]"></textarea>
 
       <things-editor-value-range id="editor"
-                                 range="{{value.map}}"
+                                 range="{{value.range}}"
                                  key-type="[[value.type]]"
                                  value-type="[[value.valueType]]">
       </things-editor-value-range>
@@ -47,12 +47,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         app.value = {
           type: "string",
-          valueType: "string"
+          valueType: "boolean",
+          range: {
+            '1~2': true,
+            default: true
+          }
         }
 
-        app.$.editor.addEventListener('change', function() {
+        app.$.editor._changed = function(range) {
           app.text = JSON.stringify(app.value, null, "\t")
-        })
+        }
+
+        app.$.editor._addComplexObserverEffect('_changed(range)');
       })
     </script>
 
