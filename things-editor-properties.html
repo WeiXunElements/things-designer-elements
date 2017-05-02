@@ -133,9 +133,10 @@ Example:
       _setValues: function() {
           this._changedOnThis = true
           let self = this
+
           Array.from(this.querySelectorAll('things-editor-property')).forEach(function(prop) {
             let name = prop.getAttribute('name')
-            prop.value = self.target[name]
+            prop.value = self.target && self.target[name]
           })
           this._changedOnThis = false
       },

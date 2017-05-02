@@ -26,6 +26,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 300px;
         background: var(--theme-color, red);
       }
+
+      textarea {
+        width: 600px;
+        height: 300px;
+      }
     </style>
   </head>
   <body unresolved>
@@ -38,29 +43,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 target="{{value}}"
                                 props="[[props]]">
         <things-editor-property label="NUMBER"
+                                name="number"
                                 type="number"
                                 value="{{value.number}}"
                                 property="[[property]]">
         </things-editor-property>
 
+        <things-editor-property label="ANGLE"
+                                name="angle"
+                                type="angle"
+                                value="{{value.angle}}"
+                                property="[[property]]">
+        </things-editor-property>
+
         <things-editor-property label="COLOR"
+                                name="color"
                                 type="color"
                                 value="{{value.color}}"
                                 property="[[property]]">
         </things-editor-property>
 
         <things-editor-property label="COLOR STOPS"
+                                name="solidColorStops"
                                 type="solid-color-stops"
                                 value="{{value.solidColorStops}}"
                                 property="[[property]]">
         </things-editor-property>
 
         <things-editor-property label="COLOR STOPS"
+                                name="gradientColorStops"
                                 type="gradient-color-stops"
                                 value="{{value.gradientColorStops}}"
                                 property="[[property]]">
         </things-editor-property>
       </things-editor-properties>
+
+      <textarea value="[[text]]"></textarea>
 
     </template>
 
@@ -77,13 +95,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         app.value = {
           number: 100.9,
+          angle: 3.14,
           color: 'red',
           solidColorStops: [],
           gradientColorStops: []
         }
 
         app.$.properties.addEventListener('change', function() {
-          console.log('changed', app.value)
+          app.text = JSON.stringify(app.value, null, "\t")
         })
       })
     </script>

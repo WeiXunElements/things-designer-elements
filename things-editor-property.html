@@ -10,7 +10,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../polymer/polymer.html">
 
-<link rel="import" href="./elements.html">
+<link rel="import" href="./things-editor-color.html">
+<link rel="import" href="./things-editor-color-stops.html">
+<link rel="import" href="./things-editor-multiple-color.html">
+<link rel="import" href="./things-editor-color-style.html">
+<link rel="import" href="./things-editor-number-input.html">
+<link rel="import" href="./things-editor-angle-input.html">
+<link rel="import" href="./things-editor-table.html">
+<link rel="import" href="./things-editor-action.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -41,6 +48,11 @@ Example:
     <template is="dom-if" if="[[_isTypeofEditor(type, 'number')]]">
       <input is="things-editor-number-input" type="number" number="{{value::change}}" placeholder="[[placeholder]]">
     </template>
+
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'angle')]]">
+      <input is="things-editor-angle-input" type="number" radian="{{value::change}}" placeholder="[[placeholder]]">
+    </template>
+
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'string')]]">
       <input type="text" value="{{value::change}}" placeholder="[[placeholder]]">
