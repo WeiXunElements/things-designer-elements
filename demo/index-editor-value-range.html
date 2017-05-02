@@ -54,9 +54,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
         }
 
-        app.$.editor.addEventListener('change', function() {
+        app.$.editor._changed = function(range) {
           app.text = JSON.stringify(app.value, null, "\t")
-        })
+        }
+
+        app.$.editor._addComplexObserverEffect('_changed(range)');
       })
     </script>
 

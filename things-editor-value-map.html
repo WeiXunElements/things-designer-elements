@@ -123,6 +123,18 @@ Example:
         return type === 'boolean'
       },
 
+      _defaultValue: function(type) {
+        switch(type || this.valueType) {
+        case 'color':
+          return '#000000';
+        case 'boolean':
+        case 'checkbox':
+          return false;
+        default:
+          return ''
+        }
+      },
+
       _onChange: function(e) {
         var input = e.target
         var value
@@ -134,11 +146,12 @@ Example:
 
         var div = input.parentElement
 
-        if(input.hasAttribute('data-value')) {
+        // if(input.hasAttribute('data-value')) {
+        if(div.hasAttribute('data-record')) {
           var dataList = div.querySelectorAll('[data-value]:not([hidden])')
           for(var i = 0;i < dataList.length;i++)
             if(dataList[i] !== input)
-              dataList[i].value = value
+              dataList[i].value = value || this._defaultValue()
         }
 
         if(div.hasAttribute('data-record'))
@@ -170,7 +183,7 @@ Example:
             value = input.value
 
           if(key)
-            newmap[key] = value || (this.valueType == 'color' ? '#000000': '')
+            newmap[key] = value || this._defaultValue()
         }
 
         this.set('map', newmap)
@@ -219,7 +232,10 @@ Example:
 
         for (var i = 0;i < inputs.length;i++) {
           let input = inputs[i]
-          input.value = (input.type == 'color') ? '#000000' : ''
+          if(input.type == 'checkbox')
+            input.checked = false
+          else
+            input.value = this._defaultValue(input.type)
         }
 
         inputs[0].focus()

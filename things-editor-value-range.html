@@ -10,8 +10,8 @@ Example:
                              value-type="[[valueType]]">
   </things-editor-value-range>
 
-@demo demo/index-editor-value-range-color.html
 @demo demo/index-editor-value-range.html
+@demo demo/index-editor-value-range-color.html
 @hero hero.svg
 -->
 
@@ -124,6 +124,18 @@ Example:
         return type === 'boolean'
       },
 
+      _defaultValue: function(type) {
+        switch(type || this.valueType) {
+        case 'color':
+          return '#000000';
+        case 'boolean':
+        case 'checkbox':
+          return false;
+        default:
+          return ''
+        }
+      },
+
       _onChange: function(e) {
 
         var input = e.target
@@ -230,7 +242,10 @@ Example:
 
         for (var i = 0;i < inputs.length;i++) {
           let input = inputs[i]
-          input.value = (input.type == 'color') ? '#000000' : ''
+          if(input.type == 'checkbox')
+            input.checked = false
+          else
+            input.value = this._defaultValue(input.type)
         }
 
         inputs[0].focus()
