@@ -54,7 +54,7 @@ Example:
         <button class="record-action" on-tap="_delete" tabindex="-1">-</button>
       </div>
     </template>
- 
+
      <div data-record-new>
       <input type="text" data-key placeholder="key" value=""/>
       <input type="text" data-value placeholder="value" value="" data-value-type$="[[valueType]]"/>
@@ -120,6 +120,8 @@ Example:
           this._build()
         else if(div.hasAttribute('data-record-new') && input.hasAttribute('data-value'))
           this._add()
+
+        e.stopPropagation()
       },
 
       _build: function(includeNewRecord) {
@@ -137,7 +139,7 @@ Example:
           var value = record.querySelector('[data-value]').value
 
           if(key)
-            newmap[key] = value
+            newmap[key] = value || (this.valueType == 'color' ? '#000000': '')
         }
 
         this.set('map', newmap)
@@ -184,8 +186,10 @@ Example:
 
         var inputs = this.querySelectorAll('[data-record-new] input')
 
-        for (var i = 0;i < inputs.length;i++)
-          inputs[i].value = ''
+        for (var i = 0;i < inputs.length;i++) {
+          let input = inputs[i]
+          input.value = (input.type == 'color') ? '#000000' : ''
+        }
 
         inputs[0].focus()
       },
