@@ -17,32 +17,37 @@ Example:
 
 <dom-module id="things-editor-value-map">
   <template>
-    <style>
-      :host {
-        @apply(--things-variable-ruletype-container)
-      }
-      *{float:left;}
-      input{
-        width:41%;
-        margin:3px 0 3px 3px;
-      }
-      input[type='color']{
-        @apply(--things-input-color);
-        height:15px;
-        top:2px;
-      }
-      input[type='color']::-webkit-color-swatch-wrapper{padding:0;}
-      input[type='color']::-webkit-color-swatch{border:0;}
-      div{
-        border-bottom:1px solid #c0c0c0;
-      }
-      div:last-child{
-        border-bottom:none;
-      }
-      .record-action{
-        @apply(--things-record-action-button)
-      }
-    </style>
+  <style>
+    :host {
+      @apply(--things-variable-ruletype-container)
+    }
+    *{float:left;}
+    input{
+      width:41%;
+      margin:3px 0 3px 3px;
+    }
+    input[type='color']{
+      @apply(--things-input-color);
+      height:15px;
+      top:2px;
+    }
+    input[type='color']::-webkit-color-swatch-wrapper{padding:0;}
+    input[type='color']::-webkit-color-swatch{border:0;}
+    input[type="checkbox"]{
+      width:initial !important;
+      margin-top:6px;
+    }
+    div{
+      border-bottom:1px solid #c0c0c0;
+      width:100%;
+    }
+    div:last-child{
+      border-bottom:none;
+    }
+    .record-action{
+      @apply(--things-record-action-button)
+    }
+  </style>
 
      <template is="dom-repeat" items="{{_toArray(map)}}">
       <div data-record>
