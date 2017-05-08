@@ -1,6 +1,6 @@
 {
   "name": "things-designer-elements",
-  "version": "2.0.12",
+  "version": "2.0.13",
   "authors": [
     "Hatio Lab. <heartyoh@hatiolab.com>"
   ],
@@ -29,7 +29,7 @@
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
     "web-component-tester": "^4.0.0",
-    "things-scene": "^0.7.0",
+    "things-scene-core": "ThingsElements/things-scene-core#^2.0.0",
     "things-theme": "ThingsElements/things-theme"
   }
 }
