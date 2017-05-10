@@ -10,60 +10,47 @@ Example:
                              value-type="[[valueType]]">
   </things-editor-value-range>
 
-@demo demo/index-editor-value-range.html
 @demo demo/index-editor-value-range-color.html
+@demo demo/index-editor-value-range.html
 @hero hero.svg
 -->
 
 <dom-module id="things-editor-value-range">
   <template>
-  <style>
-    :host {
-      @apply(--things-variable-ruletype-container)
-    }
-    *{float:left;}
-    input{
-      width:20%;
-      margin:3px 0 3px 3px;
-    }
-    input[type='color']{
-      @apply(--things-input-color);
-      height:15px;
-      top:2px;
-    }
-    input[type='color']::-webkit-color-swatch-wrapper{padding:0;}
-    input[type='color']::-webkit-color-swatch{border:0;}
-    input.things-editor-value-range[data-value-type="color"]{
-      min-width:38.3% !important;
-    }
-    div input[data-value-type='color']:nth-child(3){width:38.5%;}
-    div input.default-value[data-value-type='color']{width:62%;}
-    input[type="checkbox"]{
-      width:initial !important;
-      margin-top:6px;
-    }
-    div{
-        border-bottom:1px solid #c0c0c0;
-        width:100%
+    <style>
+      :host {
+        @apply(--things-variable-ruletype-container)
       }
-    div:last-child{border-bottom:none;}
-    .record-action{
-      @apply(--things-record-action-button);
-    }
-  </style>
+      *{float:left;}
+      input, things-editor-color{
+        width:20%;
+        margin:3px 0 3px 3px;
+      }
+      input[type='color']{
+        @apply(--things-input-color);
+        height:15px;
+        top:2px;
+      }
+      input[type='color']::-webkit-color-swatch-wrapper{padding:0;}
+      input[type='color']::-webkit-color-swatch{border:0;}
+      div input[data-value-type='color']:nth-child(3){width:38.5%;}
+      div input.default-value[data-value-type='color'], div things-editor-color.default-value{width:62%;}
+      div{border-bottom:1px solid #c0c0c0;}
+      div:last-child{border-bottom:none;}
+      .record-action{
+        @apply(--things-record-action-button);
+      }
+    </style>
 
     <template is="dom-repeat" items="{{_toArray(range)}}">
       <div data-record>
         <input type="text" data-from placeholder="from" value="{{item.from}}"/>
         <input type="text" data-to placeholder="to" value="{{item.to}}"/>
-        <template is="dom-if" if="[[_isBooleanType(valueType)]]">
-          <input type="checkbox" data-value checked="{{item.value::change}}" data-value-type$="[[valueType]]"/>
-        </template>
-        <template is="dom-if" if="[[!_isBooleanType(valueType)]]">
-          <input type="text" data-value placeholder="value" value="{{item.value}}" data-value-type$="[[valueType]]"/>
-        </template>
         <template is="dom-if" if="[[_isColorType(valueType)]]">
-          <input data-value type="color" value="{{item.value}}" tabindex="-1"/>
+          <things-editor-color data-value value="{{item.value}}" tabindex="-1"></things-editor-color>
+        </template>
+        <template is="dom-if" if="[[!_isColorType(valueType)]]">
+          <input type="text" data-value placeholder="value" value="{{item.value}}" data-value-type$="[[valueType]]"/>
         </template>
         <button class="record-action" on-tap="_delete" tabindex="-1">-</button>
       </div>
@@ -72,14 +59,11 @@ Example:
     <div data-record-new>
       <input type="text" data-from placeholder="from" value=""/>
       <input type="text" data-to placeholder="to" value=""/>
-      <template is="dom-if" if="[[_isBooleanType(valueType)]]">
-        <input type="checkbox" data-value data-value-type$="[[valueType]]"/>
-      </template>
-      <template is="dom-if" if="[[!_isBooleanType(valueType)]]">
-        <input type="text" data-value placeholder="value" value="" data-value-type$="[[valueType]]"/>
-      </template>
       <template is="dom-if" if="[[_isColorType(valueType)]]">
-        <input data-value type="color" tabindex="-1"/>
+        <things-editor-color data-value value="" tabindex="-1"></things-editor-color>
+      </template>
+      <template is="dom-if" if="[[!_isColorType(valueType)]]">
+        <input type="text" data-value placeholder="value" value="" data-value-type$="[[valueType]]"/>
       </template>
       <button class="record-action" on-tap="_add" tabindex="-1">+</button>
     </div>
@@ -87,14 +71,11 @@ Example:
     <div data-record>
       <input type="text" data-from data-default disabled value="default"/>
       <input type="text" data-to placeholder="to" value="" hidden/>
-      <template is="dom-if" if="[[_isBooleanType(valueType)]]">
-        <input type="checkbox" data-value checked="{{range.default::change}}" class="default-value" data-value-type$="[[valueType]]"/>
-      </template>
-      <template is="dom-if" if="[[!_isBooleanType(valueType)]]">
-        <input type="text" data-value value="{{range.default}}" placeholder="value" class="default-value" data-value-type$="[[valueType]]"/>
-      </template>
       <template is="dom-if" if="[[_isColorType(valueType)]]">
-        <input data-value type="color" value="{{range.default}}" tabindex="-1"/>
+        <things-editor-color class="default-value" data-value value="{{range.default}}" tabindex="-1"></things-editor-color>
+      </template>
+      <template is="dom-if" if="[[!_isColorType(valueType)]]">
+        <input type="text" data-value value="{{range.default}}" placeholder="value" class="default-value" data-value-type$="[[valueType]]"/>
       </template>
       <button class="record-action" on-tap="_sort">&gt;</button>
     </div>
@@ -130,36 +111,14 @@ Example:
         return type === 'color'
       },
 
-      _isBooleanType: function(type) {
-        return type === 'boolean'
-      },
-
-      _defaultValue: function(type) {
-        switch(type || this.valueType) {
-        case 'color':
-          return '#000000';
-        case 'boolean':
-        case 'checkbox':
-          return false;
-        default:
-          return ''
-        }
-      },
-
       _onChange: function(e) {
 
         var input = e.target
-        var value
-
-        if(input.type == 'checkbox')
-          value = Boolean(input.checked)
-        else
-          value = input.value
-
+        var value = e.target.value
         var div = input.parentElement
 
         if(input.hasAttribute('data-value')) {
-          var dataList = div.querySelectorAll('[data-value]:not([hidden])')
+          var dataList = div.querySelectorAll('[data-value]')
           for(var i = 0;i < dataList.length;i++)
             if(dataList[i] !== input)
               dataList[i].value = value
@@ -169,8 +128,6 @@ Example:
           this._build()
         else if(div.hasAttribute('data-record-new') && input.hasAttribute('data-value'))
           this._add()
-
-        e.stopPropagation()
       },
 
       _build: function(includeNewRecord) {
@@ -186,24 +143,13 @@ Example:
 
           var from = record.querySelector('[data-from]').value
           var to = record.querySelector('[data-to]').value
-          var inputs = record.querySelectorAll('[data-value]:not([style*="display: none"])')
-          if(!inputs || inputs.length == 0)
-            continue;
-
-          var input = inputs[inputs.length - 1]
-
-          var value
-
-          if(input.type == 'checkbox')
-            value = Boolean(input.checked)
-          else
-            value = input.value
+          var value = record.querySelector('[data-value]').value
 
           if(from) {
             if(from === 'default')
-              newrange['default'] = value || (this.valueType == 'color' ? '#000000': '')
+              newrange['default'] = value
             else
-              newrange[`${from}~${to}`] = value
+              newrange[from + "~" + to] = value
           }
         }
 
@@ -241,7 +187,7 @@ Example:
           }
 
         var range = this._toArray(this.range).sort(sorter).reduce(function(sum, i) {
-          sum[`${i.from}~${i.to}`] = i.value
+          sum[i.from + "~" + i.to] = i.value
           return sum
         }, {})
 
@@ -253,16 +199,10 @@ Example:
       _add: function(e) {
         this._build(true)
 
-        var inputs = this.querySelectorAll('[data-record-new] input:not([style*="display: none"])')
+        var inputs = this.querySelectorAll('[data-record-new] input')
 
-        for (var i = 0;i < inputs.length;i++) {
-          let input = inputs[i]
-
-          if(input.type == 'checkbox')
-            input.checked = false
-          else
-            input.value = this._defaultValue(input.type)
-        }
+        for (var i = 0;i < inputs.length;i++)
+          inputs[i].value = ''
 
         inputs[0].focus()
       },

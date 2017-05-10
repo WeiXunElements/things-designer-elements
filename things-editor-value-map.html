@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="./things-editor-color.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -22,10 +23,19 @@ Example:
       @apply(--things-variable-ruletype-container)
     }
     *{float:left;}
-    input{
+    input, things-editor-color{
       width:41%;
       margin:3px 0 3px 3px;
     }
+    things-editor-color {
+      height: 15px;
+    }
+
+    things-editor-color:after {
+      content: '';
+      clear: both;
+    }
+
     input[type='color']{
       @apply(--things-input-color);
       height:15px;
@@ -47,34 +57,39 @@ Example:
     .record-action{
       @apply(--things-record-action-button)
     }
+
   </style>
 
-     <template is="dom-repeat" items="{{_toArray(map)}}">
+    <template is="dom-repeat" items="{{_toArray(map)}}">
       <div data-record>
         <input type="text" data-key placeholder="key" value="{{item.key}}"/>
         <template is="dom-if" if="[[_isBooleanType(valueType)]]">
           <input type="checkbox" data-value checked="{{item.value::change}}" data-value-type$="[[valueType]]"/>
         </template>
         <template is="dom-if" if="[[!_isBooleanType(valueType)]]">
-          <input type="text" data-value placeholder="value" value="{{item.value}}" data-value-type$="[[valueType]]"/>
-        </template>
-        <template is="dom-if" if="[[_isColorType(valueType)]]">
-          <input type="color" data-value value="{{item.value}}" tabindex="-1"/>
+          <template is="dom-if" if="[[_isColorType(valueType)]]">
+            <things-editor-color data-value value="{{item.value}}" tabindex="-1"></things-editor-color>
+          </template>
+          <template is="dom-if" if="[[!_isColorType(valueType)]]">
+            <input type="text" data-value placeholder="value" value="{{item.value}}" data-value-type$="[[valueType]]"/>
+          </template>
         </template>
         <button class="record-action" on-tap="_delete" tabindex="-1">-</button>
       </div>
     </template>
 
-     <div data-record-new>
+    <div data-record-new>
       <input type="text" data-key placeholder="key" value=""/>
       <template is="dom-if" if="[[_isBooleanType(valueType)]]">
         <input type="checkbox" data-value data-value-type$="[[valueType]]"/>
       </template>
       <template is="dom-if" if="[[!_isBooleanType(valueType)]]">
-        <input type="text" data-value placeholder="value" value="" data-value-type$="[[valueType]]"/>
-      </template>
-      <template is="dom-if" if="[[_isColorType(valueType)]]">
-        <input type="color" data-value value="" tabindex="-1"/>
+        <template is="dom-if" if="[[_isColorType(valueType)]]">
+          <things-editor-color data-value value="" tabindex="-1" placeholder="value"></things-editor-color>
+        </template>
+        <template is="dom-if" if="[[!_isColorType(valueType)]]">
+          <input type="text" data-value placeholder="value" value="" data-value-type$="[[valueType]]"/>
+        </template>
       </template>
       <button class="record-action" on-tap="_add" tabindex="-1">+</button>
     </div>
@@ -84,11 +99,16 @@ Example:
       <template is="dom-if" if="[[_isBooleanType(valueType)]]">
         <input type="checkbox" data-value checked="{{map.default::change}}" data-value-type$="[[valueType]]"/>
       </template>
-      <template is="dom-if" if="[[!_isBooleanType(valueType)]]">
-        <input type="text" data-value value="{{map.default}}" placeholder="value" data-value-type$="[[valueType]]"/>
+      <template is="dom-if" if="[[_isBooleanType(valueType)]]">
+        <input type="checkbox" data-value data-value-type$="[[valueType]]"/>
       </template>
-      <template is="dom-if" if="[[_isColorType(valueType)]]">
-        <input type="color" data-value value="{{map.default}}" tabindex="-1"/>
+      <template is="dom-if" if="[[!_isBooleanType(valueType)]]">
+        <template is="dom-if" if="[[_isColorType(valueType)]]">
+          <things-editor-color data-value value="{{map.default}}" placeholder="value" tabindex="-1"></things-editor-color>
+        </template>
+        <template is="dom-if" if="[[!_isColorType(valueType)]]">
+          <input type="text" data-value placeholder="value" value="{{map.default}}" placeholder="value" data-value-type$="[[valueType]]"/>
+        </template>
       </template>
       <button class="record-action" on-tap="_sort" tabindex="-1">&gt;</button>
     </div>
