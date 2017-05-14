@@ -3,6 +3,7 @@
 <link rel="import" href="../iron-pages/iron-pages.html">
 <link rel="import" href="../things-i18n-msg/things-i18n-msg.html">
 <link rel="import" href="./things-editor-number-input.html">
+<link rel="import" href="./things-editor-angle-input.html">
 <link rel="import" href="./things-editor-value.html">
 
 <!--
@@ -56,8 +57,8 @@ Example:
       <label><things-i18n-msg msgid="label.duration" auto>시간</things-i18n-msg></label>
       <input is="things-editor-number-input" number="{{animation.duration::change}}" value="2000">
 
-      <label><things-i18n-msg msgid="label.rotate" auto>회전</things-i18n-msg></label>
-      <input is="things-editor-number-input" number="{{animation.theta::change}}" value="1">
+      <label><things-i18n-msg msgid="label.theta" auto>각도</things-i18n-msg></label>
+      <input is="things-editor-angle-input" radian="{{animation.theta::change}}">
 
       <label><things-i18n-msg msgid="label.repeat" auto>반복</things-i18n-msg></label>
       <input type="checkbox" checked="{{animation.repeat::change}}"></input>
@@ -68,7 +69,7 @@ Example:
       <input is="things-editor-number-input" number="{{animation.cycle::change}}" value="1000">
 
       <label><things-i18n-msg msgid="label.tilt" auto>기울기</things-i18n-msg></label>
-      <input is="things-editor-number-input" number="{{animation.tilt::change}}" value="15">
+      <input is="things-editor-angle-input" radian="{{animation.tilt::change}}">
 
       <label><things-i18n-msg msgid="label.repeat" auto>반복</things-i18n-msg></label>
       <input type="checkbox" checked="{{animation.repeat::change}}"></input>

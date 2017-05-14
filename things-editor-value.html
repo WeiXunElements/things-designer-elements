@@ -78,6 +78,7 @@ Example:
       <option><things-i18n-msg msgid="label.dimension" auto>dimension</things-i18n-msg></option>
       <option><things-i18n-msg msgid="label.value" auto>value</things-i18n-msg></option>
       <option><things-i18n-msg msgid="label.data" auto>data</things-i18n-msg></option>
+      <option><things-i18n-msg msgid="label.started" auto>started</things-i18n-msg></option>
     </select>
 
     <label>
@@ -156,6 +157,7 @@ Example:
       _valueType: function(property){
         switch(property) {
         case 'hidden':
+        case 'started':
           this.valueType = 'boolean'
           break
         case 'rotation':
