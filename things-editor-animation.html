@@ -52,7 +52,7 @@ Example:
     <label><things-i18n-msg msgid="label.delay" auto>지연</things-i18n-msg></label>
     <input is="things-editor-number-input" number="{{animation.delay::change}}" value="0">
 
-    <template is='dom-if' if='[[_isRotation(value._type)]]'>
+    <template is='dom-if' if='[[_isRotation(value.type)]]'>
       <label><things-i18n-msg msgid="label.duration" auto>시간</things-i18n-msg></label>
       <input is="things-editor-number-input" number="{{animation.duration::change}}" value="2000">
 
@@ -63,7 +63,7 @@ Example:
       <input type="checkbox" checked="{{animation.repeat::change}}"></input>
     </template>
 
-    <template is='dom-if' if='[[_isVibration(value._type)]]'>
+    <template is='dom-if' if='[[_isVibration(value.type)]]'>
       <label><things-i18n-msg msgid="label.cycle" auto>주기</things-i18n-msg></label>
       <input is="things-editor-number-input" number="{{animation.cycle::change}}" value="1000">
 
@@ -74,7 +74,7 @@ Example:
       <input type="checkbox" checked="{{animation.repeat::change}}"></input>
     </template>
 
-    <template is='dom-if' if='[[_isHeartbeat(value._type)]]'>
+    <template is='dom-if' if='[[_isHeartbeat(value.type)]]'>
       <label><things-i18n-msg msgid="label.cycle" auto>속도</things-i18n-msg></label>
       <input is="things-editor-number-input" number="{{animation.cycle::change}}" value="2000">
 
@@ -85,7 +85,7 @@ Example:
       <input type="checkbox" checked="{{animation.repeat::change}}"></input>
     </template>
 
-    <template is='dom-if' if='[[_isMoving(value._type)]]'>
+    <template is='dom-if' if='[[_isMoving(value.type)]]'>
       <label><things-i18n-msg msgid="label.duration" auto>시간</things-i18n-msg></label>
       <input is="things-editor-number-input" number="{{animation.duration::change}}" value="2000">
 
@@ -99,7 +99,7 @@ Example:
       <input type="checkbox" checked="{{animation.repeat::change}}"></input>
     </template>
 
-    <template is='dom-if' if='[[_isOutLine(value._type)]]'>
+    <template is='dom-if' if='[[_isOutLine(value.type)]]'>
       <label><things-i18n-msg msgid="label.duration" auto>시간</things-i18n-msg></label>
       <input is="things-editor-number-input" number="{{animation.duration::change}}" value="2000">
 
@@ -148,49 +148,19 @@ Example:
     },
 
     onChangedAnimation: function(changed) {
+      if(changed.path.indexOf('animation.') !== 0)
+        return
+
       this.changedOnThis = true
 
-      name = changed.path
-      value = changed.value
-
-      switch(name){
-        case 'animation.delay':
-          this.set('value.delay', value)
-          break;
-        case 'animation.x':
-          this.set('value.x', value)
-          break;
-        case 'animation.y':
-          this.set('value.y', value)
-          break;
-        case 'animation.duration':
-          this.set('value.duration', value)
-          break;
-        case 'animation.theta':
-          this.set('value.theta', value)
-          break;
-        case 'animation.repeat':
-          this.set('value.repeat', value)
-          break;
-        case 'animation.tilt':
-          this.set('value.tilt', value)
-          break;
-        case 'animation.cycle':
-          this.set('value.cycle', value)
-          break;
-        case 'animation.scale':
-          this.set('value.scale', value)
-          break;
-        case 'animation.rideOn':
-          this.set('value.rideOn', value)
-          break;
-      }
+      var prop = changed.path.substr(10)
+      this.set('value.' + prop, changed.value)
 
       this.changedOnThis = false
     },
 
     _isOutLine: function(type){
-      return type == 'out-line'
+      return type == 'outline'
     },
 
     _isRotation: function(type){

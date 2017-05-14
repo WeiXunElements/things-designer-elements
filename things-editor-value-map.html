@@ -11,8 +11,8 @@ Example:
                            value-type="[[valueType]]">
   </things-editor-value-map>
 
-@demo demo/index-editor-value-map.html
 @demo demo/index-editor-value-map-color.html
+@demo demo/index-editor-value-map.html
 @hero hero.svg
 -->
 
@@ -98,9 +98,6 @@ Example:
       <input type="text" data-key value="default" disabled/>
       <template is="dom-if" if="[[_isBooleanType(valueType)]]">
         <input type="checkbox" data-value checked="{{map.default::change}}" data-value-type$="[[valueType]]"/>
-      </template>
-      <template is="dom-if" if="[[_isBooleanType(valueType)]]">
-        <input type="checkbox" data-value data-value-type$="[[valueType]]"/>
       </template>
       <template is="dom-if" if="[[!_isBooleanType(valueType)]]">
         <template is="dom-if" if="[[_isColorType(valueType)]]">
