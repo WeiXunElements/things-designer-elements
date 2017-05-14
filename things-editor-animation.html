@@ -76,7 +76,7 @@ Example:
     </template>
 
     <template is='dom-if' if='[[_isHeartbeat(value.type)]]'>
-      <label><things-i18n-msg msgid="label.cycle" auto>속도</things-i18n-msg></label>
+      <label><things-i18n-msg msgid="label.cycle" auto>주기</things-i18n-msg></label>
       <input is="things-editor-number-input" number="{{animation.cycle::change}}" value="2000">
 
       <label><things-i18n-msg msgid="label.scale" auto>크기</things-i18n-msg></label>
@@ -100,7 +100,7 @@ Example:
       <input type="checkbox" checked="{{animation.repeat::change}}"></input>
     </template>
 
-    <template is='dom-if' if='[[_isOutLine(value.type)]]'>
+    <template is='dom-if' if='[[_isOutline(value.type)]]'>
       <label><things-i18n-msg msgid="label.duration" auto>시간</things-i18n-msg></label>
       <input is="things-editor-number-input" number="{{animation.duration::change}}" value="2000">
 
@@ -160,7 +160,7 @@ Example:
       this.changedOnThis = false
     },
 
-    _isOutLine: function(type){
+    _isOutline: function(type){
       return type == 'outline'
     },
 
