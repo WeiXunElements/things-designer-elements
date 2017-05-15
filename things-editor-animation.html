@@ -50,67 +50,42 @@ Example:
     }
   </style>
 
-    <label><things-i18n-msg msgid="label.delay" auto>지연</things-i18n-msg></label>
+    <label><things-i18n-msg msgid="label.delay" auto>delay</things-i18n-msg></label>
     <input is="things-editor-number-input" number="{{animation.delay::change}}">
 
+    <label><things-i18n-msg msgid="label.duration" auto>duration</things-i18n-msg></label>
+    <input is="things-editor-number-input" number="{{animation.duration::change}}">
+
     <template is='dom-if' if='[[_isRotation(value.type)]]'>
-      <label><things-i18n-msg msgid="label.duration" auto>시간</things-i18n-msg></label>
-      <input is="things-editor-number-input" number="{{animation.duration::change}}">
-
-      <label><things-i18n-msg msgid="label.theta" auto>각도</things-i18n-msg></label>
+      <label><things-i18n-msg msgid="label.theta" auto>theta</things-i18n-msg></label>
       <input is="things-editor-angle-input" radian="{{animation.theta::change}}">
-
-      <label><things-i18n-msg msgid="label.repeat" auto>반복</things-i18n-msg></label>
-      <input type="checkbox" checked="{{animation.repeat::change}}"></input>
     </template>
 
     <template is='dom-if' if='[[_isVibration(value.type)]]'>
-      <label><things-i18n-msg msgid="label.duration" auto>주기</things-i18n-msg></label>
-      <input is="things-editor-number-input" number="{{animation.duration::change}}">
-
-      <label><things-i18n-msg msgid="label.theta" auto>기울기</things-i18n-msg></label>
+      <label><things-i18n-msg msgid="label.theta" auto>theta</things-i18n-msg></label>
       <input is="things-editor-angle-input" radian="{{animation.theta::change}}">
-
-      <label><things-i18n-msg msgid="label.repeat" auto>반복</things-i18n-msg></label>
-      <input type="checkbox" checked="{{animation.repeat::change}}"></input>
     </template>
 
     <template is='dom-if' if='[[_isHeartbeat(value.type)]]'>
-      <label><things-i18n-msg msgid="label.duration" auto>주기</things-i18n-msg></label>
-      <input is="things-editor-number-input" number="{{animation.duration::change}}">
-
-      <label><things-i18n-msg msgid="label.scale" auto>크기</things-i18n-msg></label>
+      <label><things-i18n-msg msgid="label.scale" auto>scale</things-i18n-msg></label>
       <input is="things-editor-number-input" number="{{animation.scale::change}}">
-
-      <label><things-i18n-msg msgid="label.repeat" auto>반복</things-i18n-msg></label>
-      <input type="checkbox" checked="{{animation.repeat::change}}"></input>
     </template>
 
     <template is='dom-if' if='[[_isMoving(value.type)]]'>
-      <label><things-i18n-msg msgid="label.duration" auto>시간</things-i18n-msg></label>
-      <input is="things-editor-number-input" number="{{animation.duration::change}}">
-
-      <label><things-i18n-msg msgid="label.x-axes" auto>X 축</things-i18n-msg></label>
+      <label><things-i18n-msg msgid="label.x-axes" auto>X-axes</things-i18n-msg></label>
       <input is="things-editor-number-input" number="{{animation.x::change}}">
 
-      <label><things-i18n-msg msgid="label.y-axes" auto>Y 축</things-i18n-msg></label>
+      <label><things-i18n-msg msgid="label.y-axes" auto>Y-axes</things-i18n-msg></label>
       <input is="things-editor-number-input" number="{{animation.y::change}}">
-
-      <label><things-i18n-msg msgid="label.repeat" auto>반복</things-i18n-msg></label>
-      <input type="checkbox" checked="{{animation.repeat::change}}"></input>
     </template>
 
     <template is='dom-if' if='[[_isOutline(value.type)]]'>
-      <label><things-i18n-msg msgid="label.duration" auto>시간</things-i18n-msg></label>
-      <input is="things-editor-number-input" number="{{animation.duration::change}}">
-
-      <label><things-i18n-msg msgid="label.target" auto>대상</things-i18n-msg></label>
+      <label><things-i18n-msg msgid="label.target" auto>target</things-i18n-msg></label>
       <input required value="{{animation.rideOn::change}}">
-
-      <label><things-i18n-msg msgid="label.repeat" auto>반복</things-i18n-msg></label>
-      <input type="checkbox" checked="{{animation.repeat::change}}"></input>
     </template>
 
+    <label><things-i18n-msg msgid="label.repeat" auto>repeat</things-i18n-msg></label>
+    <input type="checkbox" checked="{{animation.repeat::change}}"></input>
 
   </template>
 
