@@ -51,11 +51,11 @@ Example:
   </style>
 
     <label><things-i18n-msg msgid="label.delay" auto>지연</things-i18n-msg></label>
-    <input is="things-editor-number-input" number="{{animation.delay::change}}" value="0">
+    <input is="things-editor-number-input" number="{{animation.delay::change}}">
 
     <template is='dom-if' if='[[_isRotation(value.type)]]'>
       <label><things-i18n-msg msgid="label.duration" auto>시간</things-i18n-msg></label>
-      <input is="things-editor-number-input" number="{{animation.duration::change}}" value="2000">
+      <input is="things-editor-number-input" number="{{animation.duration::change}}">
 
       <label><things-i18n-msg msgid="label.theta" auto>각도</things-i18n-msg></label>
       <input is="things-editor-angle-input" radian="{{animation.theta::change}}">
@@ -65,22 +65,22 @@ Example:
     </template>
 
     <template is='dom-if' if='[[_isVibration(value.type)]]'>
-      <label><things-i18n-msg msgid="label.cycle" auto>주기</things-i18n-msg></label>
-      <input is="things-editor-number-input" number="{{animation.cycle::change}}" value="1000">
+      <label><things-i18n-msg msgid="label.duration" auto>주기</things-i18n-msg></label>
+      <input is="things-editor-number-input" number="{{animation.duration::change}}">
 
-      <label><things-i18n-msg msgid="label.tilt" auto>기울기</things-i18n-msg></label>
-      <input is="things-editor-angle-input" radian="{{animation.tilt::change}}">
+      <label><things-i18n-msg msgid="label.theta" auto>기울기</things-i18n-msg></label>
+      <input is="things-editor-angle-input" radian="{{animation.theta::change}}">
 
       <label><things-i18n-msg msgid="label.repeat" auto>반복</things-i18n-msg></label>
       <input type="checkbox" checked="{{animation.repeat::change}}"></input>
     </template>
 
     <template is='dom-if' if='[[_isHeartbeat(value.type)]]'>
-      <label><things-i18n-msg msgid="label.cycle" auto>주기</things-i18n-msg></label>
-      <input is="things-editor-number-input" number="{{animation.cycle::change}}" value="2000">
+      <label><things-i18n-msg msgid="label.duration" auto>주기</things-i18n-msg></label>
+      <input is="things-editor-number-input" number="{{animation.duration::change}}">
 
       <label><things-i18n-msg msgid="label.scale" auto>크기</things-i18n-msg></label>
-      <input is="things-editor-number-input" number="{{animation.scale::change}}" value="1.3">
+      <input is="things-editor-number-input" number="{{animation.scale::change}}">
 
       <label><things-i18n-msg msgid="label.repeat" auto>반복</things-i18n-msg></label>
       <input type="checkbox" checked="{{animation.repeat::change}}"></input>
@@ -88,13 +88,13 @@ Example:
 
     <template is='dom-if' if='[[_isMoving(value.type)]]'>
       <label><things-i18n-msg msgid="label.duration" auto>시간</things-i18n-msg></label>
-      <input is="things-editor-number-input" number="{{animation.duration::change}}" value="2000">
+      <input is="things-editor-number-input" number="{{animation.duration::change}}">
 
       <label><things-i18n-msg msgid="label.x-axes" auto>X 축</things-i18n-msg></label>
-      <input is="things-editor-number-input" number="{{animation.x::change}}" value="100">
+      <input is="things-editor-number-input" number="{{animation.x::change}}">
 
       <label><things-i18n-msg msgid="label.y-axes" auto>Y 축</things-i18n-msg></label>
-      <input is="things-editor-number-input" number="{{animation.y::change}}" value="0">
+      <input is="things-editor-number-input" number="{{animation.y::change}}">
 
       <label><things-i18n-msg msgid="label.repeat" auto>반복</things-i18n-msg></label>
       <input type="checkbox" checked="{{animation.repeat::change}}"></input>
@@ -102,7 +102,7 @@ Example:
 
     <template is='dom-if' if='[[_isOutline(value.type)]]'>
       <label><things-i18n-msg msgid="label.duration" auto>시간</things-i18n-msg></label>
-      <input is="things-editor-number-input" number="{{animation.duration::change}}" value="2000">
+      <input is="things-editor-number-input" number="{{animation.duration::change}}">
 
       <label><things-i18n-msg msgid="label.target" auto>대상</things-i18n-msg></label>
       <input required value="{{animation.rideOn::change}}">
