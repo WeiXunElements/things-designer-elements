@@ -43,7 +43,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       window.addEventListener('WebComponentsReady', function(e) {
         var app = document.querySelector('#app')
 
-        app.value = "#FF0000"
+        app.value = "red"
 
         app.$.editor.addEventListener('change', function() {
           app.$.target.style.background = app.$.editor.tinycolor(app.$.editor.value)

@@ -206,7 +206,7 @@ Example:
       <span id="color-thumbnail"></span>
     </a>
 
-    <paper-color-picker shape="huebox" color={{valueAsObject}} color-as-string={{colorString}} allow-alpha always-show-alpha type="hsl"></paper-color-picker>
+    <!-- <paper-color-picker shape="huebox" color={{valueAsObject}} color-as-string={{colorString}} allow-alpha always-show-alpha type="hsl"></paper-color-picker> -->
 
   </template>
 
@@ -300,17 +300,40 @@ Example:
       },
 
       showPicker: function() {
-        var picker = this.$$("paper-color-picker")
+
         var color = tinycolor(this.value)
 
+        var picker = this.create('paper-color-picker', {
+          shape: 'huebox',
+          color: this.valueAsObject,
+          colorAsString: this.colorString,
+          allowAlpha: true,
+          alwaysShowAlpha: true,
+          type: "hsl"
+        });
+
         if(color.isValid()) {
-          picker._initialAlphaValueHack = this.valueAsObject.alpha
-          picker.set('immediateColor.red', this.valueAsObject.red)
-          picker.set('immediateColor.green', this.valueAsObject.green)
-          picker.set('immediateColor.blue', this.valueAsObject.blue)
+          let rgb = color.toRgb()
+
+          picker._initialAlphaValueHack = color.getAlpha()
+
+          picker.set('immediateColor.red', rgb.r)
+          picker.set('immediateColor.green', rgb.g)
+          picker.set('immediateColor.blue', rgb.b)
         }
 
-        picker.open()
+        this.appendChild(picker);
+
+        var self = this;
+        picker.addEventListener("iron-overlay-closed", function() {
+          if(picker.colorAsString)
+            self.colorString = picker.colorAsString;
+          picker.parentNode.removeChild(picker);
+        });
+
+        setTimeout(function() {
+          picker.open();
+        })
       }
 
     })
