@@ -325,11 +325,13 @@ Example:
         this.appendChild(picker);
 
         var self = this;
-        picker.addEventListener("iron-overlay-closed", function() {
+        function _() {
           if(picker.colorAsString)
             self.colorString = picker.colorAsString;
+          picker.removeEventListener("iron-overlay-closed", _)
           picker.parentNode.removeChild(picker);
-        });
+        }
+        picker.addEventListener("iron-overlay-closed", _);
 
         setTimeout(function() {
           picker.open();
