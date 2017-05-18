@@ -56,11 +56,17 @@ Example:
       <div data-record>
         <input type="text" data-from placeholder="from" value="{{item.from}}"/>
         <input type="text" data-to placeholder="to" value="{{item.to}}"/>
-        <template is="dom-if" if="[[_isColorType(valueType)]]">
-          <things-editor-color data-value value="{{item.value}}" tabindex="-1"></things-editor-color>
+
+        <template is="dom-if" if="[[_isBooleanType(valueType)]]">
+          <input type="checkbox" data-value checked="{{item.value::change}}" data-value-type$="[[valueType]]"/>
         </template>
-        <template is="dom-if" if="[[!_isColorType(valueType)]]">
-          <input type="text" data-value placeholder="value" value="{{item.value}}" data-value-type$="[[valueType]]"/>
+        <template is="dom-if" if="[[!_isBooleanType(valueType)]]">
+          <template is="dom-if" if="[[_isColorType(valueType)]]">
+            <things-editor-color data-value value="{{item.value}}" tabindex="-1"></things-editor-color>
+          </template>
+          <template is="dom-if" if="[[!_isColorType(valueType)]]">
+            <input type="text" data-value placeholder="value" value="{{item.value}}" data-value-type$="[[valueType]]"/>
+          </template>
         </template>
         <button class="record-action" on-tap="_delete" tabindex="-1">-</button>
       </div>
@@ -69,11 +75,17 @@ Example:
     <div data-record-new>
       <input type="text" data-from placeholder="from" value=""/>
       <input type="text" data-to placeholder="to" value=""/>
-      <template is="dom-if" if="[[_isColorType(valueType)]]">
-        <things-editor-color data-value value="" tabindex="-1"></things-editor-color>
+
+      <template is="dom-if" if="[[_isBooleanType(valueType)]]">
+        <input type="checkbox" data-value data-value-type$="[[valueType]]"/>
       </template>
-      <template is="dom-if" if="[[!_isColorType(valueType)]]">
-        <input type="text" data-value placeholder="value" value="" data-value-type$="[[valueType]]"/>
+      <template is="dom-if" if="[[!_isBooleanType(valueType)]]">
+        <template is="dom-if" if="[[_isColorType(valueType)]]">
+          <things-editor-color data-value value="" tabindex="-1" placeholder="value"></things-editor-color>
+        </template>
+        <template is="dom-if" if="[[!_isColorType(valueType)]]">
+          <input type="text" data-value placeholder="value" value="" data-value-type$="[[valueType]]"/>
+        </template>
       </template>
       <button class="record-action" on-tap="_add" tabindex="-1">+</button>
     </div>
@@ -81,11 +93,17 @@ Example:
     <div data-record>
       <input type="text" data-from data-default disabled value="default"/>
       <input type="text" data-to placeholder="to" value="" hidden/>
-      <template is="dom-if" if="[[_isColorType(valueType)]]">
-        <things-editor-color class="default-value" data-value value="{{range.default}}" tabindex="-1"></things-editor-color>
+
+      <template is="dom-if" if="[[_isBooleanType(valueType)]]">
+        <input type="checkbox" data-value checked="{{range.default::change}}" data-value-type$="[[valueType]]"/>
       </template>
-      <template is="dom-if" if="[[!_isColorType(valueType)]]">
-        <input type="text" data-value value="{{range.default}}" placeholder="value" class="default-value" data-value-type$="[[valueType]]"/>
+      <template is="dom-if" if="[[!_isBooleanType(valueType)]]">
+        <template is="dom-if" if="[[_isColorType(valueType)]]">
+          <things-editor-color data-value value="{{range.default}}" placeholder="value" tabindex="-1"></things-editor-color>
+        </template>
+        <template is="dom-if" if="[[!_isColorType(valueType)]]">
+          <input type="text" data-value placeholder="value" value="{{range.default}}" placeholder="value" data-value-type$="[[valueType]]"/>
+        </template>
       </template>
       <button class="record-action" on-tap="_sort">&gt;</button>
     </div>
