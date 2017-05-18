@@ -102,7 +102,7 @@ Example:
           <things-editor-color data-value value="{{range.default}}" placeholder="value" tabindex="-1"></things-editor-color>
         </template>
         <template is="dom-if" if="[[!_isColorType(valueType)]]">
-          <input type="text" data-value placeholder="value" value="{{range.default}}" placeholder="value" data-value-type$="[[valueType]]"/>
+          <input type="text" data-value value="{{range.default}}" placeholder="value" class="default-value" data-value-type$="[[valueType]]"/>
         </template>
       </template>
       <button class="record-action" on-tap="_sort">&gt;</button>
@@ -112,140 +112,138 @@ Example:
 
   <script>
 
-    Polymer({
-      is: 'things-editor-value-range',
-
-      properties: {
-        range: {
-          type: Object,
-          notify: true,
-          value: {}
-        },
-        rangeType: {
-          notify: true,
-          value: 'number'
-        },
-        valueType: {
-          notify: true,
-          value: 'string'
-        }
+  Polymer({
+    is: 'things-editor-value-range',
+    properties: {
+      range: {
+        type: Object,
+        notify: true,
+        value: {}
       },
-
-      listeners: {
-        'change': '_onChange'
+      rangeType: {
+        notify: true,
+        value: 'number'
       },
-
-      _isColorType: function(type) {
-        return type === 'color'
-      },
-
-      _isBooleanType: function(type) {
-        return type === 'boolean'
-      },
-
-      _onChange: function(e) {
-
-        var input = e.target
-        var value = e.target.value
-        var div = input.parentElement
-
-        if(input.hasAttribute('data-value')) {
-          var dataList = div.querySelectorAll('[data-value]')
-          for(var i = 0;i < dataList.length;i++)
-            if(dataList[i] !== input)
-              dataList[i].value = value
-        }
-
-        if(div.hasAttribute('data-record'))
-          this._build()
-        else if(div.hasAttribute('data-record-new') && input.hasAttribute('data-value'))
-          this._add()
-      },
-
-      _build: function(includeNewRecord) {
-        if(includeNewRecord)
-          var records = this.querySelectorAll('[data-record],[data-record-new]')
-        else
-          var records = this.querySelectorAll('[data-record]')
-
-        var newrange = {}
-
-        for(var i = 0;i < records.length;i++) {
-          var record = records[i]
-
-          var from = record.querySelector('[data-from]').value
-          var to = record.querySelector('[data-to]').value
-          var value = record.querySelector('[data-value]').value
-
-          if(from) {
-            if(from === 'default')
-              newrange['default'] = value
-            else
-              newrange[from + "~" + to] = value
-          }
-        }
-
-        this.set('range', newrange)
-      },
-
-      /* default를 제외한 range아이템들을 template(dom-repeat)용 배열로 변환하는 함수 */
-      _toArray: function(range) {
-        var array = []
-
-        for(var key in range) {
-          if(key == 'default')
-            continue
-
-          var fromto = key.split('~')
-
-          array.push({
-            from: fromto[0],
-            to: fromto[1],
-            value: range[key]
-          })
-        }
-
-        return array
-      },
-
-      _sort: function(e) {
-
-        var sorter = this.rangeType === 'number' ?
-          function(a, b) {
-            return parseFloat(b.from) < parseFloat(a.from)
-          } :
-          function(a, b) {
-            return b.from < a.from
-          }
-
-        var range = this._toArray(this.range).sort(sorter).reduce(function(sum, i) {
-          sum[i.from + "~" + i.to] = i.value
-          return sum
-        }, {})
-
-        range.default = this.range.default
-
-        this.set('range', range)
-      },
-
-      _add: function(e) {
-        this._build(true)
-
-        var inputs = this.querySelectorAll('[data-record-new] input')
-
-        for (var i = 0;i < inputs.length;i++)
-          inputs[i].value = ''
-
-        inputs[0].focus()
-      },
-
-      _delete: function(e) {
-        var record = e.target.parentElement
-        record.querySelector('[data-from]').value = ''
-        this._build()
+      valueType: {
+        notify: true,
+        value: 'string'
       }
-
-    });
-
-  </script>
+    },
+    listeners: {
+      'change': '_onChange'
+    },
+    _isColorType: function(type) {
+      return type === 'color'
+    },
+    _isBooleanType: function(type) {
+      return type === 'boolean'
+    },
+    _defaultValue: function(type) {
+      switch(type || this.valueType) {
+      case 'color':
+        return '#000000';
+      case 'boolean':
+      case 'checkbox':
+        return false;
+      default:
+        return ''
+      }
+    },
+    _onChange: function(e) {
+      var input = e.target
+      var value
+      if(input.type == 'checkbox')
+        value = Boolean(input.checked)
+      else
+        value = input.value
+      var div = input.parentElement
+      if(input.hasAttribute('data-value')) {
+        var dataList = div.querySelectorAll('[data-value]:not([hidden])')
+        for(var i = 0;i < dataList.length;i++)
+          if(dataList[i] !== input)
+            dataList[i].value = value
+      }
+      if(div.hasAttribute('data-record'))
+        this._build()
+      else if(div.hasAttribute('data-record-new') && input.hasAttribute('data-value'))
+        this._add()
+      e.stopPropagation()
+    },
+    _build: function(includeNewRecord) {
+      if(includeNewRecord)
+        var records = this.querySelectorAll('[data-record],[data-record-new]')
+      else
+        var records = this.querySelectorAll('[data-record]')
+      var newrange = {}
+      for(var i = 0;i < records.length;i++) {
+        var record = records[i]
+        var from = record.querySelector('[data-from]').value
+        var to = record.querySelector('[data-to]').value
+        var inputs = record.querySelectorAll('[data-value]:not([style*="display: none"])')
+        if(!inputs || inputs.length == 0)
+          continue;
+        var input = inputs[inputs.length - 1]
+        var value
+        if(input.type == 'checkbox')
+          value = Boolean(input.checked)
+        else
+          value = input.value
+        if(from) {
+          if(from === 'default')
+            newrange['default'] = value || (this.valueType == 'color' ? '#000000': '')
+          else
+            newrange[`${from}~${to}`] = value
+        }
+      }
+      this.set('range', newrange)
+    },
+    /* default를 제외한 range아이템들을 template(dom-repeat)용 배열로 변환하는 함수 */
+    _toArray: function(range) {
+      var array = []
+      for(var key in range) {
+        if(key == 'default')
+          continue
+        var fromto = key.split('~')
+        array.push({
+          from: fromto[0],
+          to: fromto[1],
+          value: range[key]
+        })
+      }
+      return array
+    },
+    _sort: function(e) {
+      var sorter = this.rangeType === 'number' ?
+        function(a, b) {
+          return parseFloat(b.from) < parseFloat(a.from)
+        } :
+        function(a, b) {
+          return b.from < a.from
+        }
+      var range = this._toArray(this.range).sort(sorter).reduce(function(sum, i) {
+        sum[`${i.from}~${i.to}`] = i.value
+        return sum
+      }, {})
+      range.default = this.range.default
+      this.set('range', range)
+    },
+    _add: function(e) {
+      this._build(true)
+      var inputs = this.querySelectorAll('[data-record-new] input:not([style*="display: none"])')
+      for (var i = 0;i < inputs.length;i++) {
+        let input = inputs[i]
+        if(input.type == 'checkbox')
+          input.checked = false
+        else
+          input.value = this._defaultValue(input.type)
+      }
+      inputs[0].focus()
+    },
+    _delete: function(e) {
+      var record = e.target.parentElement
+      record.querySelector('[data-from]').value = ''
+      this._build()
+    }
+  });
+</script>
 </dom-module>
