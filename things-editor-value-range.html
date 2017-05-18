@@ -26,15 +26,25 @@ Example:
         width:20%;
         margin:3px 0 3px 3px;
       }
-      input[type='color']{
-        @apply(--things-input-color);
-        height:15px;
-        top:2px;
+      things-editor-color{
+        width:38.5%
       }
-      input[type='color']::-webkit-color-swatch-wrapper{padding:0;}
-      input[type='color']::-webkit-color-swatch{border:0;}
+      things-editor-color::shadow input{
+        width:76% !important;
+        border-radius:0 !important;
+        margin-bottom:0 !important;padding:1px 19px 1px 3px !important;
+        font-size:12px !important
+      }
+      things-editor-color::shadow a{
+        float:right;
+        margin:0 !important;margin-top:-17px !important;
+      }
+      things-editor-color::shadow a span{
+        height:13px !important
+      }
       div input[data-value-type='color']:nth-child(3){width:38.5%;}
-      div input.default-value[data-value-type='color'], div things-editor-color.default-value{width:62%;}
+      div things-editor-color.default-value{width:62%;}
+      div things-editor-color.default-value::shadow input{width:125px !important}
       div{border-bottom:1px solid #c0c0c0;}
       div:last-child{border-bottom:none;}
       .record-action{
