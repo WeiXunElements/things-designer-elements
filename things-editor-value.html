@@ -61,7 +61,16 @@ Example:
     <label>
       <things-i18n-msg msgid="label.target" auto>target</things-i18n-msg>
     </label>
-    <input id="target-input" type="text" value="{{mapping.target::change}}"/>
+
+    <input id="target-input" type="text" list="target-list" value="{{mapping.target::change}}"/>
+    <datalist id="target-list">
+        <option value="(self)">
+        <option value="(parent)">
+        <option value="(child)">
+        <option value="(sibling)">
+        <option value="(root)">
+        <option value="(all)">
+    </datalist>
 
     <label>
       <things-i18n-msg msgid="label.property" auto>property</things-i18n-msg>
