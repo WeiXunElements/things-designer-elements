@@ -164,6 +164,12 @@ Example:
       },
 
       _onChange: function(e) {
+
+        if(this._onChangeFlug)
+          return
+
+        this._onChangeFlug = true
+
         var input = e.target
         var value
 
@@ -188,6 +194,8 @@ Example:
           this._add()
 
         e.stopPropagation()
+
+        this._onChangeFlug = false
       },
 
       _build: function(includeNewRecord) {
