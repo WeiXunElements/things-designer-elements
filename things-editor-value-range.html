@@ -150,6 +150,11 @@ Example:
       }
     },
     _onChange: function(e) {
+      if(this._onChangeFlug)
+        return
+
+      this._onChangeFlug = true
+
       var input = e.target
       var value
       if(input.type == 'checkbox')
@@ -168,6 +173,9 @@ Example:
       else if(div.hasAttribute('data-record-new') && input.hasAttribute('data-value'))
         this._add()
       e.stopPropagation()
+
+      this._onChangeFlug = false
+
     },
     _build: function(includeNewRecord) {
       if(includeNewRecord)
