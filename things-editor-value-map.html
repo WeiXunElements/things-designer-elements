@@ -165,10 +165,10 @@ Example:
 
       _onChange: function(e) {
 
-        if(this._onChangeFlug)
+        if(this._changingNow)
           return
 
-        this._onChangeFlug = true
+        this._changingNow = true
 
         var input = e.target
         var value
@@ -195,7 +195,7 @@ Example:
 
         e.stopPropagation()
 
-        this._onChangeFlug = false
+        this._changingNow = false
       },
 
       _build: function(includeNewRecord) {
