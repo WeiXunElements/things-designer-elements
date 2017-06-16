@@ -58,6 +58,10 @@ Example:
       <input type="text" value="{{value::change}}" placeholder="[[placeholder]]">
     </template>
 
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'textarea')]]">
+      <textarea value="{{value::change}}" placeholder="[[placeholder]]"></textarea>
+    </template>
+
     <template is="dom-if" if="[[_isTypeofEditor(type, 'checkbox')]]">
       <input type="checkbox" checked="{{value::change}}" placeholder="[[placeholder]]">
     </template>
