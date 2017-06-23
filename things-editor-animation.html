@@ -51,10 +51,10 @@ Example:
   </style>
 
     <label><things-i18n-msg msgid="label.waiting-time" auto>waiting time</things-i18n-msg></label>
-    <input is="things-editor-number-input" number="{{animation.delay::change}}">
+    <input is="things-editor-number-input" number="{{animation.delay::change}}" placeholder="ms">
 
     <label><things-i18n-msg msgid="label.duration" auto>duration</things-i18n-msg></label>
-    <input is="things-editor-number-input" number="{{animation.duration::change}}">
+    <input is="things-editor-number-input" number="{{animation.duration::change}}" placeholder="ms">
 
     <template is='dom-if' if='[[_isRotation(value.type)]]'>
       <label><things-i18n-msg msgid="label.theta" auto>theta</things-i18n-msg></label>
