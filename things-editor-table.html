@@ -2,7 +2,7 @@
 
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
 <link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../paper-menu/paper-menu.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
 <link rel="import" href="../paper-item/paper-item.html">
 
 <link rel="import" href="../iron-icons/editor-icons.html">
@@ -93,7 +93,7 @@ Example:
       <label>border type</label>
       <paper-dropdown-menu no-label-float="true" class="line-type solid">
       <!-- solid는 선택된 항목 보여주기위한 class로 하위 paper-item의 class와 동일하게 -->
-        <paper-menu id="border-style" class="dropdown-content" selected="{{borderStyle}}" attr-for-selected="name" >
+        <paper-listbox id="border-style" class="dropdown-content" selected="{{borderStyle}}" attr-for-selected="name" >
           <paper-item class="solid" name="solid"></paper-item>
           <paper-item class="round-dot" name="round-dot"></paper-item>
           <paper-item class="square-dot" name="square-dot"></paper-item>
@@ -102,7 +102,7 @@ Example:
           <paper-item class="long-dash" name="long-dash"></paper-item>
           <paper-item class="long-dash-dot" name="long-dash-dot"></paper-item>
           <paper-item class="long-dash-dot-dot" name="long-dash-dot-dot"></paper-item>
-        </paper-menu>
+        </paper-listbox>
       </paper-dropdown-menu>
 
     </fieldset>

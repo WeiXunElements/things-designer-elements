@@ -18,18 +18,26 @@
     "/test/"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.2.0",
-    "iron-elements": "PolymerElements/iron-elements#^1.0.0",
-    "paper-elements": "PolymerElements/paper-elements#^1.0.1",
-    "paper-color-picker" : "ThingsElements/paper-color-picker",
+    "polymer": "Polymer/polymer#^2.0.0",
+    "iron-icons": "^2.0.0",
+    "iron-resizable-behavior": "^2.0.0",
+    "iron-pages": "^2.0.0",
+    "paper-styles": "^2.0.0",
+    "paper-radio-button": "^2.0.0",
+    "paper-radio-group": "^2.0.0",
+    "paper-dropdown-menu": "^2.0.0",
+    "paper-listbox": "^2.0.0",
+    "paper-item": "^2.0.0",
+    "paper-button": "^2.0.0",
+    "paper-icon-button": "^2.0.0",
+    "paper-color-picker" : "ThingsElements/paper-color-picker#polymer-2",
     "ace-builds": "~1.2.0",
-    "TinyColor" : "bgrins/TinyColor",
-    "things-elements": "ThingsElements/things-elements"
+    "TinyColor" : "bgrins/TinyColor"
   },
   "devDependencies": {
-    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
-    "web-component-tester": "^4.0.0",
+    "iron-component-page": "PolymerElements/iron-component-page#^3.0.0",
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0-prerelease.7",
     "things-scene-core": "ThingsElements/things-scene-core#^2.0.0",
-    "things-theme": "ThingsElements/things-theme"
+    "things-theme": "ThingsElements/things-theme#polymer-2"
   }
 }

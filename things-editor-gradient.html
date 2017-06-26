@@ -1,7 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 
 <link rel="import" href="../iron-pages/iron-pages.html">
-<link rel="import" href="../paper-menu/paper-menu.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
 <link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../paper-item/paper-item.html">
 
@@ -108,7 +108,7 @@ Example:
                 selected="[[type]]">
       <div gradient-type="linear">
         <paper-dropdown-menu no-label-float="true">
-          <paper-menu class="dropdown-content gradient-direction" selected="{{direction}}" attr-for-selected="name">
+          <paper-listbox class="dropdown-content gradient-direction" selected="{{direction}}" attr-for-selected="name">
             <paper-item name="lefttop-to-rightbottom"></paper-item>
             <paper-item name="top-to-bottom"></paper-item>
             <paper-item name="righttop-to-leftbottom"></paper-item>
@@ -118,20 +118,20 @@ Example:
             <paper-item name="leftbottom-to-righttop"></paper-item>
             <paper-item name="left-to-right"></paper-item>
             <paper-item name="center-to-corner"></paper-item>
-          </paper-menu>
+          </paper-listbox>
         </paper-dropdown-menu>
 
       </div>
 
       <div gradient-type="radial">
         <paper-dropdown-menu no-label-float="true">
-          <paper-menu class="dropdown-content gradient-direction" selected="{{center}}" attr-for-selected="name">
+          <paper-listbox class="dropdown-content gradient-direction" selected="{{center}}" attr-for-selected="name">
             <paper-item name="center"></paper-item>
             <paper-item name="left-top"></paper-item>
             <paper-item name="right-top"></paper-item>
             <paper-item name="right-bottom"></paper-item>
             <paper-item name="left-bottom"></paper-item>
-          </paper-menu>
+          </paper-listbox>
         </paper-dropdown-menu>
       </div>
 
