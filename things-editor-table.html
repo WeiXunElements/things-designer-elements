@@ -107,16 +107,16 @@ Example:
     </fieldset>
 
     <fieldset id="cell-fieldset" on-tap="_onTapCell">
-        <paper-button id="merge-cells" table-event>merge cells</paper-button>
-        <paper-button id="split-cells" table-event>split cells</paper-button>
-        <paper-button id="delete-row" table-event>delete row</paper-button>
-        <paper-button id="delete-column" table-event>delete column</paper-button>
-        <paper-button id="insert-above" table-event>insert above</paper-button>
-        <paper-button id="insert-below" table-event>insert below</paper-button>
-        <paper-button id="insert-left" table-event>insert left</paper-button>
-        <paper-button id="insert-right" table-event>insert right</paper-button>
-        <paper-button id="distribute-horizontal" table-event>distribute horizontal</paper-button>
-        <paper-button id="distribute-vertical" table-event>distribute vertical</paper-button>
+      <paper-button id="merge-cells" table-event>merge cells</paper-button>
+      <paper-button id="split-cells" table-event>split cells</paper-button>
+      <paper-button id="delete-row" table-event>delete row</paper-button>
+      <paper-button id="delete-column" table-event>delete column</paper-button>
+      <paper-button id="insert-above" table-event>insert above</paper-button>
+      <paper-button id="insert-below" table-event>insert below</paper-button>
+      <paper-button id="insert-left" table-event>insert left</paper-button>
+      <paper-button id="insert-right" table-event>insert right</paper-button>
+      <paper-button id="distribute-horizontal" table-event>distribute horizontal</paper-button>
+      <paper-button id="distribute-vertical" table-event>distribute vertical</paper-button>
     </fieldset>
 
   </template>
@@ -151,20 +151,20 @@ Example:
         super();
 
         this.boundBorderChange = this._onBorderChange.bind(this);
-        this.boundTapCell = this._onTapCell.bind(this);
+        this.boundTapType = this._onTapType.bind(this);
       }
 
       connectedCallback() {
         super.connectedCallback();
 
-        this.$['border-fieldset'].addEventListener('change', this.boundBorderChange);
+        this.$['border-fieldset'].addEventListener('change', this.boundTapType);
         this.$['border-style'].addEventListener('iron-select', this.boundBorderChange);
       }
 
       disconnectedCallback() {
         super.disconnectedCallback();
 
-        this.$['border-fieldset'].removeEventListener('change', this.boundBorderChange);
+        this.$['border-fieldset'].removeEventListener('change', this.boundTapType);
         this.$['border-style'].removeEventListener('iron-select', this.boundBorderChange);
       }
 
@@ -173,29 +173,38 @@ Example:
         // 각 버튼의 fire할 이벤트의 이름을 'table-' + id 로 한다.
         var target = e.target;
 
-        while (!target.hasAttribute('table-event') && target !== this)
+        while (target && !target.hasAttribute('table-event') && target !== this)
           target = target.parentElement;
 
-        if(target === this)
+        if(target === this || target === null)
           return;
 
-        this.dispatchEvent(new CustomEvent('table-' + target.id));
+        this.dispatchEvent(new CustomEvent('table-' + target.id, {
+          bubbles: true,
+          composed: true
+        }));
+
+        e.stopPropagation();
       }
 
       _onTapType(e) {
         var target = e.target;
 
-        while (!target.hasAttribute('data-value') && target !== this)
+        while (target && !target.hasAttribute('data-value') && target !== this)
           target = target.parentElement;
 
-        if(target === this)
+        if(target === this || target === null)
           return;
 
         this.dispatchEvent(new CustomEvent('table-cell-border-set', {
-          type: target.getAttribute('data-value'),
-          borderWidth: this.borderWidth,
-          borderStyle: this.borderStyle,
-          borderColor: this.borderColor
+          bubbles: true,
+          composed: true,
+          detail: {
+            type: target.getAttribute('data-value'),
+            borderWidth: this.borderWidth,
+            borderStyle: this.borderStyle,
+            borderColor: this.borderColor
+          }
         }));
 
         e.stopPropagation();

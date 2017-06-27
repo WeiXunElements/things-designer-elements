@@ -22,34 +22,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <link rel="import" href="../things-editor-angle-input.html">
 
     <custom-style>
-      <style is="custom-style" include="demo-pages-shared-styles">
+      <style include="demo-pages-shared-styles">
       </style>
     </custom-style>
 
   </head>
   <body unresolved>
     <div class="vertical-section-container centered">
-      <demo-snippet>
-        <template>
-          <dom-bind>
-            <template>
+      <demo-snippet><template>
+        <dom-bind><template>
 
-              <p>An example of <code>&lt;things-editor-angle-input&gt;</code>:</p>
+          <p>An example of <code>&lt;things-editor-angle-input&gt;</code>:</p>
 
-              <p>Type angle as degree 
-                <things-editor-angle-input radian="{{radian}}">
-                  <input>
-                </things-editor-angle-input>
-              </p>
-              <p>You typed the angle as radian : <span></span>{{radian}}</span></p>
-              <p>Reset radian value to 0.1 <button id="reset">RESET</button></p>
-              <p>Reset radian value to NaN <button id="setnan">NaN</button></p>
+          <p>Type angle as degree 
+            <things-editor-angle-input radian="{{radian}}">
+              <input>
+            </things-editor-angle-input>
+          </p>
+          <p>You typed the angle as radian : <span></span>{{radian}}</span></p>
+          <p>Reset radian value to 0.1 <button id="reset">RESET</button></p>
+          <p>Reset radian value to NaN <button id="setnan">NaN</button></p>
 
-            </template>
-          </dom-bind>
-        </template>
-      </demo-snippet>
-
+        </template></dom-bind>
+      </template></demo-snippet>
     </div>
 
     <script>
