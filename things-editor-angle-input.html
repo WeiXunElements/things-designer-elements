@@ -71,14 +71,15 @@ Example:
 
       _initSlottedInput: function() {
         this._inputElement = this.getEffectiveChildren()[0];
-        if(this.inputElement && this.inputElement.value) {
-          this.radian = this.inputElement.value;
-        }
+        if(!this._inputElement)
+          return;
 
         this._inputElement.setAttribute('type', 'number');
 
         if(!this._inputElement.getAttribute('placeholder'))
           this._inputElement.setAttribute('placeholder', '°');
+
+        this._onChangeRadian(this.radian);
       },
 
       _onChangeValue(e) {
@@ -91,6 +92,9 @@ Example:
       },
 
       _onChangeRadian(radian) {
+        if(!this.inputElement)
+          return;
+
         /* 외부에서 바인딩된 변수의 값을 바꾼 경우 */
         if(isNaN(Number(radian))) {
           this.inputElement.value = undefined;

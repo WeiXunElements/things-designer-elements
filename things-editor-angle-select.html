@@ -80,14 +80,10 @@ Example:
 
       _initSlottedSelect: function() {
         this._selectElement = this.getEffectiveChildren()[0];
-        if(this.selectElement && this.selectElement.value) {
-          this.radian = this.selectElement.value;
-        }
+        if(!this._selectElement)
+          return;
 
-        this._selectElement.setAttribute('type', 'number');
-
-        if(!this._selectElement.getAttribute('placeholder'))
-          this._selectElement.setAttribute('placeholder', '°');
+        this._onChangeRadian(this.radian);
       },
 
       _onChangeValue(e) {
