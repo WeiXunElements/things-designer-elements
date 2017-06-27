@@ -5,30 +5,32 @@ Degree 각도 값을 입력 받아서, radian 값으로 변환해주는 input의
 
 Example:
 
-    <input is="things-editor-angle-input" radian="{{radian}}">
+  <things-editor-angle-input radian="{{radian}}">
+    <input>
+  </things-editor-angle-input>
 
 @demo demo/index-editor-angle-input.html
 @hero hero.svg
 -->
 
 <dom-module id="things-editor-angle-input">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+      }
+    </style>
+    <slot id="content"></slot>
+  </template>
+
   <script>
   (function() {
     'use strict';
 
     Polymer({
       is: 'things-editor-angle-input',
-      extends: 'input',
 
       properties: {
-        /**
-         * `degree`는 각도의 degree값으로 input element의 입력값과 연동된다.
-         */
-        degree: {
-          type: String,
-          notify: true
-        },
-
         /**
          * `radian`은 각도의 ragian값이다.
          */
@@ -44,47 +46,57 @@ Example:
       },
 
       observers: [
-        "_onChangeDegree(degree)",
         "_onChangeRadian(radian)"
       ],
 
-      created() {
-        this.setAttribute('type', 'number');
+      attached() {
+        this._observer = Polymer.dom(this).observeNodes(function(info) {
+          this._initSlottedInput();
+        }.bind(this));
+      },
+      
+      detached() {
+        if (this._observer) {
+          Polymer.dom(this).unobserveNodes(this._observer);
+          this._observer = null;
+        }
+      },
 
-        if(!this.getAttribute('placeholder'))
-          this.setAttribute('placeholder', '°');
+      /**
+       * Returns the distributed <input> element.
+       */
+      get inputElement () {
+        return this._inputElement;
+      },
+
+      _initSlottedInput: function() {
+        this._inputElement = this.getEffectiveChildren()[0];
+        if(this.inputElement && this.inputElement.value) {
+          this.radian = this.inputElement.value;
+        }
+
+        this._inputElement.setAttribute('type', 'number');
+
+        if(!this._inputElement.getAttribute('placeholder'))
+          this._inputElement.setAttribute('placeholder', '°');
       },
 
       _onChangeValue(e) {
+        var degree = this.inputElement.value;
 
-        /* 에디터에서 값을 바꾼 경우 */
-        this.set('degree', Number(this.value));
+        if(isNaN(degree))
+          this.set('radian', undefined);
+        else
+          this.set('radian', degree * (Math.PI / 180));
       },
 
       _onChangeRadian(radian) {
-        if(this._dont_loop)
-          return
-
         /* 외부에서 바인딩된 변수의 값을 바꾼 경우 */
         if(isNaN(Number(radian))) {
-          this.value = undefined;
-          this.degree = undefined;
+          this.inputElement.value = undefined;
         } else {
-          this.value = Math.round(radian * 180 / Math.PI);
-          this.set('degree', this.value);
+          this.inputElement.value = Math.round(radian * 180 / Math.PI);
         }
-      },
-
-      _onChangeDegree(degree) {
-        this._dont_loop = true;
-
-        if(isNaN(degree)) {
-          this.set('radian', undefined);
-        } else {
-          this.set('radian', degree * (Math.PI / 180));
-        }
-
-        this._dont_loop = false;
       }
     });
   })();

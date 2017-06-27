@@ -15,72 +15,87 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <title>things-editor-table Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    
     <link rel="import" href="../things-editor-table.html">
+    <link rel="import" href="../../things-theme/things-point-theme.html">
 
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
-
-    <style is="custom-style" include="things-point-theme">
-      :root {
-        --things-editor-table: {
-          background: lightgray;
+    <custom-style>
+      <style include="demo-pages-shared-styles">
+      </style>
+      <style include="things-point-theme">
+        :root {
+          --things-editor-table: {
+            background: lightgray;
+          };
         };
-      };
 
-      body {
-        height: 600px;
-      }
+        body {
+          height: 300px;
+        }
 
-      textarea {
-        width: 600px;
-        height: 300px;
-      }
-    </style>
+        textarea {
+          width: 100%;
+          height: 240px;
+        }
+      </style>
+    </custom-style>
+
   </head>
   <body unresolved>
 
-    <template is="dom-bind" id="app">
+    <div class="vertical-section-container centered">
 
-      <p>An example of <code>&lt;things-editor-table&gt;</code>:</p>
+      <h3>Basic things-editor-table demo</h3>
 
-      <p>Border Style</p>
+      <demo-snippet><template>
+        <dom-bind>
+          <template>
 
-      <things-editor-table id="border"
-                            type="{{border.type}}"
-                            border-width="{{border.borderWidth}}"
-                            border-color="{{border.borderColor}}"
-                            border-style="{{border.borderStyle}}"
-                            on-border-type-click="onChange"
-                            on-table-delete="onDelete"
-                            on-table-insert-above="onInsertAbove">
-      </things-editor-table>
+            <p>Border Style</p>
 
-      <p></p>
+            <things-editor-table
+              id="border"
+              type="{{border.type}}"
+              border-width="{{border.borderWidth}}"
+              border-color="{{border.borderColor}}"
+              border-style="{{border.borderStyle}}"
+              on-border-type-click="onChange"
+              on-table-delete="onDelete"
+              on-table-insert-above="onInsertAbove">
+            </things-editor-table>
 
-      <textarea class="xx" value="[[text]]"></textarea>
+            <p>
 
-      <table>
-        <tr>
-          <td>1</td>
-          <td>2</td>
-          <td>3</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>5</td>
-          <td>6</td>
-        </tr>
-        <tr>
-          <td>7</td>
-          <td>8</td>
-          <td>9</td>
-        </tr>
-      </table>
+            <textarea class="xx" value="[[text]]"></textarea>
 
-    </template>
+            <table>
+              <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>8</td>
+                <td>9</td>
+              </tr>
+            </table>
+
+          </template>
+        </dom-bind>
+      </template></demo-snippet>
+    </div>
 
     <script>
       window.addEventListener('WebComponentsReady', function(e) {
-        var app = document.querySelector('#app');
+        var app = document.querySelector('dom-bind');
 
         app.onDelete = function(e) {
           console.log("onDelete")

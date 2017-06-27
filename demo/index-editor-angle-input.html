@@ -13,23 +13,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>things-editor-angle-input Demo</title>
+
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    
     <link rel="import" href="../things-editor-angle-input.html">
+
+    <custom-style>
+      <style is="custom-style" include="demo-pages-shared-styles">
+      </style>
+    </custom-style>
+
   </head>
   <body unresolved>
+    <div class="vertical-section-container centered">
+      <demo-snippet>
+        <template>
+          <dom-bind>
+            <template>
 
-    <template is="dom-bind" id="app">
-      <p>An example of <code>&lt;things-editor-angle-input&gt;</code>:</p>
+              <p>An example of <code>&lt;things-editor-angle-input&gt;</code>:</p>
 
-      <p>Type angle as degree <input is="things-editor-angle-input" radian="{{radian}}"></p>
-      <p>You typed the angle as radian : <span></span>{{radian}}</span></p>
-      <p>Reset radian value to 0.1 <button id="reset">RESET</button></p>
-      <p>Reset radian value to NaN <button id="setnan">NaN</button></p>
-    </template>
+              <p>Type angle as degree 
+                <things-editor-angle-input radian="{{radian}}">
+                  <input>
+                </things-editor-angle-input>
+              </p>
+              <p>You typed the angle as radian : <span></span>{{radian}}</span></p>
+              <p>Reset radian value to 0.1 <button id="reset">RESET</button></p>
+              <p>Reset radian value to NaN <button id="setnan">NaN</button></p>
+
+            </template>
+          </dom-bind>
+        </template>
+      </demo-snippet>
+
+    </div>
 
     <script>
       window.addEventListener('WebComponentsReady', function(e) {
-        var app = document.querySelector('#app');
+        var app = document.querySelector('dom-bind');
         app.radian = 0.1;
         app.$.reset.addEventListener('click', function(e) {
           app.radian = 0.1;

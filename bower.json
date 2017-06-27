@@ -35,6 +35,7 @@
     "TinyColor" : "bgrins/TinyColor"
   },
   "devDependencies": {
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
     "iron-component-page": "PolymerElements/iron-component-page#^3.0.0",
     "web-component-tester": "Polymer/web-component-tester#^6.0.0-prerelease.7",
     "things-scene-core": "ThingsElements/things-scene-core#^2.0.0",
