@@ -51,18 +51,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <p>Reset radian value to 0˚<button id="reset">RESET</button></p>
             </template>
           </dom-bind>
+          
+          <script>
+            window.addEventListener('WebComponentsReady', function(e) {
+              var app = document.querySelector('dom-bind')
+              app.radian = 0
+              app.$.reset.addEventListener('click', function(e) {
+                app.radian = 3.14
+              })
+            });
+          </script>
+
         </template>
       </demo-snippet>
     </div>
 
-    <script>
-      window.addEventListener('WebComponentsReady', function(e) {
-        var app = document.querySelector('dom-bind')
-        app.radian = 0
-        app.$.reset.addEventListener('click', function(e) {
-          app.radian = 3.14
-        })
-      });
-    </script>
   </body>
 </html>

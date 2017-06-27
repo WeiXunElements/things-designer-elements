@@ -44,20 +44,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <p>Reset radian value to NaN <button id="setnan">NaN</button></p>
 
         </template></dom-bind>
+
+        <script>
+          window.addEventListener('WebComponentsReady', function(e) {
+            var app = document.querySelector('dom-bind');
+            app.radian = 0.1;
+            app.$.reset.addEventListener('click', function(e) {
+              app.radian = 0.1;
+            })
+            app.$.setnan.addEventListener('click', function(e) {
+              app.radian = undefined;
+            })
+          });
+        </script>
+
       </template></demo-snippet>
     </div>
 
-    <script>
-      window.addEventListener('WebComponentsReady', function(e) {
-        var app = document.querySelector('dom-bind');
-        app.radian = 0.1;
-        app.$.reset.addEventListener('click', function(e) {
-          app.radian = 0.1;
-        })
-        app.$.setnan.addEventListener('click', function(e) {
-          app.radian = undefined;
-        })
-      });
-    </script>
   </body>
 </html>
