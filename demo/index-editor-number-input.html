@@ -13,31 +13,54 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>things-editor-number-input Demo</title>
+
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    
     <link rel="import" href="../things-editor-number-input.html">
+
+    <custom-style>
+      <style include="demo-pages-shared-styles">
+      </style>
+    </custom-style>
+
   </head>
   <body unresolved>
 
-    <template is="dom-bind" id="app">
-      <p>An example of <code>&lt;things-editor-number-input&gt;</code>:</p>
+    <div class="vertical-section-container centered">
+      
+      <h3>An example of <code>&lt;things-editor-number-input&gt;</code>:</h3>
 
-      <p>Type value as number <input is="things-editor-number-input" number="{{number::change}}"></p>
-      <p>You typed the value as number : <span></span>{{number}}</span></p>
-      <p>Reset number value to 0.1 <button id="reset">RESET</button></p>
-      <p>Reset number value to NaN <button id="setnan">NaN</button></p>
-    </template>
+      <demo-snippet><template>
+        <dom-bind><template>
 
-    <script>
-      window.addEventListener('WebComponentsReady', function(e) {
-        var app = document.querySelector('#app');
-        app.number = 0.1;
-        app.$.reset.addEventListener('click', function(e) {
-          app.number = 0.1;
-        })
-        app.$.setnan.addEventListener('click', function(e) {
-          app.number = undefined;
-        })
-      });
-    </script>
+          <p>Type value as number 
+            <things-editor-number-input number="{{number}}">
+              <input>
+            </things-editor-number-input>
+          </p>
+          <p>You typed the value as number : <span></span>{{number}}</span></p>
+          <p>Reset number value to 0.1 <button id="reset">RESET</button></p>
+          <p>Reset number value to NaN <button id="setnan">NaN</button></p>
+
+        </template></dom-bind>
+
+        <script>
+          window.addEventListener('WebComponentsReady', function(e) {
+            var app = document.querySelector('dom-bind');
+            app.number = 0.1;
+            app.$.reset.addEventListener('click', function(e) {
+              app.number = 0.1;
+            })
+            app.$.setnan.addEventListener('click', function(e) {
+              app.number = undefined;
+            })
+          });
+        </script>
+
+      </template></demo-snippet>
+    </div>
   </body>
 </html>

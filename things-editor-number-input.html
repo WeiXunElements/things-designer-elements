@@ -5,20 +5,30 @@ Number 값이 undefined 또는 NaN인 경우에 Exception을 방지하기 위한
 
 Example:
 
-    <input is="things-editor-number-input" number="{{number}}">
+  <things-editor-number-input number="{{number}}">
+    <input>
+  </things-editor-number-input>
 
 @demo demo/index-editor-number-input.html
 @hero hero.svg
 -->
 
 <dom-module id="things-editor-number-input">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+      }
+    </style>
+    <slot id="content"></slot>
+  </template>
+
   <script>
   (function() {
     'use strict';
 
     Polymer({
       is: 'things-editor-number-input',
-      extends: 'input',
 
       properties: {
 
@@ -34,42 +44,57 @@ Example:
         'change': "_onChangeValue"
       },
 
-      created() {
-        this.setAttribute('type', 'number')
+      attached() {
+        this._observer = Polymer.dom(this).observeNodes(function(info) {
+          this._initSlottedInput();
+        }.bind(this));
+      },
+      
+      detached() {
+        if (this._observer) {
+          Polymer.dom(this).unobserveNodes(this._observer);
+          this._observer = null;
+        }
+      },
+
+      /**
+       * Returns the distributed <input> element.
+       */
+      get inputElement () {
+        return this._inputElement;
+      },
+
+      _initSlottedInput: function() {
+        this._inputElement = this.getEffectiveChildren()[0];
+        if(!this._inputElement)
+          return;
+
+        this._inputElement.setAttribute('type', 'number');
+
+        this._onChangeNumber(this.number);
       },
 
       _onChangeNumber(number) {
-        if(this._onSelf)
+        if(!this.inputElement)
           return;
 
-        this._onSelf = true;
-
         /* 외부에서 바인딩된 변수의 값을 바꾼 경우 */
-
         if(isNaN(Number(number))) {
-          this.value = null;
+          this.inputElement.value = NaN;
         } else {
-          this.value = Number(number);
+          this.inputElement.value = Number(number);
         }
-
-        this._onSelf = false;
       },
 
       _onChangeValue(e) {
-        if(this._onSelf)
-          return;
-
-        this._onSelf = true;
-
         /* 에디터에서 값을 바꾼 경우 */
+        var value = this.inputElement.valueAsNumber;
 
-        if(isNaN(Number(this.value))) {
-          this.number = undefined;
+        if(isNaN(Number(value))) {
+          this.number = NaN;
         } else {
-          this.number = Number(this.value);
+          this.number = Number(value);
         }
-
-        this._onSelf = false;
       }
     });
   })();
