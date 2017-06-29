@@ -54,8 +54,8 @@ Example:
 
     <template is="dom-repeat" items="{{_toArray(range)}}">
       <div data-record>
-        <input type="text" data-from placeholder="from" value="{{item.from}}"/>
-        <input type="text" data-to placeholder="to" value="{{item.to}}"/>
+        <input type="text" data-from placeholder="<=" value="{{item.from}}"/>
+        <input type="text" data-to placeholder=">" value="{{item.to}}"/>
 
         <template is="dom-if" if="[[_isBooleanType(valueType)]]">
           <input type="checkbox" data-value checked="{{item.value::change}}" data-value-type$="[[valueType]]"/>
@@ -73,8 +73,8 @@ Example:
     </template>
 
     <div data-record-new>
-      <input type="text" data-from placeholder="from" value=""/>
-      <input type="text" data-to placeholder="to" value=""/>
+      <input type="text" data-from placeholder="<=" value=""/>
+      <input type="text" data-to placeholder=">" value=""/>
 
       <template is="dom-if" if="[[_isBooleanType(valueType)]]">
         <input type="checkbox" data-value data-value-type$="[[valueType]]"/>
@@ -92,7 +92,7 @@ Example:
 
     <div data-record>
       <input type="text" data-from data-default disabled value="default"/>
-      <input type="text" data-to placeholder="to" value="" hidden/>
+      <input type="text" data-to placeholder=">" value="" hidden/>
 
       <template is="dom-if" if="[[_isBooleanType(valueType)]]">
         <input type="checkbox" data-value checked="{{range.default::change}}" data-value-type$="[[valueType]]"/>
