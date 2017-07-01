@@ -7,44 +7,50 @@ Copyright © HatioLab Inc. All rights reserved.
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
     <title>things-editor-color Demo</title>
+
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    
+    <link rel="import" href="../../neon-animation/web-animations.html">
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    
     <link rel="import" href="../things-editor-color.html">
 
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
-
-    <style is="custom-style" include="things-point-theme">
-      #target {
-        width: 300px;
-        height: 300px;
-        background: var(--theme-color, red);
-      }
-    </style>
+    <custom-style>
+      <style include="demo-pages-shared-styles">
+      </style>
+    </custom-style>
   </head>
   <body unresolved>
 
-    <template is="dom-bind" id="app">
+    <div class="vertical-section-container centered">
+      <demo-snippet><template>
+        <dom-bind><template>
 
-      <p>An example of <code>&lt;things-editor-color&gt;</code>:</p>
+          <p>An example of <code>&lt;things-editor-color&gt;</code>:</p>
 
-      <div id="target"></div>
+          <div id="target"></div>
 
-      <things-editor-color id="editor" value="{{value}}">
-      </things-editor-color>
+          <things-editor-color id="editor" value="{{value}}">
+          </things-editor-color>
 
-    </template>
+        </template></dom-bind>
 
-    <script>
-      window.addEventListener('WebComponentsReady', function(e) {
-        var app = document.querySelector('#app')
+        <script>
+          window.addEventListener('WebComponentsReady', function(e) {
+            var app = document.querySelector('dom-bind')
 
-        app.value = "red"
+            app.value = "red"
 
-        app.$.editor.addEventListener('change', function() {
-          app.$.target.style.background = app.$.editor.tinycolor(app.$.editor.value)
-        })
-      })
-    </script>
-
+            app.$.editor.addEventListener('change', function() {
+              app.$.target.style.background = app.$.editor.tinycolor(app.$.editor.value)
+            })
+          })
+        </script>
+      </template></demo-snippet>
+    </div>
   </body>
 </html>

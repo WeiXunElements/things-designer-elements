@@ -210,8 +210,6 @@ Example:
       <span id="color-thumbnail"></span>
     </a>
 
-    <!-- <paper-color-picker shape="huebox" color={{valueAsObject}} color-as-string={{colorString}} allow-alpha always-show-alpha type="hsl"></paper-color-picker> -->
-
   </template>
 
   <script>
@@ -326,7 +324,7 @@ Example:
           picker.set('immediateColor.blue', rgb.b)
         }
 
-        this.appendChild(picker);
+        this.root.appendChild(picker);
 
         var self = this;
         function _() {
