@@ -12,56 +12,68 @@ Copyright © HatioLab Inc. All rights reserved.
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    
     <link rel="import" href="../things-editor-shadow.html">
 
     <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
 
-    <style is="custom-style" include="things-point-theme">
-      :root {
-        --things-editor-shadow: {
-          background: lightgray;
-        }
-      };
+    <custom-style>
+      <style include="demo-pages-shared-styles">
+      </style>
+      <style include="things-point-theme">
+        :root {
+          --things-editor-shadow: {
+            background: lightgray;
+          }
+        };
 
-      textarea {
-        width: 600px;
-        height: 300px;
-      }
-    </style>
+        textarea {
+          width: 100%;
+          height: 200px;
+        }
+      </style>
+    </custom-style>
+
   </head>
   <body unresolved>
 
-    <template is="dom-bind" id="app">
+    <div class="vertical-section-container centered">
+      <demo-snippet><template>
+        <dom-bind><template>
 
-      <p>An example of <code>&lt;things-editor-shadow&gt;</code>:</p>
+          <p>An example of <code>&lt;things-editor-shadow&gt;</code>:</p>
 
-      <textarea value="[[text]]"></textarea>
+          <textarea value="[[text]]"></textarea>
 
-      <p>Shadow Style</p>
+          <p>Shadow Style</p>
 
-      <things-editor-shadow id="editor"
-                            value="{{value}}">
-      </things-editor-shadow>
+          <things-editor-shadow id="editor"
+                                value="{{value}}">
+          </things-editor-shadow>
 
-    </template>
+        </template></dom-bind>
 
-    <script>
-      window.addEventListener('WebComponentsReady', function(e) {
-        var app = document.querySelector('#app')
+        <script>
+          window.addEventListener('WebComponentsReady', function(e) {
+            var app = document.querySelector('dom-bind')
 
-        app.value = {
-          blurSize: 20,
-          left: 1,
-          top: 2,
-          color: 'black',
-          alpha: 0.8
-        }
+            app.value = {
+              blurSize: 20,
+              left: 1,
+              top: 2,
+              color: 'black',
+              alpha: 0.8
+            }
 
-        app.$.editor.addEventListener('change', function() {
-          app.text = JSON.stringify(app.value, null, "\t")
-        })
-      })
-    </script>
+            app.$.editor.addEventListener('change', function() {
+              app.text = JSON.stringify(app.value, null, "\t")
+            })
+          })
+        </script>
+      </template></demo-snippet>
+    </div>
 
   </body>
 </html>
