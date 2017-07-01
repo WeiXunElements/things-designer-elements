@@ -8,86 +8,96 @@ Copyright © HatioLab Inc. All rights reserved.
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>things-editor-color-stops Demo</title>
+
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    
     <link rel="import" href="../things-editor-color-stops.html">
     <link rel="import" href="../things-editor-properties.html">
 
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
+    <custom-style>
+      <style include="demo-pages-shared-styles">
+        :root {
+          --things-editor-color-stops: {
+            background: lightgray;
+          }
+        };
 
-    <style is="custom-style" include="things-point-theme">
-      :root {
-        --things-editor-color-stops: {
-          background: lightgray;
+        textarea {
+          width: 100%;
+          height: 300px;
         }
-      };
+      </style>
+    </custom-style>
 
-      textarea {
-        width: 600px;
-        height: 300px;
-      }
-    </style>
   </head>
   <body unresolved>
 
-    <template is="dom-bind" id="app">
+    <div class="vertical-section-container centered">
+      <demo-snippet><template>
+        <dom-bind><template>
 
-      <p>An example of <code>&lt;things-editor-color-stops&gt;</code>:</p>
+          <p>An example of <code>&lt;things-editor-color-stops&gt;</code>:</p>
 
-      <things-editor-properties id="properties" target="{{xx}}">
+          <things-editor-properties id="properties" target="{{xx}}">
 
-        <p>Solid</p>
+            <p>Solid</p>
 
-        <things-editor-color-stops type="solid"
-                                   value="{{xx.colorStops}}"
-                                   min="[[xx.min]]"
-                                   max="[[xx.max]]">
-        </things-editor-color-stops>
+            <things-editor-color-stops type="solid"
+                                      value="{{xx.colorStops}}"
+                                      min="[[xx.min]]"
+                                      max="[[xx.max]]">
+            </things-editor-color-stops>
 
-        <p>Gradient</p>
+            <p>Gradient</p>
 
-        <things-editor-color-stops type="gradient"
-                                   value="{{xx.colorStops}}"
-                                   min="[[xx.min]]"
-                                   max="[[xx.max]]">
-        </things-editor-color-stops>
+            <things-editor-color-stops type="gradient"
+                                      value="{{xx.colorStops}}"
+                                      min="[[xx.min]]"
+                                      max="[[xx.max]]">
+            </things-editor-color-stops>
 
-      </things-editor-properties>
+          </things-editor-properties>
 
-      <textarea value="[[text]]"></textarea>
+          <textarea value="[[text]]"></textarea>
 
-    </template>
+        </template></dom-bind>
 
-    <script>
-      window.addEventListener('WebComponentsReady', function(e) {
-        var app = document.querySelector('#app')
+        <script>
+          window.addEventListener('WebComponentsReady', function(e) {
+            var app = document.querySelector('dom-bind')
 
-        app.$.properties.addEventListener('change', function() {
-          app.text = JSON.stringify(app.xx.colorStops, null, "\t")
-        })
+            app.$.properties.addEventListener('change', function() {
+              app.text = JSON.stringify(app.xx.colorStops, null, "\t")
+            })
 
-        app.xx = {
-          min: 50,
-          max: 100,
-          colorStops: [{
-            color: 'blue',
-            position: 50
-          }, {
-            color: 'green',
-            position: 60
-          }, {
-            color: 'yellow',
-            position: 75
-          }, {
-            color: 'red',
-            position: 90
-          }, {
-            color: 'black',
-            position: 100
-          }]
-        }
-      })
-    </script>
+            app.xx = {
+              min: 50,
+              max: 100,
+              colorStops: [{
+                color: 'blue',
+                position: 50
+              }, {
+                color: 'green',
+                position: 60
+              }, {
+                color: 'yellow',
+                position: 75
+              }, {
+                color: 'red',
+                position: 90
+              }, {
+                color: 'black',
+                position: 100
+              }]
+            }
+          })
+        </script>
+
+      </template></demo-snippet>
+    </div>
 
   </body>
 </html>

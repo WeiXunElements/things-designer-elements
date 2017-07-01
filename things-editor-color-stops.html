@@ -112,8 +112,8 @@ Example:
     </style>
 
     <div id="color-stops">
-      <div id="colorbar">
-        <div id="markers">
+      <div id="colorbar" on-dblclick="_onDblClickColorbar">
+        <div id="markers" on-down="_onDownMarkers" on-dblclick="_onDblClickMarkers" on-track="_onTrackMarkers" on-mouseup="_onMouseUpMarkers">
           <template id="markers-template" is="dom-repeat" items="[[_refinedValue(value)]]">
             <div style$="background-color:[[item.color]];margin-left:[[_calculatePosition(item.position, min, max)]]px;" marker-index$="[[index]]" draggable=false>
             </div>
@@ -123,11 +123,11 @@ Example:
     </div>
 
     <label class="icon-only-label color"></label>
-    <things-editor-color id="color-editor" value="{{focused.color}}">
+    <things-editor-color id="color-editor" value="{{focused.color}}" on-change="_onChangeSubComponent">
     </things-editor-color>
 
     <label class="icon-only-label position"></label>
-    <input is="things-editor-number-input" id="color-position" type="number" number="{{focused.position::change}}"/>
+    <input is="things-editor-number-input" id="color-position" type="number" number="{{focused.position::change}}" on-change="_onChangeSubComponent"/>
 
   </template>
 
@@ -180,13 +180,13 @@ Example:
       },
 
       listeners: {
-        'color-editor.change' : '_onChangeSubComponent',
-        'color-position.change' : '_onChangeSubComponent',
-        'colorbar.dblclick': '_onDblClickColorbar',
-        'markers.down': '_onDownMarkers',
-        'markers.dblclick': '_onDblClickMarkers',
-        'markers.track': '_onTrackMarkers',
-        'markers.mouseup': '_onMouseUpMarkers',
+        // 'color-editor.change' : '_onChangeSubComponent',
+        // 'color-position.change' : '_onChangeSubComponent',
+        // 'colorbar.dblclick': '_onDblClickColorbar',
+        // 'markers.down': '_onDownMarkers',
+        // 'markers.dblclick': '_onDblClickMarkers',
+        // 'markers.track': '_onTrackMarkers',
+        // 'markers.mouseup': '_onMouseUpMarkers',
         'iron-resize': '_onIronResize'
       },
 
@@ -209,7 +209,9 @@ Example:
         this.$['markers-template'].render()
 
         marker = this.$$(`#markers div[marker-index='${index}']`)
-        this.attributeFollows('focused', marker, this.$$('#markers div[focused]'))
+        var olds = this.root.querySelectorAll('#markers div[focused]')
+        olds.length > 0 && olds.forEach(old => old.removeAttribute('focused'))
+        marker && marker.setAttribute('focused', true)
 
         if(!marker) {
           this.focused = null
