@@ -127,7 +127,9 @@ Example:
     </things-editor-color>
 
     <label class="icon-only-label position"></label>
-    <input is="things-editor-number-input" id="color-position" type="number" number="{{focused.position::change}}" on-change="_onChangeSubComponent"/>
+    <things-editor-number-input id="color-position" number="{{focused.position}}" on-change="_onChangeSubComponent"/>
+      <input/>
+    </things-editor-number-input>
 
   </template>
 
@@ -180,13 +182,6 @@ Example:
       },
 
       listeners: {
-        // 'color-editor.change' : '_onChangeSubComponent',
-        // 'color-position.change' : '_onChangeSubComponent',
-        // 'colorbar.dblclick': '_onDblClickColorbar',
-        // 'markers.down': '_onDownMarkers',
-        // 'markers.dblclick': '_onDblClickMarkers',
-        // 'markers.track': '_onTrackMarkers',
-        // 'markers.mouseup': '_onMouseUpMarkers',
         'iron-resize': '_onIronResize'
       },
 
@@ -354,8 +349,8 @@ Example:
         }
 
         colorStops.splice(i, 0, {
-          position: position,
-          color: '#FFFFFF'
+          color: 'white',
+          position: Math.round(position)
         })
 
         this.value = colorStops
@@ -397,7 +392,7 @@ Example:
           else if(position < this.min)
             position = this.min
 
-          this.set('focused.position', position)
+          this.set('focused.position', Math.round(position))
           break;
 
         case 'end':

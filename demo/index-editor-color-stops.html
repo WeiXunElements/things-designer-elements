@@ -10,12 +10,12 @@ Copyright © HatioLab Inc. All rights reserved.
     <title>things-editor-color-stops Demo</title>
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../../neon-animation/web-animations.html">
 
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
     
     <link rel="import" href="../things-editor-color-stops.html">
-    <link rel="import" href="../things-editor-properties.html">
 
     <custom-style>
       <style include="demo-pages-shared-styles">
@@ -36,12 +36,13 @@ Copyright © HatioLab Inc. All rights reserved.
   <body unresolved>
 
     <div class="vertical-section-container centered">
+
+      <h3>An example of <code>&lt;things-editor-color-stops&gt;</code>:</h3>
+
       <demo-snippet><template>
         <dom-bind><template>
 
-          <p>An example of <code>&lt;things-editor-color-stops&gt;</code>:</p>
-
-          <things-editor-properties id="properties" target="{{xx}}">
+          <div id="properties" target="{{xx}}">
 
             <p>Solid</p>
 
@@ -51,6 +52,7 @@ Copyright © HatioLab Inc. All rights reserved.
                                       max="[[xx.max]]">
             </things-editor-color-stops>
 
+            <br>
             <p>Gradient</p>
 
             <things-editor-color-stops type="gradient"
@@ -59,7 +61,7 @@ Copyright © HatioLab Inc. All rights reserved.
                                       max="[[xx.max]]">
             </things-editor-color-stops>
 
-          </things-editor-properties>
+          </div>
 
           <textarea value="[[text]]"></textarea>
 
