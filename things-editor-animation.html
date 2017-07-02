@@ -54,32 +54,46 @@ Example:
   </style>
 
     <label><things-i18n-msg msgid="label.waiting-time" auto>waiting time</things-i18n-msg></label>
-    <input is="things-editor-number-input" number="{{animation.delay::change}}" placeholder="ms">
+    <things-editor-number-input number="{{animation.delay}}">
+      <input placeholder="ms">
+    </things-editor-number-input>
 
     <label><things-i18n-msg msgid="label.duration" auto>duration</things-i18n-msg></label>
-    <input is="things-editor-number-input" number="{{animation.duration::change}}" placeholder="ms">
+    <things-editor-number-input number="{{animation.duration}}">
+      <input placeholder="ms">
+    </things-editor-number-input>
 
     <template is='dom-if' if='[[_isRotation(value.type)]]'>
       <label><things-i18n-msg msgid="label.theta" auto>theta</things-i18n-msg></label>
-      <input is="things-editor-angle-input" radian="{{animation.theta::change}}">
+      <things-editor-angle-input radian="{{animation.theta}}">
+        <input>
+      </things-editor-angle-input>
     </template>
 
     <template is='dom-if' if='[[_isVibration(value.type)]]'>
       <label><things-i18n-msg msgid="label.theta" auto>theta</things-i18n-msg></label>
-      <input is="things-editor-angle-input" radian="{{animation.theta::change}}">
+      <things-editor-angle-input radian="{{animation.theta}}">
+        <input>
+      </things-editor-angle-input>
     </template>
 
     <template is='dom-if' if='[[_isHeartbeat(value.type)]]'>
       <label><things-i18n-msg msgid="label.scale" auto>scale</things-i18n-msg></label>
-      <input is="things-editor-number-input" number="{{animation.scale::change}}">
+      <things-editor-number-input number="{{animation.scale}}">
+        <input>
+      </things-editor-number-input>
     </template>
 
     <template is='dom-if' if='[[_isMoving(value.type)]]'>
       <label><things-i18n-msg msgid="label.x-axes" auto>X-axes</things-i18n-msg></label>
-      <input is="things-editor-number-input" number="{{animation.x::change}}">
+      <things-editor-number-input number="{{animation.x}}">
+        <input>
+      </things-editor-number-input>
 
       <label><things-i18n-msg msgid="label.y-axes" auto>Y-axes</things-i18n-msg></label>
-      <input is="things-editor-number-input" number="{{animation.y::change}}">
+      <things-editor-number-input number="{{animation.y}}">
+        <input>
+      </things-editor-number-input>
     </template>
 
     <template is='dom-if' if='[[_isOutline(value.type)]]'>
@@ -102,23 +116,18 @@ Example:
       }
     },
 
-    listeners: {
-      'value-changed': 'onChangedValue'
-    },
-
     observers: [
-      'onChangedAnimation(animation.*)'
+      'onChangedAnimation(animation.*)',
+      'onChangedValue(value)'
     ],
 
-    onChangedValue: function(changed, after) {
-
-      if(this.changedOnThis){
+    onChangedValue: function(changed) {
+      if(this.changedOnThis)
         return
-      }
 
-      var value = after.value
+      var value = changed
 
-      if(!value){
+      if(!value) {
         this.animation = {}
         return
       }
