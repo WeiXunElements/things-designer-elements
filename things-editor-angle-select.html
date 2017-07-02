@@ -10,7 +10,7 @@ Degree 각도 값을 입력 받아서, radian 값으로 변환해주는 select�
 Example:
 
   <things-editor-angle-select radian="{{radian}}">
-    <select is="things-editor-angle-select">
+    <select>
       <option value="0">0˚</option>
       <option value="90">90˚</option>
       <option value="180">180˚</option>
@@ -29,7 +29,7 @@ Example:
         display: inline-block;
       }
     </style>
-    <slot id="content"></slot>
+    <slot id="content" on-change="_onChangeValue"></slot>
   </template>
 
   <script>
@@ -47,10 +47,6 @@ Example:
           type: Number,
           notify: true
         }
-      },
-
-      listeners: {
-        'change': "_onChangeValue"
       },
 
       observers: [
@@ -97,6 +93,9 @@ Example:
           this.set('radian', undefined);
         else
           this.set('radian', degree * (Math.PI / 180));
+
+        e.stopPropagation();
+        this.dispatchEvent(new CustomEvent('change', { bubbles: true, composed: true }));          
       },
 
       _onChangeRadian(radian) {

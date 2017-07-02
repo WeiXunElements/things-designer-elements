@@ -89,13 +89,24 @@ Example:
 
     <div>
       <label><things-i18n-msg msgid="label.offset-x" auto>offsetX</things-i18n-msg></label>
-      <input is="things-editor-number-input" type="number" number="{{offsetX::change}}">
+      <things-editor-number-input number="{{offsetX::change}}">
+        <input>
+      </things-editor-number-input>
+
       <label><things-i18n-msg msgid="label.offset-y" auto>offsetY</things-i18n-msg></label>
-      <input is="things-editor-number-input" type="number" number="{{offsetY::change}}">
+      <things-editor-number-input number="{{offsetY::change}}">
+        <input>
+      </things-editor-number-input>
+
       <label><things-i18n-msg msgid="label.width" auto>width</things-i18n-msg></label>
-      <input is="things-editor-number-input" type="number" number="{{width::change}}">
+      <things-editor-number-input number="{{width::change}}">
+        <input>
+      </things-editor-number-input>
+
       <label><things-i18n-msg msgid="label.height" auto>height</things-i18n-msg></label>
-      <input is="things-editor-number-input" type="number" number="{{height::change}}">
+      <things-editor-number-input number="{{height::change}}">
+        <input>
+      </things-editor-number-input>
     </div>
 
     <input type="checkbox" checked="{{fitPattern::change}}" required><things-i18n-msg msgid="label.fit" auto>Fit</things-i18n-msg>

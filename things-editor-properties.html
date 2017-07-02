@@ -13,10 +13,17 @@ Copyright © HatioLab Inc. All rights reserved.
 Example:
 
     <things-editor-properties target="{{target}}">
-      <label>Center X</label>
-      <input is="things-editor-number-input" type="number" number="{{target.cx::change}}">
+      
+      <label>Center X</label>      
+      <things-editor-number-input number="{{target.cx::change}}">
+        <input>
+      </things-editor-number-input>
+
       <label>Width</label>
-      <input is="things-editor-number-input" type="number" number="{{target.width::change}}">
+      <things-editor-number-input number="{{target.width::change}}">
+        <input>
+      </things-editor-number-input>
+
     </things-editor-properties>
 
 @demo demo/index-editor-properties.html

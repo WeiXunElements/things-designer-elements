@@ -19,8 +19,6 @@ An element providing a solution to no problem in particular.
 
 Example:
 
-
-
 @demo demo/index-editor-property.html
 @hero hero.svg
 -->
@@ -41,13 +39,16 @@ Example:
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'number')]]">
-      <input is="things-editor-number-input" type="number" number="{{value::change}}" placeholder="[[placeholder]]">
+      <things-editor-number-input number="{{value::change}}">
+        <input placeholder="[[placeholder]]">
+      </things-editor-number-input>
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'angle')]]">
-      <input is="things-editor-angle-input" type="number" radian="{{value::change}}" placeholder="[[placeholder]]">
+      <things-editor-angle-input radian="{{value::change}}">
+        <input placeholder="[[placeholder]]">
+      </things-editor-angle-input>
     </template>
-
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'string')]]">
       <input type="text" value="{{value::change}}" placeholder="[[placeholder]]">

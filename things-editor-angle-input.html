@@ -24,7 +24,7 @@ Example:
         display: inline-block;
       }
     </style>
-    <slot id="content"></slot>
+    <slot id="content" on-change="_onChangeValue"></slot>
   </template>
 
   <script>
@@ -43,10 +43,6 @@ Example:
           notify: true,
           reflectToAttribute: true
         }
-      },
-
-      listeners: {
-        'change': "_onChangeValue"
       },
 
       observers: [
@@ -93,6 +89,9 @@ Example:
           this.set('radian', undefined);
         else
           this.set('radian', degree * (Math.PI / 180));
+
+        e.stopPropagation();
+        this.dispatchEvent(new CustomEvent('change', { bubbles: true, composed: true }));
       },
 
       _onChangeRadian(radian) {

@@ -104,7 +104,9 @@ Example:
         <option>radial</option>
       </select>
       <label class="icon-only-label color"></label>
-      <input is="things-editor-angle-input" type="number" radian="{{rotation}}">
+      <things-editor-angle-input radian="{{rotation::change}}">
+        <input>
+      </things-editor-angle-input>
     </div>
 
     <label>direction</label>

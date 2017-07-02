@@ -12,12 +12,19 @@ Copyright © HatioLab Inc. All rights reserved.
 
 Example:
 
-    <things-editor-properties-2 target="{{target}}">
-      <label>Center X</label>
-      <input is="things-editor-number-input" type="number" number="{{target.cx::change}}">
+    <things-editor-properties target="{{target}}">
+      
+      <label>Center X</label>      
+      <things-editor-number-input number="{{target.cx::change}}">
+        <input>
+      </things-editor-number-input>
+
       <label>Width</label>
-      <input is="things-editor-number-input" type="number" number="{{target.width::change}}">
-    </things-editor-properties-2>
+      <things-editor-number-input number="{{target.width::change}}">
+        <input>
+      </things-editor-number-input>
+
+    </things-editor-properties>
 
 @demo demo/index-editor-properties-2.html
 @hero hero.svg

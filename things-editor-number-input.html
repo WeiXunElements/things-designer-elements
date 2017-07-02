@@ -24,7 +24,7 @@ Example:
         display: inline-block;
       }
     </style>
-    <slot id="content"></slot>
+    <slot id="content" on-change="_onChangeValue"></slot>
   </template>
 
   <script>
@@ -42,10 +42,6 @@ Example:
           reflectToAttribute: true,
           observer: "_onChangeNumber"
         }
-      },
-
-      listeners: {
-        'change': "_onChangeValue"
       },
 
       attached() {
@@ -99,6 +95,9 @@ Example:
         } else {
           this.number = Number(value);
         }
+
+        e.stopPropagation();
+        this.dispatchEvent(new CustomEvent('change', { bubbles: true, composed: true }));
       }
     });
   })();

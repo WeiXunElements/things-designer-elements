@@ -54,21 +54,21 @@ Example:
     <label>
       <things-i18n-msg msgid="label.shadowOffsetX" auto>offset-X</things-i18n-msg>
     </label>
-    <things-editor-number-input id='left' number="{{shadow.left}}">
+    <things-editor-number-input id='left' number="{{shadow.left::change}}">
       <input>
     </things-editor-number-input>
 
     <label>
       <things-i18n-msg msgid="label.shadowOffsetY" auto>offset-Y</things-i18n-msg>
     </label>
-    <things-editor-number-input id='top' number="{{shadow.top}}">
+    <things-editor-number-input id='top' number="{{shadow.top::change}}">
       <input>
     </things-editor-number-input>
 
     <label>
       <things-i18n-msg msgid="label.shadowSize" auto>Size</things-i18n-msg>
     </label>
-    <things-editor-number-input id='blurSize' number="{{shadow.blurSize}}">
+    <things-editor-number-input id='blurSize' number="{{shadow.blurSize::change}}">
       <input>
     </things-editor-number-input>
 

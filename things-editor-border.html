@@ -78,7 +78,9 @@ Example:
 
     <div class="full-width">
         <label class="icon-only-label linewidth">size</label>
-        <input id="border-width" is="things-editor-number-input" number="{{borderWidth::change}}"/>
+        <things-editor-number-input id="border-width" number="{{borderWidth::change}}">
+          <input>
+        </things-editor-number-input>
 
         <label class="icon-only-label color">color</label>
         <things-editor-color id="border-color" value="{{borderColor}}">
