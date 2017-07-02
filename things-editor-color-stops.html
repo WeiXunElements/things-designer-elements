@@ -350,7 +350,7 @@ Example:
 
         colorStops.splice(i, 0, {
           color: 'white',
-          position: Math.round(position)
+          position: Math.round(position * 100) / 100
         })
 
         this.value = colorStops
@@ -392,7 +392,7 @@ Example:
           else if(position < this.min)
             position = this.min
 
-          this.set('focused.position', Math.round(position))
+          this.set('focused.position', Math.round(position * 100) / 100)
           break;
 
         case 'end':
