@@ -65,7 +65,8 @@ Example:
     <slot id="content"></slot>
 
     <fieldset>
-      <template id="dom-repeater" is="dom-repeat" items="[[_props]]">
+
+      <template id="dom-repeater" is="dom-repeat" items="[[_props]]" on-dom-change="_onDomBuilt">
         <!-- <label>
           <things-i18n-msg msgid="label.[[item.label]]" msg="{{item.label}}" auto hidden>[[item.label]]</things-i18n-msg>
         </label> -->
@@ -108,8 +109,7 @@ Example:
       ],
 
       listeners: {
-        'change': '_onValueChanged',
-        'dom-repeater.dom-change': '_onDomBuilt'
+        'change': '_onValueChanged'
       },
 
       _onPropsChanged: function() {

@@ -130,7 +130,9 @@ Example:
         <things-editor-script id="eval-editor"
                               theme="ace/theme/monokai"
                               mode="ace/mode/javascript"
-                              value="{{rule.eval}}">
+                              value="{{rule.eval}}"
+                              on-blur="onBlurEvalEditor"
+                              on-editor-ready="onEditorReady">
         </things-editor-script>
       </div>
     </iron-pages>
@@ -153,11 +155,6 @@ Example:
         'onChangedRule(rule.*)',
         '_valueType(mapping.property)'
       ],
-
-      listeners: {
-        'eval-editor.blur': 'onBlurEvalEditor',
-        'eval-editor.editor-ready': 'onEditorReady'
-      },
 
       onEditorReady: function(e) {
         // event.detail should be a ace-editor

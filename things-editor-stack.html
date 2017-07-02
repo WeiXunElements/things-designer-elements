@@ -55,7 +55,7 @@ Example:
 
     </style>
 
-    <button id='add-floor'>+</button>
+    <button id='add-floor' on-click="_onClickAddFloor">+</button>
 
     <template id="floors" is="dom-repeat" items="[[stack]]" sort="_sortReverse">
       <template is="dom-if" if="{{_isActive(item)}}">
@@ -101,8 +101,7 @@ Example:
       },
 
       listeners: {
-        'iron-resize': '_onIronResize',
-        'add-floor.click': '_onClickAddFloor'
+        'iron-resize': '_onIronResize'
       },
 
       _onChangeProps: function(min, max, type) {

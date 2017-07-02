@@ -112,22 +112,19 @@ Example:
         }        
       },
 
-      listeners: {
-        'value-changed': 'onChangedValue'
-      },
-
       observers: [
         'onChandedGradient(gradient.*)',
         'onChangedPattern(pattern.*)',
-        'onChangedSolid(solid)'
+        'onChangedSolid(solid)',
+        'onChangedValue(value)'
       ],
 
-      onChangedValue: function(changed, after) {
+      onChangedValue: function(value) {
 
         if(this.changedOnThis)
           return
 
-        var value = after.value
+        // var value = after.value
 
         /* 설정 값에 따라서, 멤버 속성을 설정한다. */
         if(!value) {

@@ -133,15 +133,26 @@ Example:
         value: 'string'
       }
     },
-    listeners: {
-      'change': '_onChange'
+
+    attached() {
+      if(!this.boundOnChange)
+        this.boundOnChange = this._onChange.bind(this);
+
+      this.addEventListener('change', this.boundOnChange);
     },
+
+    detached() {
+      this.removeEventListener('change', this.boundOnChange);
+    },
+
     _isColorType: function(type) {
       return type === 'color'
     },
+
     _isBooleanType: function(type) {
       return type === 'boolean'
     },
+
     _defaultValue: function(type) {
       switch(type || this.valueType) {
       case 'color':

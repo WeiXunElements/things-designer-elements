@@ -205,7 +205,7 @@ Example:
 
     </style>
 
-    <input id="text" type="text" value="{{value}}" placeholder="[[placeholder]]">
+    <input id="text" type="text" value="{{value}}" placeholder="[[placeholder]]" on-change="_onInputChanged">
     <a id="color" type="button" on-click="showPicker">
       <span id="color-thumbnail"></span>
     </a>
@@ -232,10 +232,6 @@ Example:
             alpha: 1
           }
         }
-      },
-
-      listeners: {
-        'text.change': '_onInputChanged'
       },
 
       observers: [
