@@ -17,12 +17,8 @@ Copyright © HatioLab Inc. All rights reserved.
     
     <link rel="import" href="../things-editor-shadow.html">
 
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
-
     <custom-style>
       <style include="demo-pages-shared-styles">
-      </style>
-      <style include="things-point-theme">
         :root {
           --things-editor-shadow: {
             background: lightgray;
@@ -40,24 +36,29 @@ Copyright © HatioLab Inc. All rights reserved.
   <body unresolved>
 
     <div class="vertical-section-container centered">
+
+      <h3>An example of <code>&lt;things-editor-shadow&gt;</code>:</h3>
+
       <demo-snippet><template>
         <dom-bind><template>
-
-          <p>An example of <code>&lt;things-editor-shadow&gt;</code>:</p>
-
-          <textarea value="[[text]]"></textarea>
-
-          <p>Shadow Style</p>
 
           <things-editor-shadow id="editor"
                                 value="{{value}}">
           </things-editor-shadow>
+
+          <textarea value="[[text]]"></textarea>
 
         </template></dom-bind>
 
         <script>
           window.addEventListener('WebComponentsReady', function(e) {
             var app = document.querySelector('dom-bind')
+
+            function update() {
+              app.text = JSON.stringify(app.value, null, "\t")
+            }
+
+            app.$.editor.addEventListener('change', update)
 
             app.value = {
               blurSize: 20,
@@ -67,9 +68,7 @@ Copyright © HatioLab Inc. All rights reserved.
               alpha: 0.8
             }
 
-            app.$.editor.addEventListener('change', function() {
-              app.text = JSON.stringify(app.value, null, "\t")
-            })
+            update()
           })
         </script>
       </template></demo-snippet>

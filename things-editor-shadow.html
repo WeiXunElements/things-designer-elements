@@ -54,23 +54,23 @@ Example:
     <label>
       <things-i18n-msg msgid="label.shadowOffsetX" auto>offset-X</things-i18n-msg>
     </label>
-    <things-things-editor-number-input id='left' number="{{shadow.left::change}}">
+    <things-editor-number-input id='left' number="{{shadow.left}}">
       <input>
-    </things-things-editor-number-input>
+    </things-editor-number-input>
 
     <label>
       <things-i18n-msg msgid="label.shadowOffsetY" auto>offset-Y</things-i18n-msg>
     </label>
-    <things-things-editor-number-input id='top' number="{{shadow.top::change}}">
+    <things-editor-number-input id='top' number="{{shadow.top}}">
       <input>
-    </things-things-editor-number-input>
+    </things-editor-number-input>
 
     <label>
       <things-i18n-msg msgid="label.shadowSize" auto>Size</things-i18n-msg>
     </label>
-    <things-things-editor-number-input id='blurSize' number="{{shadow.blurSize::change}}">
+    <things-editor-number-input id='blurSize' number="{{shadow.blurSize}}">
       <input>
-    </things-things-editor-number-input>
+    </things-editor-number-input>
 
     <label class="icon-only-label color"></label>
     <things-editor-color id='color' value="{{shadow.color::change}}">
@@ -88,21 +88,16 @@ Example:
       }
     },
 
-    listeners: {
-      'value-changed': 'onChangedValue'
-    },
-
     observers: [
-      'onChangedShadow(shadow.*)'
+      'onChangedShadow(shadow.*)',
+      'onChangedValue(value)'
     ],
 
-    onChangedValue: function(changed, after) {
-
-      if(this.changedOnThis){
+    onChangedValue: function(changed) {
+      if(this.changedOnThis)
         return
-      }
 
-      var value = after.value
+      var value = changed
 
       if(!value){
         this.shadow = {}
