@@ -33,7 +33,7 @@ Example:
       }
     </style>
 
-    <slot id="content" select="paper-button"></slot>
+    <slot id="content" on-tap="_onTapButton"></slot>
 
   </template>
 
@@ -55,10 +55,6 @@ Example:
         mandatory: {
           type: Boolean
         }
-      },
-
-      listeners: {
-        'tap': "_onTapButton"
       },
 
       ready: function() {

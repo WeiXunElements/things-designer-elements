@@ -10,46 +10,56 @@ Copyright © HatioLab Inc. All rights reserved.
     <title>things-editor-action Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
+    <link rel="import" href="../../neon-animation/web-animations.html">
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    
     <link rel="import" href="../things-editor-action.html">
 
     <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
 
-    <style is="custom-style" include="things-point-theme">
-      :root {
-        --things-editor-action: {
-          background: lightgray;
+    <custom-style>
+      <style include="things-point-theme">
+        :root {
+          --things-editor-action: {
+            background: lightgray;
+          }
+        };
+
+        textarea {
+          width: 600px;
+          height: 300px;
         }
-      };
-
-      textarea {
-        width: 600px;
-        height: 300px;
-      }
-    </style>
+      </style>
+    </custom-style>
   </head>
   <body unresolved>
 
-    <template is="dom-bind" id="app">
+    <div class="vertical-section-container centered">
 
-      <p>An example of <code>&lt;things-editor-action&gt;</code>:</p>
+      <h3>An example of <code>&lt;things-editor-action&gt;</code>:</h3>
 
-      <things-editor-action id="action"
-                            icon="remove-circle"
-                            on-action-editor-clicked="onAction">
-      </things-editor-action>
+      <demo-snippet><template>
+        <dom-bind><template>
 
-    </template>
+          <things-editor-action id="action"
+                                icon="remove-circle"
+                                on-action-editor-clicked="onAction">
+          </things-editor-action>
 
-    <script>
-      window.addEventListener('WebComponentsReady', function(e) {
-        var app = document.querySelector('#app');
+        </template></dom-bind>
 
-        app.onAction = function(e) {
-          alert("action")
-        }
-      })
-    </script>
+        <script>
+          window.addEventListener('WebComponentsReady', function(e) {
+            var app = document.querySelector('dom-bind');
 
+            app.onAction = function(e) {
+              alert("action")
+            }
+          })
+        </script>
+      </template></demo-snippet>
+    </div>
   </body>
 </html>

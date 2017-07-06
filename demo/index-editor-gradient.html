@@ -8,75 +8,91 @@ Copyright © HatioLab Inc. All rights reserved.
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>things-editor-gradient Demo</title>
+
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
+    <link rel="import" href="../../neon-animation/web-animations.html">
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    
     <link rel="import" href="../things-editor-gradient.html">
 
     <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
 
-    <style is="custom-style" include="things-point-theme">
-    :root {
-      --things-editor-gradient: {
-        background: yellow;
-      }
-    };
+    <custom-style>
+      <style include="demo-pages-shared-styles">
+      </style>
+      <style include="things-point-theme">
+      :root {
+        --things-editor-gradient: {
+          background: yellow;
+        }
+      };
 
-    div{
-      display: inline-flex;
-    }
-    #linear-target {
-      width: 200px;
-      height: 200px;
-      background: linear-gradient(45deg, blue, red 30%, yellow 60%, green 80%, black);
-    }
-    #radial-target {
-      display: inline-block;
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle, blue, red 30%, yellow 60%, green 80%, black);
-    }
-    </style>
+      div{
+        display: inline-flex;
+      }
+      #linear-target {
+        width: 200px;
+        height: 200px;
+        background: linear-gradient(45deg, blue, red 30%, yellow 60%, green 80%, black);
+      }
+      #radial-target {
+        display: inline-block;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle, blue, red 30%, yellow 60%, green 80%, black);
+      }
+      </style>
+    </custom-style>
+
   </head>
   <body unresolved>
+    <div class="vertical-section-container centered">
 
-    <template is="dom-bind" id="app">
-      <p>An example of <code>&lt;things-editor-gradient&gt;</code>:</p>
-      <div>
-        <div id='linear-target'></div>
-        <div id='radial-target'></div>
-      </div>
+      <h3>An example of <code>&lt;things-editor-gradient&gt;</code>:</h3>
 
-      <things-editor-gradient id="editor"
-                              type="{{gradient.type}}"
-                              rotation="{{gradient.rotation}}"
-                              center="{{gradient.center}}"
-                              color-stops="{{gradient.colorStops}}"
-                              rotate-with-shapes="{{gradient.rotateWithShapes}}">
-      </things-editor-gradient>
+      <demo-snippet><template>
+        <dom-bind><template>
 
-    </template>
+          <div>
+            <div id='linear-target'></div>
+            <div id='radial-target'></div>
+          </div>
 
-    <script>
-      window.addEventListener('WebComponentsReady', function(e) {
-        var app = document.querySelector('#app')
+          <things-editor-gradient id="editor"
+                                  type="{{gradient.type}}"
+                                  rotation="{{gradient.rotation}}"
+                                  center="{{gradient.center}}"
+                                  color-stops="{{gradient.colorStops}}"
+                                  rotate-with-shapes="{{gradient.rotateWithShapes}}">
+          </things-editor-gradient>
 
-        app.gradient = {
-          type: 'linear',
-          rotation: Math.PI / 4,
-          colorStops: [{
-            color: 'red',
-            position: 0
-          }, {
-            color: 'blue',
-            position: 1
-          }]
-        }
+        </template></dom-bind>
 
-        app.$.editor.addEventListener('change', function() {
-          console.log(app.gradient)
-        })
-      })
-    </script>
+        <script>
+          window.addEventListener('WebComponentsReady', function(e) {
+            var app = document.querySelector('dom-bind')
 
+            app.gradient = {
+              type: 'linear',
+              rotation: Math.PI / 4,
+              colorStops: [{
+                color: 'red',
+                position: 0
+              }, {
+                color: 'blue',
+                position: 1
+              }]
+            }
+
+            app.$.editor.addEventListener('change', function() {
+              console.log(app.gradient)
+            })
+          })
+        </script>
+      </template></demo-snippet>
+    </div>
   </body>
 </html>
