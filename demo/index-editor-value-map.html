@@ -10,53 +10,61 @@ Copyright © HatioLab Inc. All rights reserved.
     <title>things-editor-value-map Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    
     <link rel="import" href="../things-editor-value-map.html">
 
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
-
-    <style is="custom-style" include="things-point-theme">
-    textarea {
-      width: 600px;
-      height: 300px;
-    }
-    </style>
+    <custom-style>
+      <style include="demo-pages-shared-styles">
+        textarea {
+          width: 100%;
+          height: 300px;
+        }
+      </style>
+    </custom-style>
   </head>
   <body unresolved>
 
-    <template is="dom-bind" id="app">
-      <p>An example of <code>&lt;things-editor-value-map&gt;</code>:</p>
+    <div class="vertical-section-container centered">
 
-      <textarea value="[[text]]"></textarea>
+      <h3>An example of <code>&lt;things-editor-value-map&gt;</code>:</h3>
 
-      <things-editor-value-map id="editor"
-                               map="{{value.map}}"
-                               key-type="[[value.type]]"
-                               value-type="[[value.valueType]]">
-      </things-editor-value-map>
+      <demo-snippet><template>
+        <dom-bind><template>
+          <textarea value="[[text]]"></textarea>
 
-    </template>
+          <things-editor-value-map id="editor"
+                                  map="{{value.map}}"
+                                  key-type="[[value.type]]"
+                                  value-type="[[value.valueType]]">
+          </things-editor-value-map>
 
-    <script>
-      window.addEventListener('WebComponentsReady', function(e) {
-        var app = document.querySelector('#app')
+        </template></dom-bind>
 
-        app.set('value', {
-          type: "string",
-          valueType: "boolean",
-          map: {
-            '1': true,
-            '2': false,
-            'default': true
-          }
-        })
+        <script>
+          window.addEventListener('WebComponentsReady', function(e) {
+            var app = document.querySelector('dom-bind')
 
-        app.$.editor._changed = function(map) {
-          app.text = JSON.stringify(app.value, null, "\t")
-        }
+            app.set('value', {
+              type: "string",
+              valueType: "boolean",
+              map: {
+                '1': true,
+                '2': false,
+                'default': true
+              }
+            })
 
-        app.$.editor._addComplexObserverEffect('_changed(map)');
-      })
-    </script>
+            app.$.editor._changed = map => {
+              app.text = JSON.stringify(app.value, null, "\t")
+            }
+
+            app.$.editor._createPropertyObserver('map', '_changed', true);
+          })
+        </script>
+      </template></demo-snippet>
+    </div>
 
   </body>
 </html>

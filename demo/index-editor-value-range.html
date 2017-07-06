@@ -10,52 +10,62 @@ Copyright © HatioLab Inc. All rights reserved.
     <title>things-editor-value-range Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    
     <link rel="import" href="../things-editor-value-range.html">
 
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
-
-    <style is="custom-style" include="things-point-theme">
-    textarea {
-      width: 600px;
-      height: 300px;
-    }
-    </style>
+    <custom-style>
+      <style include="demo-pages-shared-styles">
+        textarea {
+          width: 100%;
+          height: 300px;
+        }
+      </style>
+    </custom-style>
   </head>
   <body unresolved>
 
-    <template is="dom-bind" id="app">
-      <p>An example of <code>&lt;things-editor-value-range&gt;</code>:</p>
+    <div class="vertical-section-container centered">
 
-      <textarea value="[[text]]"></textarea>
+      <h3>An example of <code>&lt;things-editor-value-range&gt;</code>:</h3>
 
-      <things-editor-value-range id="editor"
-                                 range="{{value.range}}"
-                                 key-type="[[value.type]]"
-                                 value-type="[[value.valueType]]">
-      </things-editor-value-range>
+      <demo-snippet><template>
+        <dom-bind><template>
 
-    </template>
+          <textarea value="[[text]]"></textarea>
 
-    <script>
-      window.addEventListener('WebComponentsReady', function(e) {
-        var app = document.querySelector('#app')
+          <things-editor-value-range id="editor"
+                                    range="{{value.range}}"
+                                    key-type="[[value.type]]"
+                                    value-type="[[value.valueType]]">
+          </things-editor-value-range>
 
-        app.value = {
-          type: "string",
-          valueType: "boolean",
-          range: {
-            '1~2': true,
-            default: true
-          }
-        }
+        </template></dom-bind>
 
-        app.$.editor._changed = function(range) {
-          app.text = JSON.stringify(app.value, null, "\t")
-        }
+        <script>
+          window.addEventListener('WebComponentsReady', function(e) {
+            var app = document.querySelector('dom-bind')
 
-        app.$.editor._addComplexObserverEffect('_changed(range)');
-      })
-    </script>
+            app.value = {
+              type: "string",
+              valueType: "boolean",
+              range: {
+                '1~2': true,
+                default: true
+              }
+            }
+
+            app.$.editor._changed = range => {
+              app.text = JSON.stringify(app.value, null, "\t")
+            }
+
+            app.$.editor._createPropertyObserver('range', '_changed', true);
+          })
+        </script>
+
+      </template></demo-snippet>
+    </div>
 
   </body>
 </html>

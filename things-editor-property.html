@@ -157,7 +157,7 @@ Example:
           return
 
         this.set("value", e.detail)
-        this.fire("change")
+        this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
       }
 
     })

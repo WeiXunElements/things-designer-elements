@@ -10,47 +10,56 @@ Copyright © HatioLab Inc. All rights reserved.
     <title>things-editor-value Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
-
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    
     <link rel="import" href="../things-editor-value.html">
 
-    <style is="custom-style" include="things-point-theme">
-    textarea {
-      width: 600px;
-      height: 300px;
-    }
-    </style>
+    <custom-style>
+      <style include="demo-pages-shared-styles">
+        textarea {
+          width: 100%;
+          height: 300px;
+        }
+      </style>
+    </custom-style>
   </head>
   <body unresolved>
 
-    <template is="dom-bind" id="app">
-      <p>An example of <code>&lt;things-editor-value&gt;</code>:</p>
+    <div class="vertical-section-container centered">
 
-      <textarea value="[[text]]"></textarea>
+      <h3>An example of <code>&lt;things-editor-value&gt;</code>:</h3>
 
-      <things-editor-value id="editor"
-                           mapping="{{mapping}}"
-                           type="[[type]]">
-      </things-editor-value>
-    </template>
+      <demo-snippet><template>
+        <dom-bind><template>
 
-    <script>
-      window.addEventListener('WebComponentsReady', function(e) {
-        var app = document.querySelector('#app')
+          <textarea value="[[text]]"></textarea>
 
-        app.type = "string"
-        app.mapping = {
-          target: '#special',
-          property: 'text',
-          rule: 'eval',
-          param: 'return "blue"'
-        }
+          <things-editor-value id="editor"
+                              mapping="{{mapping}}"
+                              type="[[type]]">
+          </things-editor-value>
+        </template></dom-bind>
 
-        app.$.editor.addEventListener('value-change', function(e) {
-          app.text = JSON.stringify(app.mapping, null, "\t")
-        })
-      })
-    </script>
+        <script>
+          window.addEventListener('WebComponentsReady', function(e) {
+            var app = document.querySelector('dom-bind')
+
+            app.type = "string"
+            app.mapping = {
+              target: '#special',
+              property: 'text',
+              rule: 'eval',
+              param: 'return "blue"'
+            }
+
+            app.$.editor.addEventListener('value-change', function(e) {
+              app.text = JSON.stringify(app.mapping, null, "\t")
+            })
+          })
+        </script>
+      </template></demo-snippet>
+    </div>
 
   </body>
 </html>

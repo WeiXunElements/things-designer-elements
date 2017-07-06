@@ -203,7 +203,7 @@ Example:
         /* 마커 템플릿을 다시 만든다. */
         this.$['markers-template'].render()
 
-        marker = this.$$(`#markers div[marker-index='${index}']`)
+        marker = this.shadowRoot.querySelector(`#markers div[marker-index='${index}']`)
         var olds = this.root.querySelectorAll('#markers div[focused]')
         olds.length > 0 && olds.forEach(old => old.removeAttribute('focused'))
         marker && marker.setAttribute('focused', true)

@@ -110,37 +110,36 @@ Example:
       ],
 
       _onPropsChanged: function() {
-        if(this._asyncher) {
-          this.cancelAsync(this._asyncher)
-          delete this._asyncher
+        if(this._timeout) {
+          clearTimeout(this._timeout)
+          delete this._timeout
         }
 
-        this._asyncher = this.async(function() {
+        this._timeout = setTimeout(() => {
           this._props = this.props
         }, 100)
       },
 
       _onDomBuilt: function() {
         // DOM이 build 되었으니, 모델을 적용한다.
-        this.async(function() {
+        setTimeout(() => {
           this._setValues()
-          delete this._asyncher
+          delete this._timeout
         })
       },
 
       _setValues: function() {
-          this._changedOnThis = true
-          let self = this
+        // this._changedOnThis = true
 
-          self.target && Array.from(this.querySelectorAll('things-editor-property')).forEach(function(prop) {
-            let name = prop.getAttribute('name')
-            prop.value = self.target[name]
-          })
-          this._changedOnThis = false
+        this.target && Array.from(this.root.querySelectorAll('things-editor-property')).forEach(prop => {
+          let name = prop.getAttribute('name')
+          prop.value = this.target[name]
+        })
+        // this._changedOnThis = false
       },
 
       _onTargetChanged: function(change) {
-        if(this._asyncher)
+        if(this._timeout)
           return
 
         if(change.path == 'target') {
@@ -153,8 +152,8 @@ Example:
       },
 
       _onValueChanged: function(e) {
-        if(this._changedOnThis)
-          return
+        // if(this._changedOnThis)
+        //   return
 
         var prop = e.target
         while(prop && prop.tagName != 'THINGS-EDITOR-PROPERTY')
