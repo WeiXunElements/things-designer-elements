@@ -272,7 +272,7 @@ Example:
           return sum
         }, {})
 
-        map.default = this.map.default
+        map.default = this.map && this.map.default
 
         this.set('map', map)
       },

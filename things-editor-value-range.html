@@ -164,6 +164,7 @@ Example:
         return ''
       }
     },
+
     _onChange: function(e) {
       if(this._changingNow)
         return
@@ -192,6 +193,7 @@ Example:
       this._changingNow = false
 
     },
+    
     _build: function(includeNewRecord) {
       if(includeNewRecord)
         var records = this.root.querySelectorAll('[data-record],[data-record-new]')
@@ -220,6 +222,7 @@ Example:
       }
       this.set('range', newrange)
     },
+    
     /* default를 제외한 range아이템들을 template(dom-repeat)용 배열로 변환하는 함수 */
     _toArray: function(range) {
       var array = []
@@ -235,6 +238,7 @@ Example:
       }
       return array
     },
+    
     _sort: function(e) {
       var sorter = this.rangeType === 'number' ?
         function(a, b) {
@@ -247,9 +251,12 @@ Example:
         sum[`${i.from}~${i.to}`] = i.value
         return sum
       }, {})
-      range.default = this.range.default
+    
+      range.default = this.range && this.range.default
+    
       this.set('range', range)
     },
+    
     _add: function(e) {
       this._build(true)
       var inputs = this.root.querySelectorAll('[data-record-new] input:not([style*="display: none"])')
@@ -262,6 +269,7 @@ Example:
       }
       inputs[0].focus()
     },
+    
     _delete: function(e) {
       var record = e.target.parentElement
       record.querySelector('[data-from]').value = ''
