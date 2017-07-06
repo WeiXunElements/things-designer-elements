@@ -76,6 +76,7 @@ Example:
                                 placeholder="[[item.placeholder]]"
                                 observe="[[item.observe]]"
                                 property="[[item.property]]"
+                                on-change="_onValueChanged"
                                 >
         </things-editor-property>
       </template>
@@ -107,10 +108,6 @@ Example:
         '_onTargetChanged(target.*)',
         '_onPropsChanged(props)'
       ],
-
-      listeners: {
-        'change': '_onValueChanged'
-      },
 
       _onPropsChanged: function() {
         if(this._asyncher) {
@@ -156,7 +153,6 @@ Example:
       },
 
       _onValueChanged: function(e) {
-
         if(this._changedOnThis)
           return
 
