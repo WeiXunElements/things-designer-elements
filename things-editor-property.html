@@ -117,49 +117,49 @@ Example:
 
   <script>
 
-    Polymer({
-      is: 'things-editor-property',
+    class ThingsEditorProperty extends Polymer.Element {
+      static get is() { return 'things-editor-property'; }
 
-      properties: {
-        value: {
-          notify: true,
-          observer: '_valueChanged'
-        },
-        type: String,
-        label: String,
-        property: {
-          type: Object,
-          notify: true,
-          value: {}
+      static get properties() {
+        return {
+          value: {
+            notify: true,
+            observer: '_valueChanged'
+          },
+          type: String,
+          label: String,
+          property: {
+            type: Object,
+            notify: true,
+            value: function (){ return {} }
+          }
         }
-      },
+      }
 
-      _isTypeofEditor: function(editorType, type) {
+      _isTypeofEditor(editorType, type) {
         return editorType == type
-      },
+      }
 
-      _isExist: function(label) {
-
+      _isExist(label) {
         var str = String(label || "")
         return label != ""
+      }
 
-      },
-
-      _valueChanged: function(value) {
+      _valueChanged(value) {
         if(!this.get('observe'))
           return
 
         this.get('observe').call(this, value)
-      },
+      }
 
-      _onThingsImageChanged: function(e) {
+      _onThingsImageChanged(e) {
         if(!this.property)
           return
 
         this.set("value", e.detail)
         this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
       }
-
-    })
+    }
+    window.customElements.define(ThingsEditorProperty.is, ThingsEditorProperty);    
   </script>
 </dom-module>

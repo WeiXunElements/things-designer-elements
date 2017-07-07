@@ -85,60 +85,58 @@ Example:
   </template>
 
   <script>
-
-    Polymer({
-      is: 'things-editor-properties',
-
-      properties: {
-        target: {
-          type: Object,
-          notify: true
-        },
-        props: {
-          type: Array,
-          value: []
-        },
-        _props: {
-          type: Array,
-          value: []
+    class ThingsEditorProperties extends Polymer.Element {
+      static get is() {return 'things-editor-properties';}
+      
+      static get properties() {
+        return {
+          target: {
+            type: Object,
+            notify: true,
+            observer: '_onTargetChanged'
+          },
+          props: {
+            type: Array,
+            value: function() { return []},
+            observer: '_onPropsChanged'
+          },
+          _props: {
+            type: Array,
+            value: function() { return []}
+          }
         }
-      },
+      }
 
-      observers: [
-        '_onTargetChanged(target.*)',
-        '_onPropsChanged(props)'
-      ],
-
-      _onPropsChanged: function() {
+      _onPropsChanged() {
         if(this._timeout) {
           clearTimeout(this._timeout)
           delete this._timeout
         }
 
         this._timeout = setTimeout(() => {
-          this._props = this.props
-        }, 100)
-      },
+          this.set('_props', this.props)
+        });
+      }
 
-      _onDomBuilt: function() {
+      _onDomBuilt() {
         // DOM이 build 되었으니, 모델을 적용한다.
         setTimeout(() => {
           this._setValues()
           delete this._timeout
         })
-      },
+      }
 
-      _setValues: function() {
+      _setValues() {
         // this._changedOnThis = true
 
         this.target && Array.from(this.root.querySelectorAll('things-editor-property')).forEach(prop => {
           let name = prop.getAttribute('name')
-          prop.value = this.target[name]
+          prop.set('value', this.target[name])
         })
         // this._changedOnThis = false
-      },
+      }
 
-      _onTargetChanged: function(change) {
+      _onTargetChanged(change) {
         if(this._timeout)
           return
 
@@ -149,9 +147,9 @@ Example:
           this._setValues()
           return
         }
-      },
+      }
 
-      _onValueChanged: function(e) {
+      _onValueChanged(e) {
         // if(this._changedOnThis)
         //   return
 
@@ -165,8 +163,8 @@ Example:
         var name = prop.getAttribute('name')
 
         this.set('target.' + name, prop.value)
-      }
-
-    })
+      } 
+    }
+    window.customElements.define(ThingsEditorProperties.is, ThingsEditorProperties);
   </script>
 </dom-module>
