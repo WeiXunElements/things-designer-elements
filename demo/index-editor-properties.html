@@ -71,6 +71,10 @@ Copyright © HatioLab Inc. All rights reserved.
             min: 0,
             max: 100
           }
+        }, {
+          type: 'textarea',
+          label: 'LONG TEXT',
+          name: 'longtext'
         }]
 
         app.value = {
@@ -82,7 +86,8 @@ Copyright © HatioLab Inc. All rights reserved.
           }, {
             position: 80,
             color: 'red'
-          }]
+          }], 
+          longtext: 'HAHAHAHAHAHAHAHA'
         }
 
         app.$.properties.addEventListener('change', function(e) {

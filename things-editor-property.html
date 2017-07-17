@@ -13,6 +13,7 @@ Copyright © HatioLab Inc. All rights reserved.
 <link rel="import" href="./things-editor-angle-input.html">
 <link rel="import" href="./things-editor-table.html">
 <link rel="import" href="./things-editor-action.html">
+<link rel="import" href="./things-editor-script.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -29,6 +30,11 @@ Example:
   <template>
     <style>
       :host {
+      }
+      things-editor-script{
+        width:94%;height:180px;
+        margin:-7px 0 7px 7px;
+        overflow:auto;
       }
     </style>
 
@@ -54,7 +60,9 @@ Example:
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'textarea')]]">
-      <textarea value="{{value::change}}" placeholder="[[placeholder]]"></textarea>
+      <things-editor-script theme="ace/theme/monokai"
+                            value="{{value::change}}">
+      </things-editor-script>
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'checkbox')]]">

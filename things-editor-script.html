@@ -82,6 +82,11 @@ Example:
 
         editor: {
           type: Object
+        },
+
+        gutter: {
+          type: Boolean,
+          value: false
         }
       },
 
@@ -100,7 +105,8 @@ Example:
             initialContent: this.value
           })
 
-          this.fire('editor-ready', this.editor)
+          if(!this.gutter)
+            this.editor.renderer.setShowGutter(this.gutter)
 
           // inject base editor styles
           this._injectTheme('#ace_editor\\.css');
