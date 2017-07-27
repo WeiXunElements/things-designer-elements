@@ -155,13 +155,7 @@ Example:
       ],
 
       listeners: {
-        'eval-editor.blur': 'onBlurEvalEditor',
-        'eval-editor.editor-ready': 'onEditorReady'
-      },
-
-      onEditorReady: function(e) {
-        // event.detail should be a ace-editor
-        e.detail.renderer.setShowGutter(false);
+        'eval-editor.blur': 'onBlurEvalEditor'
       },
 
       onBlurEvalEditor: function(after) {
