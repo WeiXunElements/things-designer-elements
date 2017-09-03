@@ -12,47 +12,56 @@ Copyright © HatioLab Inc. All rights reserved.
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    
     <link rel="import" href="../things-editor-script.html">
 
     <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
 
-    <style is="custom-style" include="things-point-theme">
-      :root {
-        --things-editor-script: {
+    <custom-style>
+      <style include="demo-pages-shared-styles">
+        textarea {
+          width: 100%;
           height: 300px;
         }
-      }
 
-      textarea {
-        height: 100px;
-        width: 100%;
-      }
-    </style>
+        things-editor-script {
+          height: 300px;
+        }
+      </style>
+    </custom-style>
+
   </head>
   <body unresolved>
 
-    <template is="dom-bind" id="app">
+    <div class="vertical-section-container centered">
 
-      <p>An example of <code>&lt;things-editor-script&gt;</code>:</p>
+      <h3>An example of <code>&lt;things-editor-script&gt;</code>:</h3>
+      <demo-snippet><template>
+        <dom-bind><template>
+          <things-editor-script id="editor"
+            value="{{text}}"
+            fontsize="12"
+            theme="ace/theme/monokai"
+            mode="ace/mode/javascript">
+          </things-editor-script>
 
-      <things-editor-script id="editor"
-                            value="{{text}}"
-                            fontsize="12"
-                            theme="ace/theme/monokai"
-                            mode="ace/mode/javascript">
-      </things-editor-script>
+          <br>
+          <textarea value="[[text]]"></textarea>
 
-      <textarea value="[[text]]"></textarea>
-
-    </template>
-
-    <script>
-      window.addEventListener('WebComponentsReady', function(e) {
-        var app = document.querySelector('#app')
-
-        app.text = "Hello, World"
-      })
-    </script>
-
+        </template></dom-bind>
+          
+        <script>
+            window.addEventListener('WebComponentsReady', function(e) {
+              var app = document.querySelector('dom-bind')
+      
+              app.text = "Hello, World"
+            })
+        </script>
+      
+      </template></demo-snippet>
+          
+    </div>
   </body>
 </html>
