@@ -77,7 +77,8 @@ Example:
         },
 
         tabsize: {
-          type: Number
+          type: Number,
+          value: 2
         },
 
         readonly: {
@@ -90,6 +91,11 @@ Example:
 
         editor: {
           type: Object
+        },
+
+        gutter: {
+          type: Boolean,
+          value: false
         }
       },
 
@@ -109,6 +115,8 @@ Example:
           })
 
           this.fire('editor-ready', this.editor)
+          if(!this.gutter)
+            this.editor.renderer.setShowGutter(this.gutter)
 
           // inject base editor styles
           this._injectTheme('#ace_editor\\.css');
@@ -151,8 +159,10 @@ Example:
       },
 
       _valueChanged: function(value) {
-        if(this._changedOnThis)
+        if(this._changedOnThis) {
+          this.fire('change', value)
           return
+        }
 
         if(this.editor)
           this.editor.setValue(value || '')
