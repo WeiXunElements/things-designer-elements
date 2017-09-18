@@ -27,24 +27,25 @@ Example:
 <dom-module id="things-editor-property">
   <template>
     <style>
-      :host {
+       :host {}
+
+      things-editor-script {
+        width: 94%;
+        height: 180px;
+        margin: -7px 0 7px 7px;
+        overflow: auto;
       }
 
-      things-editor-script{
-        width:94%;height:180px;
-        margin:-7px 0 7px 7px;
-        overflow:auto;
-      }
-     
-     select{
+      select {
         @apply(--things-select);
-        background:url(/images/bg-input-select.png) 100% 50% no-repeat #fff;
-     }
-     
+        background: url(/images/bg-input-select.png) 100% 50% no-repeat #fff;
+      }
     </style>
 
     <template is="dom-if" if="[[_isExist(label)]]" restamp=true>
-      <label>[[label]]</label>
+      <label>
+          <things-i18n-msg msgid="[[_msgId]]" auto>[[label]]</things-i18n-msg>
+      </label>
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'legend')]]" restamp=true>
@@ -65,8 +66,7 @@ Example:
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'textarea')]]" restamp=true>
-      <things-editor-script theme="ace/theme/monokai"
-                            value="{{value}}">
+      <things-editor-script theme="ace/theme/monokai" value="{{value}}">
       </things-editor-script>
     </template>
 
@@ -83,41 +83,33 @@ Example:
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'color')]]" restamp=true>
-      <things-editor-color value="{{value::change}}" placeholder="[[placeholder]]"/>
+      <things-editor-color value="{{value::change}}" placeholder="[[placeholder]]" />
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'solid-color-stops')]]" restamp=true>
-      <things-editor-color-stops type="solid" value="{{value::change}}" min="[[property.min]]" max="[[property.max]]"/>
+      <things-editor-color-stops type="solid" value="{{value::change}}" min="[[property.min]]" max="[[property.max]]" />
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'gradient-color-stops')]]" restamp=true>
-      <things-editor-color-stops type="gradient" value="{{value::change}}" min="[[property.min]]" max="[[property.max]]"/>
+      <things-editor-color-stops type="gradient" value="{{value::change}}" min="[[property.min]]" max="[[property.max]]" />
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'multiple-color')]]" restamp=true>
-      <things-editor-multiple-color values="{{value::change}}"/>
+      <things-editor-multiple-color values="{{value::change}}" />
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'chartjs-properties')]]" restamp=true>
-      <things-editor-chartjs-properties values="{{value}}"/>
+      <things-editor-chartjs-properties values="{{value}}" />
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'action')]]" restamp=true>
-      <things-editor-action icon="[[property.icon]]" action="[[property.action]]"/>
+      <things-editor-action icon="[[property.icon]]" action="[[property.action]]" />
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'image-selector')]]" restamp=true>
-      <things-image-selector
-        on-things-image-changed="_onThingsImageChanged"
-        label="[[label]]"
-        detail-fields=""
-        display-field="[[property.displayField]]"
-        display-full-url="[[property.displayFullUrl]]"
-        base-url-alias="[[property.baseUrlAlias]]"
-        value="{{value}}"
-        default-storage="[[property.defaultStorage]]"
-        storage-filters="[[property.storageFilters]]"
-        use-upload="[[property.useUpload]]">
+      <things-image-selector on-things-image-changed="_onThingsImageChanged" label="[[label]]" detail-fields="" display-field="[[property.displayField]]"
+        display-full-url="[[property.displayFullUrl]]" base-url-alias="[[property.baseUrlAlias]]" value="{{value}}" default-storage="[[property.defaultStorage]]"
+        storage-filters="[[property.storageFilters]]" use-upload="[[property.useUpload]]">
       </things-image-selector>
     </template>
 
@@ -128,7 +120,6 @@ Example:
   </template>
 
   <script>
-
     Polymer({
       is: 'things-editor-property',
 
@@ -143,33 +134,44 @@ Example:
           type: Object,
           notify: true,
           value: {}
+        },
+        _msgId: {
+          type: String,
+          computed: '_computeLabelId(label)'
         }
       },
 
-      _isTypeofEditor: function(editorType, type) {
+      _isTypeofEditor: function (editorType, type) {
         return editorType == type
       },
 
-      _isExist: function(label) {
+      _isExist: function (label) {
 
         var str = String(label || "")
         return label != ""
 
       },
 
-      _valueChanged: function(value) {
-        if(!this.get('observe'))
+      _valueChanged: function (value) {
+        if (!this.get('observe'))
           return
 
         this.get('observe').call(this, value)
       },
 
-      _onThingsImageChanged: function(e) {
-        if(!this.property)
+      _onThingsImageChanged: function (e) {
+        if (!this.property)
           return
 
         this.set("value", e.detail)
         this.fire("change")
+      },
+
+      _computeLabelId: function (label) {
+        if (label.indexOf('label.') >= 0)
+          return label;
+
+        return 'label.' + label
       }
 
     })
