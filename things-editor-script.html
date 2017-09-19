@@ -25,7 +25,7 @@ Example:
 <dom-module id="things-editor-script">
   <template>
     <style>
-      :host{
+       :host {
         display: block;
         position: relative;
 
@@ -38,7 +38,7 @@ Example:
     <content></content>
 
   </template>
-  
+
   <script>
     Polymer({
       is: 'things-editor-script',
@@ -96,24 +96,24 @@ Example:
         '_valueChanged(value)'
       ],
 
-      attached: function() {
-        this._attached = true        
+      attached: function () {
+        this._attached = true
 
         var self = this;
 
-        if(!this.editor){
+        if (!this.editor) {
           this.editor = ace.edit(this, {
             initialContent: this.value
           })
 
-          if(!this.gutter)
+          if (!this.gutter)
             this.editor.renderer.setShowGutter(this.gutter)
 
           // inject base editor styles
           this._injectTheme('#ace_editor\\.css');
           this._injectTheme('#ace-tm');
 
-          this.editor.getSession().on('change', function(event){
+          this.editor.getSession().on('change', function (event) {
             self._changedOnThis = true
             self.set('value', self.editor.getValue())
             self._changedOnThis = false
@@ -128,12 +128,12 @@ Example:
 
       },
 
-      detached: function() {
+      detached: function () {
         this._attached = false
       },
 
-      _configEditor: function(theme, mode, fontsize, softtabs, tabsize, readonly, wrapmode) {
-        if(!this.editor || !this._attached)
+      _configEditor: function (theme, mode, fontsize, softtabs, tabsize, readonly, wrapmode) {
+        if (!this.editor || !this._attached)
           return
 
         this.editor.setTheme(this.theme);
@@ -141,41 +141,41 @@ Example:
         this.editor.setReadOnly(this.readonly);
 
         var session = this.editor.getSession();
-        
+
         session.setMode(this.mode);
         session.setUseSoftTabs(this.softtabs);
         this.tabsize && session.setTabSize(this.tabsize);
         session.setUseWrapMode(this.wrapmode);
       },
 
-      _valueChanged: function(value) {
-        if(this._changedOnThis) {
+      _valueChanged: function (value) {
+        if (this._changedOnThis) {
           this.fire('change', value)
           return
         }
 
-        if(this.editor)
+        if (this.editor)
           this.editor.setValue(value || '')
       },
 
-      _onThemeLoaded: function(e) {
+      _onThemeLoaded: function (e) {
         var themeId = "#" + e.theme.cssClass;
         this._injectTheme(themeId);
 
         // Workaround Chrome stable bug, force repaint
-        this.style.display='none';
+        this.style.display = 'none';
         this.offsetHeight;
-        this.style.display='';
+        this.style.display = '';
       },
 
       // inject the style tag of a theme to the element
-      _injectTheme: function(themeId){
+      _injectTheme: function (themeId) {
         var n = document.querySelector(themeId);
         this.appendChild(this._cloneStyle(n));
       },
 
       //helper function to clone a style
-      _cloneStyle: function(style) {
+      _cloneStyle: function (style) {
         var s = document.createElement('style');
         s.id = style.id;
         s.textContent = style.textContent;
@@ -183,8 +183,6 @@ Example:
       }
 
     });
-
   </script>
 
 </dom-module>
-

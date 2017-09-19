@@ -26,49 +26,54 @@ Example:
 <dom-module id="things-editor-properties">
   <template>
     <style>
-      :host {
+       :host {
         display: block;
       }
-      fieldset,::shadow fieldset{
+
+      fieldset,
+       ::shadow fieldset {
         @apply(--things-fieldset);
       }
-      ::shadow label{
+
+       ::shadow label {
         @apply(--things-label);
-        width:35%
+        width: 35%
       }
-      ::shadow input{
+
+       ::shadow input {
         @apply(--things-input);
-        width:55%
+        width: 55%
       }
-      ::shadow .unit input{
+
+       ::shadow .unit input {
         @apply(--things-input);
-        width:55%;
+        width: 55%;
       }
-      ::shadow legend{
+
+       ::shadow legend {
         @apply(--things-fieldset-legend);
-        padding-bottom:7px
+        padding-bottom: 7px
       }
-      ::shadow input[type="checkbox"]{
-        width:15px;
+
+       ::shadow input[type="checkbox"] {
+        width: 15px;
       }
-      ::shadow .full-width *{float:left;}
-      ::shadow .full-width input{width:32.4%;}
+
+       ::shadow .full-width * {
+        float: left;
+      }
+
+       ::shadow .full-width input {
+        width: 32.4%;
+      }
     </style>
 
     <content></content>
 
     <fieldset>
       <template id="dom-repeater" is="dom-repeat" items="[[_props]]">
-        <!-- <label>
-          <things-i18n-msg msgid="label.[[item.label]]" msg="{{item.label}}" auto hidden>[[item.label]]</things-i18n-msg>
-        </label> -->
-        <things-editor-property label="[[item.label]]"
-                                type="[[item.type]]"
-                                name$="[[item.name]]"
-                                placeholder="[[item.placeholder]]"
-                                observe="[[item.observe]]"
-                                property="[[item.property]]"
-                                >
+        <things-editor-property label="[[item.label]]" type="[[item.type]]" name$="[[item.name]]" placeholder="[[item.placeholder]]"
+          observe="[[item.observe]]" property="[[item.property]]">
         </things-editor-property>
       </template>
     </fieldset>
@@ -76,7 +81,6 @@ Example:
   </template>
 
   <script>
-
     Polymer({
       is: 'things-editor-properties',
 
@@ -105,41 +109,41 @@ Example:
         'dom-repeater.dom-change': '_onDomBuilt'
       },
 
-      _onPropsChanged: function() {
-        if(this._asyncher) {
+      _onPropsChanged: function () {
+        if (this._asyncher) {
           this.cancelAsync(this._asyncher)
           delete this._asyncher
         }
 
-        this._asyncher = this.async(function() {
+        this._asyncher = this.async(function () {
           this._props = this.props
         }, 100)
       },
 
-      _onDomBuilt: function() {
+      _onDomBuilt: function () {
         // DOM이 build 되었으니, 모델을 적용한다.
-        this.async(function() {
+        this.async(function () {
           this._setValues()
           delete this._asyncher
         })
       },
 
-      _setValues: function() {
-          this._changedOnThis = true
-          let self = this
+      _setValues: function () {
+        this._changedOnThis = true
+        let self = this
 
-          self.target && Array.from(this.querySelectorAll('things-editor-property')).forEach(function(prop) {
-            let name = prop.getAttribute('name')
-            prop.value = self.target[name]
-          })
-          this._changedOnThis = false
+        self.target && Array.from(this.querySelectorAll('things-editor-property')).forEach(function (prop) {
+          let name = prop.getAttribute('name')
+          prop.value = self.target[name]
+        })
+        this._changedOnThis = false
       },
 
-      _onTargetChanged: function(change) {
-        if(this._asyncher)
+      _onTargetChanged: function (change) {
+        if (this._asyncher)
           return
 
-        if(change.path == 'target') {
+        if (change.path == 'target') {
           // props의 변화에 의한 dom-repeat 작업이 완료된 후에, 값을 변경하여야 하므로, async로 한 사이클이 지난 후에 처리한다.
           // 반응 속도에 대한 문제가 있으므로, properties DOM 빌드 성능을 개선하는 방향으로 개선하여여 한다.
 
@@ -148,16 +152,16 @@ Example:
         }
       },
 
-      _onValueChanged: function(e) {
+      _onValueChanged: function (e) {
 
-        if(this._changedOnThis)
+        if (this._changedOnThis)
           return
 
         var prop = e.target
-        while(prop && prop.tagName != 'THINGS-EDITOR-PROPERTY')
+        while (prop && prop.tagName != 'THINGS-EDITOR-PROPERTY')
           prop = prop.parentNode
 
-        if(!prop || prop.tagName != 'THINGS-EDITOR-PROPERTY')
+        if (!prop || prop.tagName != 'THINGS-EDITOR-PROPERTY')
           return
 
         var name = prop.getAttribute('name')

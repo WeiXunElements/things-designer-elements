@@ -23,7 +23,7 @@ Example:
 <dom-module id="things-editor-stack">
   <template>
     <style>
-      :host {
+       :host {
         display: block;
         @apply(--things-editor-stack);
       }
@@ -46,13 +46,12 @@ Example:
         background-color: red;
       }
 
-      div button{
-        position:absolute;
-        right:10px;
-        width:30px;
+      div button {
+        position: absolute;
+        right: 10px;
+        width: 30px;
         min-height: 20px;
       }
-
     </style>
 
     <button id='add-floor'>+</button>
@@ -73,7 +72,6 @@ Example:
   </template>
 
   <script>
-
     Polymer({
       is: 'things-editor-stack',
 
@@ -105,23 +103,23 @@ Example:
         'add-floor.click': '_onClickAddFloor'
       },
 
-      _onChangeProps: function(min, max, type) {
+      _onChangeProps: function (min, max, type) {
       },
 
-      _onChangeValue: function(change) {
+      _onChangeValue: function (change) {
       },
 
-      _onIronResize: function(e) {
+      _onIronResize: function (e) {
       },
 
-      _onClickAddFloor: function(e) {
+      _onClickAddFloor: function (e) {
         this.push('stack', {
           name: ''
         })
       },
 
-      _onClickToActive: function(e) {
-        if(e.target.tagName != 'DIV')
+      _onClickToActive: function (e) {
+        if (e.target.tagName != 'DIV')
           return;
 
         var model = e.model;
@@ -131,36 +129,35 @@ Example:
         this.classFollows('active', e.target, this.querySelector('div.active'));
       },
 
-      _onClickRemoveFloor: function(e) {
+      _onClickRemoveFloor: function (e) {
         var model = e.model;
         var idx = this.stack.indexOf(model.item);
 
         this.splice('stack', idx, 1);
 
-        if(this.activeIndex >= this.stack.length && this.activeIndex > 0)
+        if (this.activeIndex >= this.stack.length && this.activeIndex > 0)
           this.activeIndex--;
 
-        this.async(function() {
+        this.async(function () {
           var oldActive = this.querySelector('div.active');
           var idx = this.stack.length - this.activeIndex - 1;
           var newActive = this.querySelector('div:nth-of-type(' + (idx + 1) + ')');
 
-          if(oldActive !== newActive)
+          if (oldActive !== newActive)
             this.classFollows('active', newActive, oldActive);
         })
       },
 
-      _sortReverse: function(a, b) {
+      _sortReverse: function (a, b) {
         return this.stack.indexOf(a) < this.stack.indexOf(b);
       },
 
-      _isActive: function(item) {
+      _isActive: function (item) {
         var index = this.stack.indexOf(item);
 
         return (index === this.activeIndex);
       }
 
     })
-
   </script>
 </dom-module>

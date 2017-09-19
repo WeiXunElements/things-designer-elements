@@ -24,34 +24,47 @@ Example:
 
 <dom-module id="things-editor-shadow">
   <template>
-  <style>
-    :host {
-      display: block;
-      @apply(--things-editor-shadow)
-    }
-    paper-radio-button{padding:2px 1px 10px 7px !important;}
-    .icon-only-label{
-      @apply(--things-properties-icon-only-label);
-      float:left;
-      margin-top:2px;margin-left:40px;
-    }
-    .icon-only-label.color{background-position:70% -498px;}
-    things-editor-color::shadow #text{
-      width:71%;
-    }
-    label{
-      @apply(--things-label);
-    }
-    input{
-      @apply(--things-input);
-    }
-    fieldset{
-      @apply(--things-fieldset);
-    }
-    legend{
-      @apply(--things-fieldset-legend);
-    }
-  </style>
+    <style>
+       :host {
+        display: block;
+        @apply(--things-editor-shadow)
+      }
+
+      paper-radio-button {
+        padding: 2px 1px 10px 7px !important;
+      }
+
+      .icon-only-label {
+        @apply(--things-properties-icon-only-label);
+        float: left;
+        margin-top: 2px;
+        margin-left: 40px;
+      }
+
+      .icon-only-label.color {
+        background-position: 70% -498px;
+      }
+
+      things-editor-color::shadow #text {
+        width: 71%;
+      }
+
+      label {
+        @apply(--things-label);
+      }
+
+      input {
+        @apply(--things-input);
+      }
+
+      fieldset {
+        @apply(--things-fieldset);
+      }
+
+      legend {
+        @apply(--things-fieldset-legend);
+      }
+    </style>
 
     <label>
       <things-i18n-msg msgid="label.shadowOffsetX" auto>offset-X</things-i18n-msg>
@@ -75,63 +88,63 @@ Example:
   </template>
 
   <script>
-  Polymer({
-    is: 'things-editor-shadow',
+    Polymer({
+      is: 'things-editor-shadow',
 
-    properties: {
-      value: {
-        notify: true
+      properties: {
+        value: {
+          notify: true
+        }
+      },
+
+      listeners: {
+        'value-changed': 'onChangedValue'
+      },
+
+      observers: [
+        'onChangedShadow(shadow.*)'
+      ],
+
+      onChangedValue: function (changed, after) {
+
+        if (this.changedOnThis) {
+          return
+        }
+
+        var value = after.value
+
+        if (!value) {
+          this.shadow = {}
+          return
+        }
+
+        this.shadow = Object.assign({}, value);
+      },
+
+      onChangedShadow: function (changed) {
+        this.changedOnThis = true
+
+        name = changed.path
+        value = changed.value
+
+        switch (name) {
+          case 'shadow.left':
+            this.set('value.left', value)
+            break;
+          case 'shadow.top':
+            this.set('value.top', value)
+            break;
+          case 'shadow.color':
+            this.set('value.color', value)
+            break;
+          case 'shadow.blurSize':
+            this.set('value.blurSize', value)
+            break;
+        }
+
+        this.changedOnThis = false
       }
-    },
 
-    listeners: {
-      'value-changed': 'onChangedValue'
-    },
-
-    observers: [
-      'onChangedShadow(shadow.*)'
-    ],
-
-    onChangedValue: function(changed, after) {
-
-      if(this.changedOnThis){
-        return
-      }
-
-      var value = after.value
-
-      if(!value){
-        this.shadow = {}
-        return
-      }
-
-      this.shadow = Object.assign({}, value);
-    },
-
-    onChangedShadow: function(changed) {
-      this.changedOnThis = true
-
-      name = changed.path
-      value = changed.value
-
-      switch(name){
-        case 'shadow.left':
-          this.set('value.left', value)
-          break;
-        case 'shadow.top':
-          this.set('value.top', value)
-          break;
-        case 'shadow.color':
-          this.set('value.color', value)
-          break;
-        case 'shadow.blurSize':
-          this.set('value.blurSize', value)
-          break;
-      }
-
-      this.changedOnThis = false
-    }
-
-  });
+    });
   </script>
 </dom-module>

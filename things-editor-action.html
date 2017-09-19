@@ -22,41 +22,13 @@ Example:
 <dom-module id="things-editor-action">
   <template>
     <style>
-      :host {
-        @apply(--things-properties-varialbe-panel);
-      }
-      label{
-        @apply(--things-label);
-        width:24%;
-      }
-      input{
-        @apply(--things-input);
-        width:66%;
-      }
-      select{
-        @apply(--things-select);
-        background:url(/images/bg-input-select.png) 100% 50% no-repeat #fff;
-      }
-      paper-radio-group{
-        position:relative;
-        top:-3px;
-      }
-      paper-radio-button{
-        padding:2px 1px 2px 4px !important;
-      }
-      paper-radio-button:first-child{padding-left:0 !important;}
-      things-editor-script{
-        width:94%;height:300px;
-        margin:-7px 0 7px 7px;
-        overflow:auto;
-      }
+       :host {}
     </style>
 
     <paper-icon-button icon$="[[icon]]" on-click="_onClick"></paper-icon-button>
   </template>
 
   <script>
-
     Polymer({
       is: 'things-editor-action',
 
@@ -64,10 +36,9 @@ Example:
         icon: String
       },
 
-      _onClick: function(e) {
+      _onClick: function (e) {
         this.fire('action-editor-clicked', this.action)
       }
     })
-
   </script>
 </dom-module>

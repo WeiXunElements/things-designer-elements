@@ -25,34 +25,47 @@ Example:
 
 <dom-module id="things-editor-animation">
   <template>
-  <style>
-    :host {
-      display: block;
-      @apply(--things-editor-animation)
-    }
-    paper-radio-button{padding:2px 1px 10px 7px !important;}
-    .icon-only-label{
-      @apply(--things-properties-icon-only-label);
-      float:left;
-      margin-top:2px;margin-left:40px;
-    }
-    .icon-only-label.color{background-position:70% -498px;}
-    things-editor-color::animation #text{
-      width:71%;
-    }
-    label{
-      @apply(--things-label);
-    }
-    input{
-      @apply(--things-input);
-    }
-    fieldset{
-      @apply(--things-fieldset);
-    }
-    legend{
-      @apply(--things-fieldset-legend);
-    }
-  </style>
+    <style>
+       :host {
+        display: block;
+        @apply(--things-editor-animation)
+      }
+
+      paper-radio-button {
+        padding: 2px 1px 10px 7px !important;
+      }
+
+      .icon-only-label {
+        @apply(--things-properties-icon-only-label);
+        float: left;
+        margin-top: 2px;
+        margin-left: 40px;
+      }
+
+      .icon-only-label.color {
+        background-position: 70% -498px;
+      }
+
+      things-editor-color::animation #text {
+        width: 71%;
+      }
+
+      label {
+        @apply(--things-label);
+      }
+
+      input {
+        @apply(--things-input);
+      }
+
+      fieldset {
+        @apply(--things-fieldset);
+      }
+
+      legend {
+        @apply(--things-fieldset-legend);
+      }
+    </style>
 
     <label><things-i18n-msg msgid="label.waiting-time" auto>waiting time</things-i18n-msg></label>
     <input is="things-editor-number-input" number="{{animation.delay::change}}" placeholder="ms">
@@ -94,71 +107,71 @@ Example:
   </template>
 
   <script>
-  Polymer({
-    is: 'things-editor-animation',
+    Polymer({
+      is: 'things-editor-animation',
 
-    properties: {
-      value: {
-        notify: true
+      properties: {
+        value: {
+          notify: true
+        }
+      },
+
+      listeners: {
+        'value-changed': 'onChangedValue'
+      },
+
+      observers: [
+        'onChangedAnimation(animation.*)'
+      ],
+
+      onChangedValue: function (changed, after) {
+
+        if (this.changedOnThis) {
+          return
+        }
+
+        var value = after.value
+
+        if (!value) {
+          this.animation = {}
+          return
+        }
+
+        this.animation = Object.assign({}, value);
+      },
+
+      onChangedAnimation: function (changed) {
+        if (changed.path.indexOf('animation.') !== 0)
+          return
+
+        this.changedOnThis = true
+
+        var prop = changed.path.substr(10)
+        this.set('value.' + prop, changed.value)
+
+        this.changedOnThis = false
+      },
+
+      _isOutline: function (type) {
+        return type == 'outline'
+      },
+
+      _isRotation: function (type) {
+        return type == 'rotation'
+      },
+
+      _isVibration: function (type) {
+        return type == 'vibration'
+      },
+
+      _isHeartbeat: function (type) {
+        return type == 'heartbeat'
+      },
+
+      _isMoving: function (type) {
+        return type == 'moving'
       }
-    },
 
-    listeners: {
-      'value-changed': 'onChangedValue'
-    },
-
-    observers: [
-      'onChangedAnimation(animation.*)'
-    ],
-
-    onChangedValue: function(changed, after) {
-
-      if(this.changedOnThis){
-        return
-      }
-
-      var value = after.value
-
-      if(!value){
-        this.animation = {}
-        return
-      }
-
-      this.animation = Object.assign({}, value);
-    },
-
-    onChangedAnimation: function(changed) {
-      if(changed.path.indexOf('animation.') !== 0)
-        return
-
-      this.changedOnThis = true
-
-      var prop = changed.path.substr(10)
-      this.set('value.' + prop, changed.value)
-
-      this.changedOnThis = false
-    },
-
-    _isOutline: function(type){
-      return type == 'outline'
-    },
-
-    _isRotation: function(type){
-      return type == 'rotation'
-    },
-
-    _isVibration: function(type){
-      return type == 'vibration'
-    },
-
-    _isHeartbeat: function(type){
-      return type == 'heartbeat'
-    },
-
-    _isMoving: function(type){
-      return type == 'moving'
-    }
-
-  });
+    });
   </script>
 </dom-module>

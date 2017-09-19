@@ -40,6 +40,21 @@ Example:
         @apply(--things-select);
         background: url(/images/bg-input-select.png) 100% 50% no-repeat #fff;
       }
+
+      things-image-selector {
+        width: 55%;
+        display: inline-block;
+        position: relative;
+      }
+
+      things-image-selector ::shadow label {
+        display: none;
+      }
+
+      things-image-selector ::shadow input {
+        box-sizing: border-box;
+        width: calc(100% - 37px);
+      }
     </style>
 
     <template is="dom-if" if="[[_isExist(label)]]" restamp=true>
@@ -77,7 +92,7 @@ Example:
     <template is="dom-if" if="[[_isTypeofEditor(type, 'select')]]" restamp=true>
       <select value="{{value::change}}">
         <template is="dom-repeat" items="[[property.options]]">
-          <option value$="[[item]]">[[item]]</option>
+          <option value="[[_getOptionValue(item)]]" selected="[[_isSelected(value,item)]]">[[_getOptionDisplay(item)]]</option>
         </template>
       </select>
     </template>
@@ -107,9 +122,9 @@ Example:
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'image-selector')]]" restamp=true>
-      <things-image-selector on-things-image-changed="_onThingsImageChanged" label="[[label]]" detail-fields="" display-field="[[property.displayField]]"
-        display-full-url="[[property.displayFullUrl]]" base-url-alias="[[property.baseUrlAlias]]" value="{{value}}" default-storage="[[property.defaultStorage]]"
-        storage-filters="[[property.storageFilters]]" use-upload="[[property.useUpload]]">
+      <things-image-selector on-things-image-changed="_onThingsImageChanged" display-field="[[property.displayField]]" display-full-url="[[property.displayFullUrl]]"
+        base-url-alias="[[property.baseUrlAlias]]" value="{{value}}" default-storage="[[property.defaultStorage]]" storage-filters="[[property.storageFilters]]"
+        use-upload="[[property.useUpload]]">
       </things-image-selector>
     </template>
 
@@ -172,6 +187,24 @@ Example:
           return label;
 
         return 'label.' + label
+      },
+
+      _getOptionValue: function (item) {
+        if (typeof item == 'string')
+          return item;
+
+        return item.value;
+      },
+
+      _getOptionDisplay: function (item) {
+        if (typeof item == 'string')
+          return item;
+
+        return item.display;
+      },
+
+      _isSelected: function (value, item) {
+        return value == this._getOptionValue(item)
       }
 
     })

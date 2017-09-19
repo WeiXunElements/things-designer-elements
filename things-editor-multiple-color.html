@@ -26,29 +26,35 @@ Example:
 <dom-module id="things-editor-multiple-color">
   <template>
     <style>
-      :host {
+       :host {
         display: inline-block;
         @apply(--things-editor-multiple-color)
       }
-      things-editor-color{
-        width:90px
+
+      things-editor-color {
+        width: 90px
       }
-      things-editor-color::shadow input[type="text"]{
-        width:87%
+
+      things-editor-color::shadow input[type="text"] {
+        width: 87%
       }
-      things-editor-color::shadow a#color{
-        float:right;
-        margin:-31px 4px 0 0;
+
+      things-editor-color::shadow a#color {
+        float: right;
+        margin: -31px 4px 0 0;
       }
-      input[type="button"]{
-        width:22px;height:25px;
-        border:1px solid rgba(0,0,0,.15);
-        position:relative;
-        top:-2px;
-        padding-top:0px;padding-bottom:2px;
-        background-color:#f1f2f4;
-        color:#8f9192;
-        font-size:16px;
+
+      input[type="button"] {
+        width: 22px;
+        height: 25px;
+        border: 1px solid rgba(0, 0, 0, .15);
+        position: relative;
+        top: -2px;
+        padding-top: 0px;
+        padding-bottom: 2px;
+        background-color: #f1f2f4;
+        color: #8f9192;
+        font-size: 16px;
       }
     </style>
 
@@ -69,7 +75,6 @@ Example:
   </template>
 
   <script>
-
     Polymer({
       is: 'things-editor-multiple-color',
 
@@ -91,52 +96,51 @@ Example:
 
       listeners: {
         // 'iron-resize': '_onIronResize',
-        'change' : '_onValueChanged'
+        'change': '_onValueChanged'
       },
 
       observers: [
 
       ],
 
-      _onValueChanged: function(e) {
+      _onValueChanged: function (e) {
         this.set('values', this.values.splice(0))
       },
 
-      _appendEditorColor: function(e) {
+      _appendEditorColor: function (e) {
         var values = this.values;
         values.splice(e.target.dataIndex + 1, 0, 'black')
 
         this.values = []
-        this.async(function(){
+        this.async(function () {
           this.values = values
           this.fire('change', e)
         }, 1)
       },
 
-      _removeEditorColor: function(e){
+      _removeEditorColor: function (e) {
         var values = []
-        for(var i=0; i<this.values.length; i++){
-          if(i === e.target.dataIndex)
+        for (var i = 0; i < this.values.length; i++) {
+          if (i === e.target.dataIndex)
             continue;
           else
             values.push(this.values[i])
         }
 
         this.values = []
-        this.async(function(){
+        this.async(function () {
           this.values = values
           this.fire('change', e)
         }, 1)
       },
 
-      _isOnly: function(item, index){
-        if(this.values.length === 1)
+      _isOnly: function (item, index) {
+        if (this.values.length === 1)
           return true
 
         return false
       }
 
     })
-
   </script>
 </dom-module>

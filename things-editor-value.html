@@ -27,53 +27,63 @@ Example:
 <dom-module id="things-editor-value">
   <template>
     <style>
-      :host {
+       :host {
         @apply(--things-properties-varialbe-panel);
       }
-      label{
+
+      label {
         @apply(--things-label);
-        width:24%;
+        width: 24%;
       }
-      input{
+
+      input {
         @apply(--things-input);
-        width:66%;
+        width: 66%;
       }
-      select{
+
+      select {
         @apply(--things-select);
-        background:url(/images/bg-input-select.png) 100% 50% no-repeat #fff;
+        background: url(/images/bg-input-select.png) 100% 50% no-repeat #fff;
       }
-      paper-radio-group{
-        position:relative;
-        top:-3px;
+
+      paper-radio-group {
+        position: relative;
+        top: -3px;
       }
-      paper-radio-button{
-        padding:2px 1px 2px 4px !important;
+
+      paper-radio-button {
+        padding: 2px 1px 2px 4px !important;
       }
-      paper-radio-button:first-child{padding-left:0 !important;}
-      things-editor-script{
-        width:94%;height:300px;
-        margin:-7px 0 7px 7px;
-        overflow:auto;
+
+      paper-radio-button:first-child {
+        padding-left: 0 !important;
+      }
+
+      things-editor-script {
+        width: 94%;
+        height: 300px;
+        margin: -7px 0 7px 7px;
+        overflow: auto;
       }
     </style>
 
     <label>
       <things-i18n-msg msgid="label.accessor" auto>accessor</things-i18n-msg>
     </label>
-    <input id="accessor" type="text" data-mapping-accessor value="{{mapping.accessor::change}}"/>
+    <input id="accessor" type="text" data-mapping-accessor value="{{mapping.accessor::change}}" />
 
     <label>
       <things-i18n-msg msgid="label.target" auto>target</things-i18n-msg>
     </label>
 
-    <input id="target-input" type="text" list="target-list" value="{{mapping.target::change}}"/>
+    <input id="target-input" type="text" list="target-list" value="{{mapping.target::change}}" />
     <datalist id="target-list">
-        <option value="(self)">
-        <option value="(parent)">
-        <option value="(child)">
-        <option value="(sibling)">
-        <option value="(root)">
-        <option value="(all)">
+      <option value="(self)"></option>
+      <option value="(parent)"></option>
+      <option value="(child)"></option>
+      <option value="(sibling)"></option>
+      <option value="(root)"></option>
+      <option value="(all)"></option>
     </datalist>
 
     <label>
@@ -113,31 +123,21 @@ Example:
       </paper-radio-button>
     </paper-radio-group>
 
-    <iron-pages attr-for-selected="data-rule-type"
-                selected="[[mapping.rule]]"
-                class="content">
-      <things-editor-value-map data-rule-type="map"
-                               map="{{rule.map}}"
-                               value-type="[[valueType]]">
+    <iron-pages attr-for-selected="data-rule-type" selected="[[mapping.rule]]" class="content">
+      <things-editor-value-map data-rule-type="map" map="{{rule.map}}" value-type="[[valueType]]">
       </things-editor-value-map>
 
-      <things-editor-value-range data-rule-type="range"
-                                 range="{{rule.range}}"
-                                 value-type="[[valueType]]">
+      <things-editor-value-range data-rule-type="range" range="{{rule.range}}" value-type="[[valueType]]">
       </things-editor-value-range>
 
       <div data-rule-type="eval">
-        <things-editor-script id="eval-editor"
-                              theme="ace/theme/monokai"
-                              mode="ace/mode/javascript"
-                              value="{{rule.eval}}">
+        <things-editor-script id="eval-editor" theme="ace/theme/monokai" mode="ace/mode/javascript" value="{{rule.eval}}">
         </things-editor-script>
       </div>
     </iron-pages>
   </template>
 
   <script>
-
     Polymer({
       is: 'things-editor-value',
 
@@ -158,57 +158,57 @@ Example:
         'eval-editor.blur': 'onBlurEvalEditor'
       },
 
-      onBlurEvalEditor: function(after) {
+      onBlurEvalEditor: function (after) {
         this.set('rule.eval', this.$['eval-editor'].value)
       },
 
-      _valueType: function(property){
-        switch(property) {
-        case 'hidden':
-        case 'started':
-          this.valueType = 'boolean'
-          break
-        case 'rotation':
-        case 'value':
-          this.valueType = 'number'
-          break
-        case 'fillStyle':
-        case 'strokeStyle':
-        case 'fontColor':
-          this.valueType = 'color'
-          break
-        case 'data':
-        case 'location':
-        case 'dimension':
-          this.valueType = 'object'
-          break;
-        case 'text':
-        case 'ref':
-        default:
-          this.valueType = 'string'
-          break
+      _valueType: function (property) {
+        switch (property) {
+          case 'hidden':
+          case 'started':
+            this.valueType = 'boolean'
+            break
+          case 'rotation':
+          case 'value':
+            this.valueType = 'number'
+            break
+          case 'fillStyle':
+          case 'strokeStyle':
+          case 'fontColor':
+            this.valueType = 'color'
+            break
+          case 'data':
+          case 'location':
+          case 'dimension':
+            this.valueType = 'object'
+            break;
+          case 'text':
+          case 'ref':
+          default:
+            this.valueType = 'string'
+            break
         }
       },
 
-      onChangedMapping: function(change) {
+      onChangedMapping: function (change) {
 
         this._not_changed_actually = (change.path === 'mapping')
 
         /* 사용자가 선택한 컴포넌트가 바뀐 경우도 호출되므로, 이 경우는 제외한다. */
-        if(this._not_changed_actually) {
+        if (this._not_changed_actually) {
           var rule = {}
 
-          if(this.mapping) {
-            switch(this.mapping.rule) {
-            case 'map':
-              rule.map = this.mapping.param || {}
-              break
-            case 'range':
-              rule.range = this.mapping.param || []
-              break
-            case 'eval':
-              rule.eval = this.mapping.param || ''
-              break
+          if (this.mapping) {
+            switch (this.mapping.rule) {
+              case 'map':
+                rule.map = this.mapping.param || {}
+                break
+              case 'range':
+                rule.range = this.mapping.param || []
+                break
+              case 'eval':
+                rule.eval = this.mapping.param || ''
+                break
             }
           }
 
@@ -221,34 +221,34 @@ Example:
 
         var param
 
-        if(change.path == 'mapping.rule') {
-          switch(this.mapping.rule) {
-          case 'map':
-            param = this.rule.map
-            break
-          case 'range':
-            param = this.rule.range
-            break
-          case 'eval':
-            param = this.rule.eval || ''
+        if (change.path == 'mapping.rule') {
+          switch (this.mapping.rule) {
+            case 'map':
+              param = this.rule.map
+              break
+            case 'range':
+              param = this.rule.range
+              break
+            case 'eval':
+              param = this.rule.eval || ''
 
-            // rule.eval에 값이 없을 때, ace-editor 내용이 초기화되지 않는 문제때문에 처리함.
-            if(!param)
-              this.$['eval-editor'].editor.setValue('')
-            break
-          default:
+              // rule.eval에 값이 없을 때, ace-editor 내용이 초기화되지 않는 문제때문에 처리함.
+              if (!param)
+                this.$['eval-editor'].editor.setValue('')
+              break
+            default:
           }
 
           this.set('mapping.param', param)
-        } else if(change.path == 'mapping.target') {
+        } else if (change.path == 'mapping.target') {
           let target = this.mapping.target
-          if(target.length > 0 && !target.startsWith('.') && !target.startsWith('#') && !target.startsWith('(')) {
+          if (target.length > 0 && !target.startsWith('.') && !target.startsWith('#') && !target.startsWith('(')) {
             this.mapping.target = '#' + target
             this.$['target-input'].value = this.mapping.target
           }
-        } else if(change.path == 'mapping.accessor') {
+        } else if (change.path == 'mapping.accessor') {
           let accessor = this.mapping.accessor
-          if(accessor) {
+          if (accessor) {
             this.mapping.accessor = accessor.trim()
             this.$['accessor'].value = this.mapping.accessor
           }
@@ -257,29 +257,28 @@ Example:
         this.fire('value-change', this.mapping)
       },
 
-      onChangedRule: function(change) {
+      onChangedRule: function (change) {
 
-        if(!this.mapping)
+        if (!this.mapping)
           return
 
         var param
 
-        switch(this.mapping.rule) {
-        case 'map':
-          param = this.rule.map
-          break
-        case 'range':
-          param = this.rule.range
-          break
-        case 'eval':
-          param = this.rule.eval || ''
-          break
-        default:
+        switch (this.mapping.rule) {
+          case 'map':
+            param = this.rule.map
+            break
+          case 'range':
+            param = this.rule.range
+            break
+          case 'eval':
+            param = this.rule.eval || ''
+            break
+          default:
         }
 
         this.set('mapping.param', param)
       }
     })
-
   </script>
 </dom-module>

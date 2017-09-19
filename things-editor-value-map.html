@@ -22,66 +22,79 @@ Example:
 
 <dom-module id="things-editor-value-map">
   <template>
-  <style>
-    :host {
-      @apply(--things-variable-ruletype-container)
-    }
-    *{float:left;}
-    input, things-editor-color{
-      width:41%;
-      margin:3px 0 3px 3px;
-    }
-    things-editor-color {
-      height: 15px;
-    }
+    <style>
+       :host {
+        @apply(--things-variable-ruletype-container)
+      }
 
-    things-editor-color:after {
-      content: '';
-      clear: both;
-    }
+      * {
+        float: left;
+      }
 
-    things-editor-color::shadow input{
-      width:78% !important;
-      border-radius:0 !important;
-      margin-bottom:0 !important;padding:1px 19px 1px 3px !important;
-      font-size:12px !important
-    }
-    things-editor-color::shadow a{
-      float:right;
-      margin:0 !important;margin-top:-17px !important;
-    }
-    things-editor-color::shadow a span{
-      height:13px !important
-    }
-    input[type="checkbox"]{
-      width:initial !important;
-      margin-top:6px;
-    }
-    div{
-      border-bottom:1px solid #c0c0c0;
-      width:100%;
-    }
-    div:last-child{
-      border-bottom:none;
-    }
-    .record-action{
-      @apply(--things-record-action-button)
-    }
+      input,
+      things-editor-color {
+        width: 41%;
+        margin: 3px 0 3px 3px;
+      }
 
-  </style>
+      things-editor-color {
+        height: 15px;
+      }
+
+      things-editor-color:after {
+        content: '';
+        clear: both;
+      }
+
+      things-editor-color::shadow input {
+        width: 78% !important;
+        border-radius: 0 !important;
+        margin-bottom: 0 !important;
+        padding: 1px 19px 1px 3px !important;
+        font-size: 12px !important
+      }
+
+      things-editor-color::shadow a {
+        float: right;
+        margin: 0 !important;
+        margin-top: -17px !important;
+      }
+
+      things-editor-color::shadow a span {
+        height: 13px !important
+      }
+
+      input[type="checkbox"] {
+        width: initial !important;
+        margin-top: 6px;
+      }
+
+      div {
+        border-bottom: 1px solid #c0c0c0;
+        width: 100%;
+      }
+
+      div:last-child {
+        border-bottom: none;
+      }
+
+      .record-action {
+        @apply(--things-record-action-button)
+      }
+    </style>
 
     <template is="dom-repeat" items="{{_toArray(map)}}">
       <div data-record>
-        <input type="text" data-key placeholder="key" value="{{item.key}}"/>
+        <input type="text" data-key placeholder="key" value="{{item.key}}" />
         <template is="dom-if" if="[[_isBooleanType(valueType)]]">
-          <input type="checkbox" data-value checked="{{item.value::change}}" data-value-type$="[[valueType]]"/>
+          <input type="checkbox" data-value checked="{{item.value::change}}" data-value-type$="[[valueType]]" />
         </template>
         <template is="dom-if" if="[[!_isBooleanType(valueType)]]">
           <template is="dom-if" if="[[_isColorType(valueType)]]">
             <things-editor-color data-value value="{{item.value}}" tabindex="-1"></things-editor-color>
           </template>
           <template is="dom-if" if="[[!_isColorType(valueType)]]">
-            <input type="text" data-value placeholder="value" value="{{item.value}}" data-value-type$="[[valueType]]"/>
+            <input type="text" data-value placeholder="value" value="{{item.value}}" data-value-type$="[[valueType]]" />
           </template>
         </template>
         <button class="record-action" on-tap="_delete" tabindex="-1">-</button>
@@ -89,16 +102,16 @@ Example:
     </template>
 
     <div data-record-new>
-      <input type="text" data-key placeholder="key" value=""/>
+      <input type="text" data-key placeholder="key" value="" />
       <template is="dom-if" if="[[_isBooleanType(valueType)]]">
-        <input type="checkbox" data-value data-value-type$="[[valueType]]"/>
+        <input type="checkbox" data-value data-value-type$="[[valueType]]" />
       </template>
       <template is="dom-if" if="[[!_isBooleanType(valueType)]]">
         <template is="dom-if" if="[[_isColorType(valueType)]]">
           <things-editor-color data-value value="" tabindex="-1" placeholder="value"></things-editor-color>
         </template>
         <template is="dom-if" if="[[!_isColorType(valueType)]]">
-          <input type="text" data-value placeholder="value" value="" data-value-type$="[[valueType]]"/>
+          <input type="text" data-value placeholder="value" value="" data-value-type$="[[valueType]]" />
         </template>
       </template>
       <button class="record-action" on-tap="_add" tabindex="-1">+</button>
@@ -107,14 +120,15 @@ Example:
     <div data-record>
       <input type="text" data-key value="default" disabled/>
       <template is="dom-if" if="[[_isBooleanType(valueType)]]">
-        <input type="checkbox" data-value checked="{{map.default::change}}" data-value-type$="[[valueType]]"/>
+        <input type="checkbox" data-value checked="{{map.default::change}}" data-value-type$="[[valueType]]" />
       </template>
       <template is="dom-if" if="[[!_isBooleanType(valueType)]]">
         <template is="dom-if" if="[[_isColorType(valueType)]]">
           <things-editor-color data-value value="{{map.default}}" placeholder="value" tabindex="-1"></things-editor-color>
         </template>
         <template is="dom-if" if="[[!_isColorType(valueType)]]">
-          <input type="text" data-value placeholder="value" value="{{map.default}}" placeholder="value" data-value-type$="[[valueType]]"/>
+          <input type="text" data-value placeholder="value" value="{{map.default}}" placeholder="value" data-value-type$="[[valueType]]"
+          />
         </template>
       </template>
       <button class="record-action" on-tap="_sort" tabindex="-1">&gt;</button>
@@ -123,7 +137,6 @@ Example:
   </template>
 
   <script>
-
     Polymer({
       is: 'things-editor-value-map',
 
@@ -147,29 +160,29 @@ Example:
         'change': '_onChange'
       },
 
-      _isColorType: function(type) {
+      _isColorType: function (type) {
         return type === 'color'
       },
 
-      _isBooleanType: function(type) {
+      _isBooleanType: function (type) {
         return type === 'boolean'
       },
 
-      _defaultValue: function(type) {
-        switch(type || this.valueType) {
-        case 'color':
-          return '#000000';
-        case 'boolean':
-        case 'checkbox':
-          return false;
-        default:
-          return ''
+      _defaultValue: function (type) {
+        switch (type || this.valueType) {
+          case 'color':
+            return '#000000';
+          case 'boolean':
+          case 'checkbox':
+            return false;
+          default:
+            return ''
         }
       },
 
-      _onChange: function(e) {
+      _onChange: function (e) {
 
-        if(this._changingNow)
+        if (this._changingNow)
           return
 
         this._changingNow = true
@@ -177,7 +190,7 @@ Example:
         var input = e.target
         var value
 
-        if(input.type == 'checkbox')
+        if (input.type == 'checkbox')
           value = Boolean(input.checked)
         else
           value = input.value
@@ -185,16 +198,16 @@ Example:
         var div = input.parentElement
 
         // if(input.hasAttribute('data-value')) {
-        if(div.hasAttribute('data-record')) {
+        if (div.hasAttribute('data-record')) {
           var dataList = div.querySelectorAll('[data-value]:not([hidden])')
-          for(var i = 0;i < dataList.length;i++)
-            if(dataList[i] !== input)
+          for (var i = 0; i < dataList.length; i++)
+            if (dataList[i] !== input)
               dataList[i].value = value || this._defaultValue()
         }
 
-        if(div.hasAttribute('data-record'))
+        if (div.hasAttribute('data-record'))
           this._build()
-        else if(div.hasAttribute('data-record-new') && input.hasAttribute('data-value'))
+        else if (div.hasAttribute('data-record-new') && input.hasAttribute('data-value'))
           this._add()
 
         e.stopPropagation()
@@ -202,32 +215,32 @@ Example:
         this._changingNow = false
       },
 
-      _build: function(includeNewRecord) {
-        if(includeNewRecord)
+      _build: function (includeNewRecord) {
+        if (includeNewRecord)
           var records = this.querySelectorAll('[data-record],[data-record-new]')
         else
           var records = this.querySelectorAll('[data-record]')
 
         var newmap = {}
 
-        for(var i = 0;i < records.length;i++) {
+        for (var i = 0; i < records.length; i++) {
           var record = records[i]
 
           var key = record.querySelector('[data-key]').value
           var inputs = record.querySelectorAll('[data-value]:not([style*="display: none"])')
-          if(!inputs || inputs.length == 0)
+          if (!inputs || inputs.length == 0)
             continue;
 
           var input = inputs[inputs.length - 1]
 
           var value
 
-          if(input.type == 'checkbox')
+          if (input.type == 'checkbox')
             value = Boolean(input.checked)
           else
             value = input.value
 
-          if(key)
+          if (key)
             newmap[key] = value || this._defaultValue()
         }
 
@@ -235,11 +248,11 @@ Example:
       },
 
       /* default를 제외한 map아이템들을 template(dom-repeat)용 배열로 변환하는 함수 */
-      _toArray: function(map) {
+      _toArray: function (map) {
         var array = []
 
-        for(var key in map) {
-          if(key == 'default')
+        for (var key in map) {
+          if (key == 'default')
             continue
           array.push({
             key: key,
@@ -250,17 +263,17 @@ Example:
         return array
       },
 
-      _sort: function(e) {
+      _sort: function (e) {
 
         var sorter = this.keyType === 'number' ?
-          function(a, b) {
+          function (a, b) {
             return parseFloat(b.key) < parseFloat(a.key)
           } :
-          function(a, b) {
+          function (a, b) {
             return b.key < a.key
           }
 
-        var map = this._toArray(this.map).sort(sorter).reduce(function(sum, i) {
+        var map = this._toArray(this.map).sort(sorter).reduce(function (sum, i) {
           sum[i.key] = i.value
           return sum
         }, {})
@@ -270,15 +283,15 @@ Example:
         this.set('map', map)
       },
 
-      _add: function(e) {
+      _add: function (e) {
         this._build(true)
 
         var inputs = this.querySelectorAll('[data-record-new] input:not([style*="display: none"])')
 
-        for (var i = 0;i < inputs.length;i++) {
+        for (var i = 0; i < inputs.length; i++) {
           let input = inputs[i]
 
-          if(input.type == 'checkbox')
+          if (input.type == 'checkbox')
             input.checked = false
           else
             input.value = this._defaultValue(input.type)
@@ -287,13 +300,12 @@ Example:
         inputs[0].focus()
       },
 
-      _delete: function(e) {
+      _delete: function (e) {
         var record = e.target.parentElement
         record.querySelector('[data-key]').value = ''
         this._build()
       }
 
     });
-
   </script>
 </dom-module>

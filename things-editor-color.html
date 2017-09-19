@@ -171,23 +171,27 @@ Example:
 <dom-module id="things-editor-color">
   <template>
     <style>
-      :host {
+       :host {
         @apply(--things-editor-color)
       }
+
       input[type=text] {
         @apply(--things-editor-color-input-text);
-        font-size:13px;
+        font-size: 13px;
       }
+
       input[type=alpha] {
         @apply(--things-editor-color-input-alpha)
       }
+
       input[type=button] {
         @apply(--things-editor-color-input-color)
       }
+
       #color {
         -webkit-appearance: none;
-        position:relative;
-        margin:4px 0 0 -24px;
+        position: relative;
+        margin: 4px 0 0 -24px;
         display: inline-block;
         border: 1px solid #ccc;
         border-radius: 10%;
@@ -195,6 +199,7 @@ Example:
         text-align: center;
         font-size: 0;
       }
+
       #color>span {
         display: inline-block;
         width: 15px;
@@ -202,7 +207,6 @@ Example:
         line-height: 12px;
         border-radius: 10%;
       }
-
     </style>
 
     <input id="text" type="text" value="{{value}}" placeholder="[[placeholder]]">
@@ -215,7 +219,6 @@ Example:
   </template>
 
   <script>
-
     Polymer({
       is: 'things-editor-color',
 
@@ -245,10 +248,10 @@ Example:
         '_onColorStringChanged(colorString)'
       ],
 
-      _onValueChanged: function(v) {
+      _onValueChanged: function (v) {
         var value = tinycolor(this.value);
         var isChanged = false
-        if(value.isValid()) {
+        if (value.isValid()) {
           var rgbValue = value.toRgb()
 
           isChanged = !(this.valueAsObject.red == rgbValue.r
@@ -256,7 +259,7 @@ Example:
             && this.valueAsObject.blue == rgbValue.b
             && this.valueAsObject.alpha == rgbValue.a)
 
-          if(isChanged) {
+          if (isChanged) {
             this.valueAsObject = {
               red: rgbValue.r,
               green: rgbValue.g,
@@ -274,7 +277,7 @@ Example:
         this.$["color-thumbnail"].style.backgroundColor = value
       },
 
-      _onColorStringChanged: function(valueAsObject){
+      _onColorStringChanged: function (valueAsObject) {
         var color = tinycolor({
           r: this.valueAsObject.red,
           g: this.valueAsObject.green,
@@ -282,13 +285,13 @@ Example:
           a: this.valueAsObject.alpha,
         })
 
-        if(color.isValid()) {
+        if (color.isValid()) {
           this.set("value", color.toString())
           this.fire('change')
         }
       },
 
-      _onInputChanged: function(e) {
+      _onInputChanged: function (e) {
         var color = this.$.text.value
 
         this.set('value', color)
@@ -296,14 +299,14 @@ Example:
         this.fire('change')
       },
 
-      tinycolor: function(color){
+      tinycolor: function (color) {
         var colorObj = tinycolor(color)
 
-        if(colorObj.isValid())
+        if (colorObj.isValid())
           return colorObj.toRgbString()
       },
 
-      showPicker: function() {
+      showPicker: function () {
 
         var color = tinycolor(this.value)
 
@@ -316,7 +319,7 @@ Example:
           type: "hsl"
         });
 
-        if(color.isValid()) {
+        if (color.isValid()) {
           let rgb = color.toRgb()
 
           picker._initialAlphaValueHack = color.getAlpha()
@@ -330,19 +333,18 @@ Example:
 
         var self = this;
         function _() {
-          if(picker.colorAsString)
+          if (picker.colorAsString)
             self.colorString = picker.colorAsString;
           picker.removeEventListener("iron-overlay-closed", _)
           picker.parentNode.removeChild(picker);
         }
         picker.addEventListener("iron-overlay-closed", _);
 
-        setTimeout(function() {
+        setTimeout(function () {
           picker.open();
         })
       }
 
     })
-
   </script>
 </dom-module>

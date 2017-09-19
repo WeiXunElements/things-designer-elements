@@ -28,50 +28,48 @@ Example:
 <dom-module id="things-editor-pattern">
   <template>
     <style>
-      :host {
+       :host {
         display: block;
       }
-      label{
+
+      label {
         @apply(--things-label);
       }
-      input{
+
+      input {
         @apply(--things-input);
       }
-      select{
+
+      select {
         @apply(--things-select);
-        background:url(/images/bg-input-select.png) 100% 50% no-repeat #fff;
+        background: url(/images/bg-input-select.png) 100% 50% no-repeat #fff;
       }
-      div *{
-        float:left;
+
+      div * {
+        float: left;
       }
-      div label{
-        width:18%;
-        margin-right:3px;
-        top:4px;
+
+      div label {
+        width: 18%;
+        margin-right: 3px;
+        top: 4px;
       }
-      div input{
-        width:24%;
+
+      div input {
+        width: 24%;
       }
-      input[type="checkbox"]{
-        width:15px;
-        margin-left:53px;
+
+      input[type="checkbox"] {
+        width: 15px;
+        margin-left: 53px;
       }
     </style>
 
     <things-i18n-msg msgid="label.image" msg="{{lImage}}" auto hidden>image</things-i18n-msg>
 
-    <things-image-selector
-      id="image-selector"
-      on-things-image-changed="_onThingsValueChanged"
-      label="[[lImage]]"
-      detail-fields=""
-      display-field="id"
-      display-full-url
-      base-url-alias="$base_url"
-      default-storage="[[imageStorage]]"
-      value="{{image::change}}"
-      use-upload
-      use-refresh>
+    <things-image-selector id="image-selector" on-things-image-changed="_onThingsValueChanged" label="[[lImage]]" detail-fields=""
+      display-field="id" display-full-url base-url-alias="$base_url" default-storage="[[imageStorage]]" value="{{image::change}}"
+      use-upload use-refresh>
     </things-image-selector>
 
     <label><things-i18n-msg msgid="label.align" auto>align</things-i18n-msg></label>
@@ -99,11 +97,11 @@ Example:
       <input is="things-editor-number-input" type="number" number="{{height::change}}">
     </div>
 
-    <input type="checkbox" checked="{{fitPattern::change}}" required><things-i18n-msg msgid="label.fit" auto>Fit</things-i18n-msg>
+    <input type="checkbox" checked="{{fitPattern::change}}" required>
+    <things-i18n-msg msgid="label.fit" auto>Fit</things-i18n-msg>
   </template>
 
   <script>
-
     Polymer({
       is: 'things-editor-pattern',
 
@@ -151,11 +149,10 @@ Example:
         }
       },
 
-      _onThingsValueChanged : function(e) {
+      _onThingsValueChanged: function (e) {
         this.set('image', e.target.value)
       }
 
     })
-
   </script>
 </dom-module>

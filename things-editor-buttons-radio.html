@@ -24,11 +24,12 @@ Example:
 <dom-module id="things-editor-buttons-radio">
   <template>
     <style>
-      :host {
-        width:65%;
-        display:inline-block;
+       :host {
+        width: 65%;
+        display: inline-block;
       }
-      ::content > paper-button {
+
+       ::content>paper-button {
         @apply(--things-editor-buttons-radio-button)
       }
     </style>
@@ -38,7 +39,6 @@ Example:
   </template>
 
   <script>
-
     Polymer({
       is: 'things-editor-buttons-radio',
 
@@ -61,37 +61,37 @@ Example:
         'tap': "_onTapButton"
       },
 
-      ready: function() {
-        if(!this.mandatory) {
-          Array.from(this.querySelectorAll('paper-button')).forEach(function(button) {
+      ready: function () {
+        if (!this.mandatory) {
+          Array.from(this.querySelectorAll('paper-button')).forEach(function (button) {
             button.toggleAttribute('toggles', true)
           })
         }
       },
 
-      _onValueChanged: function(value) {
+      _onValueChanged: function (value) {
 
-        Array.from(this.querySelectorAll('paper-button')).forEach(function(button) {
-          if(value === button.getAttribute('data-value'))
+        Array.from(this.querySelectorAll('paper-button')).forEach(function (button) {
+          if (value === button.getAttribute('data-value'))
             button.active = true
           else
             button.active = false
         })
       },
 
-      _onTapButton: function(e) {
+      _onTapButton: function (e) {
         var target = e.target;
 
         while (!target.hasAttribute('data-value') && target !== this)
           target = target.parentElement;
 
-        if(target === this)
+        if (target === this)
           return;
 
         var old = this.value
 
-        if(!this.mandatory) {
-          if(target.active)
+        if (!this.mandatory) {
+          if (target.active)
             this.value = target.getAttribute('data-value')
           else
             this.value = null
@@ -100,10 +100,9 @@ Example:
           target.active = true
         }
 
-        if(old !== this.value)
+        if (old !== this.value)
           this.fire('change', this.value)
       }
     });
-
   </script>
 </dom-module>
