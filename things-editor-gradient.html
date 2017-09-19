@@ -2,38 +2,96 @@
 @license
 Copyright © HatioLab Inc. All rights reserved.
 -->
-
 <link rel="import" href="../polymer/polymer.html">
 
-<link rel="import" href="./things-editor-color.html">
-<link rel="import" href="./things-editor-color-stops.html">
-<link rel="import" href="./things-editor-multiple-color.html">
-<link rel="import" href="./things-editor-color-style.html">
-<link rel="import" href="./things-editor-number-input.html">
+<link rel="import" href="../iron-pages/iron-pages.html">
+<link rel="import" href="../paper-menu/paper-menu.html">
+<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../paper-item/paper-item.html">
+
 <link rel="import" href="./things-editor-angle-input.html">
-<link rel="import" href="./things-editor-table.html">
-<link rel="import" href="./things-editor-action.html">
-<link rel="import" href="./things-editor-script.html">
+<link rel="import" href="./things-editor-color-stops.html">
 
 <!--
 An element providing a solution to no problem in particular.
-
 Example:
-
-@demo demo/index-editor-property.html
+    <things-editor-gradient type="{{gradient.type}}"
+                            rotation="{{gradient.rotation}}"
+                            center="{{gradient.center}}"
+                            color-stops="{{gradient.colorStops}}"
+                            rotate-with-shapes="{{gradient.rotateWithShapes}}">
+    </things-editor-gradient>
+@demo demo/index-editor-gradient.html
 @hero hero.svg
 -->
 
-<dom-module id="things-editor-property">
+<dom-module id="things-editor-gradient">
   <template>
     <style>
-       :host {}
+       :host {
+        display: block;
+        @apply(--things-editor-gradient)
+      }
 
-      things-editor-script {
-        width: 94%;
-        height: 180px;
-        margin: -7px 0 7px 7px;
-        overflow: auto;
+      .gradient-direction {
+        overflow: hidden;
+        max-width: 210px;
+      }
+
+      .gradient-direction paper-item {
+        background: url(images/icon-editor-gradient-direction.png) 50% 0 no-repeat;
+        min-height: 32px;
+        padding: 3px 5px;
+        width: 30px;
+        float: left;
+      }
+
+      .gradient-direction [name=lefttop-to-rightbottom] {
+        background-position: 50% 4px
+      }
+
+      .gradient-direction [name=top-to-bottom] {
+        background-position: 50% -46px
+      }
+
+      .gradient-direction [name=righttop-to-leftbottom] {
+        background-position: 50% -96px
+      }
+
+      .gradient-direction [name=right-to-left] {
+        background-position: 50% -146px
+      }
+
+      .gradient-direction [name=rightbottom-to-lefttop] {
+        background-position: 50% -196px
+      }
+
+      .gradient-direction [name=bottom-to-top] {
+        background-position: 50% -246px
+      }
+
+      .gradient-direction [name=leftbottom-to-righttop] {
+        background-position: 50% -296px
+      }
+
+      .gradient-direction [name=left-to-right] {
+        background-position: 50% -346px
+      }
+
+      .gradient-direction [name=center-to-corner] {
+        background-position: 50% -396px
+      }
+
+      .gradient-direction paper-item[focused] {
+        background-color: rgba(255, 246, 143, .5);
+      }
+
+      .gradient-direction paper-item:focus:before {
+        display: none !important;
+      }
+
+      label {
+        @apply(--things-label);
       }
 
       select {
@@ -41,166 +99,167 @@ Example:
         background: url(/images/bg-input-select.png) 100% 50% no-repeat #fff;
       }
 
-      things-image-selector {
-        width: 55%;
+      .full-width * {
+        float: left;
+      }
+
+      .full-width label {
+        width: initial;
+        top: 2px;
+        margin-right: 4px;
+      }
+
+      .full-width select {
+        width: 40%;
+        min-width: 40%;
+        margin-right: 2px;
+      }
+
+      .full-width input {
+        @apply(--things-input);
+        width: 28%;
+      }
+
+      .icon-only-label {
+        @apply(--things-properties-icon-only-label);
+        top: 0 !important;
+        width: 30px !important;
+        background: url(/images/icon-properties-label.png) no-repeat;
+      }
+
+      .icon-only-label.color {
+        background-position: 70% -198px;
+      }
+
+      iron-pages {
         display: inline-block;
-        position: relative;
+        margin: 0 5px;
+        width: 65%;
       }
-      things-image-selector ::shadow label {
-        display: none;
-      }
-      things-image-selector ::shadow input {
-        box-sizing: border-box;
-        width: calc(100% - 37px);
+
+       :host::shadow .merge-column {
+        margin: 0 0 7px 10px;
       }
     </style>
 
-    <template is="dom-if" if="[[_isExist(label)]]" restamp=true>
-      <label>
-          <things-i18n-msg msgid="[[_msgId]]" auto>[[label]]</things-i18n-msg>
-      </label>
-    </template>
-
-    <template is="dom-if" if="[[_isTypeofEditor(type, 'legend')]]" restamp=true>
-      <legend>[[property.label]]</legend>
-    </template>
-
-    <template is="dom-if" if="[[_isTypeofEditor(type, 'number')]]" restamp=true>
-      <input is="things-editor-number-input" type="number" number="{{value::change}}" placeholder="[[placeholder]]">
-    </template>
-
-    <template is="dom-if" if="[[_isTypeofEditor(type, 'angle')]]" restamp=true>
-      <input is="things-editor-angle-input" type="number" radian="{{value::change}}" placeholder="[[placeholder]]">
-    </template>
-
-
-    <template is="dom-if" if="[[_isTypeofEditor(type, 'string')]]" restamp=true>
-      <input type="text" value="{{value::change}}" placeholder="[[placeholder]]">
-    </template>
-
-    <template is="dom-if" if="[[_isTypeofEditor(type, 'textarea')]]" restamp=true>
-      <things-editor-script theme="ace/theme/monokai" value="{{value}}">
-      </things-editor-script>
-    </template>
-
-    <template is="dom-if" if="[[_isTypeofEditor(type, 'checkbox')]]" restamp=true>
-      <input type="checkbox" checked="{{value::change}}" placeholder="[[placeholder]]">
-    </template>
-
-    <template is="dom-if" if="[[_isTypeofEditor(type, 'select')]]" restamp=true>
-      <select value="{{value::change}}">
-        <template is="dom-repeat" items="[[property.options]]">
-          <option value$="[[_getOptionValue(item)]]">[[_getOptionDisplay(item)]]</option>
-        </template>
+    <div class="full-width">
+      <label>type</label>
+      <select value="{{type::change}}">
+        <option>linear</option>
+        <option>radial</option>
       </select>
-    </template>
+      <label class="icon-only-label color"></label>
+      <input is="things-editor-angle-input" type="number" radian="{{rotation}}">
+    </div>
 
-    <template is="dom-if" if="[[_isTypeofEditor(type, 'color')]]" restamp=true>
-      <things-editor-color value="{{value::change}}" placeholder="[[placeholder]]" />
-    </template>
+    <label>direction</label>
+    <iron-pages attr-for-selected="gradient-type" selected="[[type]]">
+      <div gradient-type="linear">
+        <paper-dropdown-menu no-label-float="true">
+          <paper-menu class="dropdown-content gradient-direction" selected="{{direction}}" attr-for-selected="name">
+            <paper-item name="lefttop-to-rightbottom"></paper-item>
+            <paper-item name="top-to-bottom"></paper-item>
+            <paper-item name="righttop-to-leftbottom"></paper-item>
+            <paper-item name="right-to-left"></paper-item>
+            <paper-item name="rightbottom-to-lefttop"></paper-item>
+            <paper-item name="bottom-to-top"></paper-item>
+            <paper-item name="leftbottom-to-righttop"></paper-item>
+            <paper-item name="left-to-right"></paper-item>
+            <paper-item name="center-to-corner"></paper-item>
+          </paper-menu>
+        </paper-dropdown-menu>
 
-    <template is="dom-if" if="[[_isTypeofEditor(type, 'solid-color-stops')]]" restamp=true>
-      <things-editor-color-stops type="solid" value="{{value::change}}" min="[[property.min]]" max="[[property.max]]" />
-    </template>
+      </div>
 
-    <template is="dom-if" if="[[_isTypeofEditor(type, 'gradient-color-stops')]]" restamp=true>
-      <things-editor-color-stops type="gradient" value="{{value::change}}" min="[[property.min]]" max="[[property.max]]" />
-    </template>
+      <div gradient-type="radial">
+        <paper-dropdown-menu no-label-float="true">
+          <paper-menu class="dropdown-content gradient-direction" selected="{{center}}" attr-for-selected="name">
+            <paper-item name="center"></paper-item>
+            <paper-item name="left-top"></paper-item>
+            <paper-item name="right-top"></paper-item>
+            <paper-item name="right-bottom"></paper-item>
+            <paper-item name="left-bottom"></paper-item>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </div>
 
-    <template is="dom-if" if="[[_isTypeofEditor(type, 'multiple-color')]]" restamp=true>
-      <things-editor-multiple-color values="{{value::change}}" />
-    </template>
+    </iron-pages>
 
-    <template is="dom-if" if="[[_isTypeofEditor(type, 'chartjs-properties')]]" restamp=true>
-      <things-editor-chartjs-properties values="{{value}}" />
-    </template>
+    <!-- <label>gradient stops</label> -->
 
-    <template is="dom-if" if="[[_isTypeofEditor(type, 'action')]]" restamp=true>
-      <things-editor-action icon="[[property.icon]]" action="[[property.action]]" />
-    </template>
+    <things-editor-color-stops type="gradient" value="{{colorStops}}">
+    </things-editor-color-stops>
 
-    <template is="dom-if" if="[[_isTypeofEditor(type, 'image-selector')]]" restamp=true>
-      <things-image-selector on-things-image-changed="_onThingsImageChanged" display-field="[[property.displayField]]"
-        display-full-url="[[property.displayFullUrl]]" base-url-alias="[[property.baseUrlAlias]]" value="{{value}}" default-storage="[[property.defaultStorage]]"
-        storage-filters="[[property.storageFilters]]" use-upload="[[property.useUpload]]">
-      </things-image-selector>
-    </template>
-
-    <template is="dom-if" if="[[_isTypeofEditor(type, 'editor-table')]]" restamp=true>
-      <things-editor-table></things-editor-table>
-    </template>
+    <div class="merge-column">
+      <input type="checkbox" checked="{{rotateWithShapes::change}}" required> Rotate with shapes
+    </div>
 
   </template>
 
   <script>
-    Polymer({
-      is: 'things-editor-property',
-
-      properties: {
-        value: {
-          notify: true,
-          observer: '_valueChanged'
+    (function () {
+      'use strict';
+      Polymer({
+        is: 'things-editor-gradient',
+        properties: {
+          type: {
+            notify: true,
+            value: 'linear'
+          },
+          rotation: {
+            notify: true,
+            type: Number,
+            value: Math.PI / 4
+          },
+          center: {
+            notify: true,
+            value: 'center'
+          },
+          colorStops: {
+            notify: true
+          },
+          rotateWithShapes: {
+            type: Boolean,
+            notify: true,
+            value: false
+          }
         },
-        type: String,
-        label: String,
-        property: {
-          type: Object,
-          notify: true,
-          value: {}
-        },
-        _msgId: {
-          type: String,
-          computed: '_computeLabelId(label)'
+        observers: [
+          'onChangeDirection(direction)'
+        ],
+        onChangeDirection: function (after) {
+          var rotation
+          switch (after) {
+            case "lefttop-to-rightbottom":
+              rotation = 45
+              break
+            case "top-to-bottom":
+              rotation = 90
+              break
+            case "righttop-to-leftbottom":
+              rotation = 135
+              break
+            case "right-to-left":
+              rotation = 180
+              break
+            case "rightbottom-to-lefttop":
+              rotation = 215
+              break
+            case "bottom-to-top":
+              rotation = 270
+              break
+            case "leftbottom-to-righttop":
+              rotation = 315
+              break
+            case "left-to-right":
+              rotation = 0
+              break
+            default:
+              return
+          }
+          this.rotation = rotation / 360 * Math.PI * 2
         }
-      },
-
-      _isTypeofEditor: function (editorType, type) {
-        return editorType == type
-      },
-
-      _isExist: function (label) {
-
-        var str = String(label || "")
-        return label != ""
-
-      },
-
-      _valueChanged: function (value) {
-        if (!this.get('observe'))
-          return
-
-        this.get('observe').call(this, value)
-      },
-
-      _onThingsImageChanged: function (e) {
-        if (!this.property)
-          return
-
-        this.set("value", e.detail)
-        this.fire("change")
-      },
-
-      _computeLabelId: function (label) {
-        if (label.indexOf('label.') >= 0)
-          return label;
-
-        return 'label.' + label
-      },
-
-      _getOptionValue: function(item) {
-        if(typeof item == 'string')
-          return item;
-
-        return item.value;
-      },
-
-      _getOptionDisplay: function(item) {
-        if(typeof item == 'string')
-          return item;
-
-        return item.display;
-      }
-
-    })
+      })
+    })();
   </script>
 </dom-module>
