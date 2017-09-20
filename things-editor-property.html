@@ -85,7 +85,7 @@ Example:
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'textarea')]]" restamp=true>
-      <things-editor-script theme="ace/theme/monokai" value="{{value}}">
+      <things-editor-script theme="ace/theme/monokai" value="{{value}}" mode="[[_getLanguageMode(property.language)]]">
       </things-editor-script>
     </template>
 
@@ -209,6 +209,12 @@ Example:
 
       _isSelected: function (value, item) {
         return value == this._getOptionValue(item)
+      },
+
+      _getLanguageMode: function (language) {
+        var prefix = 'ace/mode/'
+
+        return language ? prefix + language : null;
       }
 
     })
