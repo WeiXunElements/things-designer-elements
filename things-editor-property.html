@@ -134,7 +134,7 @@ Example:
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'options')]]" restamp=true>
-      <things-editor-options options="[[property.options]]" />
+      <things-editor-options options="{{value}}" />
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'editor-table')]]" restamp=true>

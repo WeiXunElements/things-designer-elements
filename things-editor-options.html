@@ -41,10 +41,10 @@ Example:
 
   </style>
 
-    <template is="dom-repeat" items="{{options}}">
+    <template is="dom-repeat" items="[[options]]">
       <div data-record>
-        <input type="text" data-text placeholder="text" value="{{item.text}}"/>
-        <input type="text" data-value placeholder="value" value="{{item.value}}"/>
+        <input type="text" data-text placeholder="text" value="[[item.text]]"/>
+        <input type="text" data-value placeholder="value" value="[[item.value]]"/>
         <button class="record-action" on-tap="_delete" tabindex="-1">-</button>
       </div>
     </template>
@@ -83,11 +83,6 @@ Example:
 
       _onChange: function(e) {
 
-        console.log('---change started')
-
-        if(this._changingNow)
-          return
-
         this._changingNow = true
 
         var input = e.target
@@ -95,30 +90,17 @@ Example:
 
         var div = input.parentElement
 
-        if(div.hasAttribute('data-record')) {
-          var dataList = div.querySelectorAll('[data-value]:not([hidden])')
-          for(var i = 0;i < dataList.length;i++)
-            if(dataList[i] !== input)
-              dataList[i].value = value || ''
-        }
-
         if(div.hasAttribute('data-record'))
           this._build(true)
         else if(div.hasAttribute('data-record-new') && input.hasAttribute('data-value'))
           this._add()
-
-        e.stopPropagation()
-
-        console.log('---change', this.options)
-
-        this._changingNow = false
       },
 
       _build: function(includeNewRecord) {
         if(includeNewRecord)
-          var records = this.root.querySelectorAll('[data-record],[data-record-new]')
+          var records = this.querySelectorAll('[data-record],[data-record-new]')
         else
-          var records = this.root.querySelectorAll('[data-record]')
+          var records = this.querySelectorAll('[data-record]')
 
         var newoptions = []
 
@@ -137,29 +119,13 @@ Example:
             newoptions.push({text: text, value: value || text})
         }
 
-        console.log('newoptions', newoptions)
-
         this.set('options', newoptions)
-      },
-
-      _sort: function(e) {
-
-        var sorter = function(a, b) {
-            return b.text < a.text
-          }
-
-        var options = this._toArray(this.options).sort(sorter).reduce(function(sum, i) {
-          sum[i.text] = i.value
-          return sum
-        }, {})
-
-        this.set('options', options)
       },
 
       _add: function(e) {
         this._build(true)
 
-        var inputs = this.root.querySelectorAll('[data-record-new] input:not([style*="display: none"])')
+        var inputs = this.querySelectorAll('[data-record-new] input:not([style*="display: none"])')
 
         for (var i = 0;i < inputs.length;i++) {
           let input = inputs[i]
