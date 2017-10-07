@@ -14,6 +14,7 @@ Copyright © HatioLab Inc. All rights reserved.
 <link rel="import" href="./things-editor-table.html">
 <link rel="import" href="./things-editor-action.html">
 <link rel="import" href="./things-editor-script.html">
+<link rel="import" href="./things-editor-options.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -130,6 +131,10 @@ Example:
         base-url-alias="[[property.baseUrlAlias]]" value="{{value}}" default-storage="[[property.defaultStorage]]" storage-filters="[[property.storageFilters]]"
         use-upload="[[property.useUpload]]">
       </things-image-selector>
+    </template>
+
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'options')]]" restamp=true>
+      <things-editor-options options="[[property.options]]" />
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'editor-table')]]" restamp=true>
