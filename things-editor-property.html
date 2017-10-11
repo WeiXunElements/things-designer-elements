@@ -141,6 +141,10 @@ Example:
       <things-editor-table></things-editor-table>
     </template>
 
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'date')]]" restamp=true>
+      <input type="date" value="{{value::change}}" placeholder="[[placeholder]]"></input>
+    </template>
+
   </template>
 
   <script>
