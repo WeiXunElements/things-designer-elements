@@ -146,6 +146,7 @@ Example:
 
         var session = this.editor.getSession();
 
+        session.setOption("useWorker", false);
         session.setMode(this.mode);
         session.setUseSoftTabs(this.softtabs);
         this.tabsize && session.setTabSize(this.tabsize);
