@@ -98,10 +98,10 @@ Example:
 
     <template is='dom-if' if='[[_isFade(value.type)]]'>
       <label><things-i18n-msg msgid="label.start-alpha" auto>start alpha</things-i18n-msg></label>
-      <input required value="{{animation.startAlpha::change}}">
+      <input is="things-editor-number-input" number="{{animation.startAlpha::change}}">
 
       <label><things-i18n-msg msgid="label.end-alpha" auto>end alpha</things-i18n-msg></label>
-      <input required value="{{animation.endAlpha::change}}">
+      <input is="things-editor-number-input" number="{{animation.startAlpha::change}}">
     </template>
 
     <template is='dom-if' if='[[_isOutline(value.type)]]'>
