@@ -96,6 +96,14 @@ Example:
       <input is="things-editor-number-input" number="{{animation.y::change}}">
     </template>
 
+    <template is='dom-if' if='[[_isFade(value.type)]]'>
+      <label><things-i18n-msg msgid="label.startAlpha" auto>start alpha</things-i18n-msg></label>
+      <input required value="{{animation.startAlpha::change}}">
+
+      <label><things-i18n-msg msgid="label.endAlpha" auto>end alpha</things-i18n-msg></label>
+      <input required value="{{animation.endalpha::change}}">
+    </template>
+
     <template is='dom-if' if='[[_isOutline(value.type)]]'>
       <label><things-i18n-msg msgid="label.target" auto>target</things-i18n-msg></label>
       <input required value="{{animation.rideOn::change}}">
@@ -170,6 +178,10 @@ Example:
 
       _isMoving: function (type) {
         return type == 'moving'
+      },
+
+      _isFade: function (type) {
+        return type == 'fade'
       }
 
     });
