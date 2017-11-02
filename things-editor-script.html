@@ -124,6 +124,9 @@ Example:
           });
         }
 
+        // prevent to warning logs ..
+        this.editor.$blockScrolling = Infinity
+
         // handle theme changes
         this.editor.renderer.addEventListener("themeLoaded", this._onThemeLoaded.bind(this));
 
