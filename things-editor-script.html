@@ -160,7 +160,7 @@ Example:
         }
 
         if (this.editor)
-          this.editor.setValue(value || '')
+          this.editor.setValue(value == undefined ? '' : String(value))
       },
 
       _onThemeLoaded: function (e) {
