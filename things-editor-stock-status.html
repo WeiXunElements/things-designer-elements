@@ -1,0 +1,212 @@
+<!--
+@license
+Copyright © HatioLab Inc. All rights reserved.
+-->
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+  <things-editor-stock-status value="{{status}}">
+  </things-editor-stock-status>
+
+@demo demo/index-editor-stock-_status.html
+@hero hero.svg
+-->
+
+<dom-module id="things-editor-stock-status">
+  <template>
+  <style>
+    :host {
+      /* @apply(--things-variable-ruletype-container) */
+    }
+    *{float:left;}
+
+    div{
+      border-bottom:1px solid #c0c0c0;
+      width:100%;
+    }
+    div:last-child{
+      border-bottom:none;
+    }
+    .record-action{
+      @apply(--things-record-action-button)
+    }
+    div[data-record] input {
+      width: 20%;
+    }
+
+    div[data-record] span {
+      float: left;
+    }
+
+  </style>
+
+    <legend>
+      <things-i18n-msg msgid="label.stock-status" auto>Stock Status</things-i18n-msg>
+    </legend>
+
+    <div data-field>
+      <label>
+        <things-i18n-msg msgid="label.field" auto>Field</things-i18n-msg>
+      </label>
+      <input type="text" value="{{_statusField::change}}">
+    </div>
+
+    <template id="range-repeater" is="dom-repeat" items="[[_ranges]]">
+      <div data-record>
+        <input type="text" data-min placeholder="min" value="[[item.min]]"/>
+        <span>&le;</span>
+        <span>Field</span>
+        <span>&lt;</span>
+        <input type="text" data-max placeholder="max" value="[[item.max]]"/>
+        <things-editor-color data-color value="[[item.color]]" placeholder="color"></things-editor-color>
+        <button class="record-action" on-tap="_delete" tabindex="-1">-</button>
+      </div>
+    </template>
+
+    <div data-record-new>
+      <input type="text" data-min placeholder="min" value=""/>
+      <input type="text" data-max placeholder="max" value=""/>
+      <things-editor-color data-color value="" placeholder="color"></things-editor-color>
+      <button class="record-action" on-tap="_add" tabindex="-1">+</button>
+    </div>
+
+  </template>
+
+  <script>
+
+    Polymer({
+      is: 'things-editor-stock-status',
+
+      properties: {
+        value: {
+          type: Object,
+          observer: '_valueChanged',
+          value: function() {
+            return null
+          },
+          notify: true
+        },
+        _statusField: {
+          type: String
+        },
+        _ranges: {
+          type: Array
+        }
+      },
+
+      listeners: {
+        'range-repeater.dom-change': '_onRepeaterChanged'
+      },
+
+      attached() {
+        if(!this.boundOnChange)
+          this.boundOnChange = this._onChange.bind(this);
+
+        this.addEventListener('change', this.boundOnChange);
+      },
+
+      detached() {
+        this.removeEventListener('change', this.boundOnChange);
+      },
+
+      _valueChanged: function(value) {
+        var val = value || this._getDefaultValue();
+        this.set('_statusField', val.field);
+        this.set('_ranges', val.ranges);
+      },
+
+      _onChange: function(e) {
+
+        this._changingNow = true
+
+        var input = e.target
+        var value = input.value
+
+        var div = input.parentElement
+
+        if(div.hasAttribute('data-field')) {
+          this.set('_statusField', value);
+        } else if(div.hasAttribute('data-record'))
+          this._build(true)
+        else if(div.hasAttribute('data-record-new') && input.hasAttribute('data-color'))
+          this._add()
+
+        this.set('value', {
+          field: this.get('_statusField'),
+          ranges: this.get('_ranges')
+        });
+
+      },
+
+      _build: function(includeNewRecord, isDelete) {
+        if(includeNewRecord)
+          var records = this.querySelectorAll('[data-record],[data-record-new]')
+        else
+          var records = this.querySelectorAll('[data-record]')
+
+        var newRanges = []
+
+        for(var i = 0;i < records.length;i++) {
+          var record = records[i]
+
+          var min = record.querySelector('[data-min]').value
+          var max = record.querySelector('[data-max]').value
+          var inputs = record.querySelectorAll('[data-color]:not([style*="display: none"])')
+          if(!inputs || inputs.length == 0)
+            continue;
+
+          var input = inputs[inputs.length - 1]
+          var color = input.value
+
+          if(max != undefined && color) 
+            newRanges.push({min: min, max: max, color: color})
+        }
+
+        if(newRanges.length > 0)
+          this.set('_ranges', newRanges);
+        else if(isDelete)
+          this.set('_ranges', [{}]);
+          
+      },
+
+      _add: function(e) {
+        this._build(true)
+
+        var inputs = this.querySelectorAll('[data-record-new] input:not([style*="display: none"])')
+
+        for (var i = 0;i < inputs.length;i++) {
+          let input = inputs[i]
+          input.value = ''
+        }
+      },
+
+      _delete: function(e) {
+        var record = e.target.parentElement
+        record.querySelector('[data-min]').value = ''
+        record.querySelector('[data-max]').value = ''
+        record.querySelector('[data-color]').value = ''
+        this._build(false, true)
+        this.fire('change')
+      },
+
+      _getDefaultValue: function() {
+        return {
+          field: '',
+          ranges: [{
+          }]
+        }
+      },
+
+      _onRepeaterChanged: function() {
+        var inputs = this.querySelectorAll('[data-record] input:not([style*="display: none"])[value=""], [data-record-new] input:not([style*="display: none"])[value=""]');
+        inputs[0].focus();
+      }
+
+    });
+
+  </script>
+</dom-module>

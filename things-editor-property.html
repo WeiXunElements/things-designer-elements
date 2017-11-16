@@ -12,6 +12,7 @@ Copyright © HatioLab Inc. All rights reserved.
 <link rel="import" href="./things-editor-number-input.html">
 <link rel="import" href="./things-editor-angle-input.html">
 <link rel="import" href="./things-editor-increase-pattern.html">
+<link rel="import" href="./things-editor-stock-status.html">
 <link rel="import" href="./things-editor-table.html">
 <link rel="import" href="./things-editor-action.html">
 <link rel="import" href="./things-editor-script.html">
@@ -149,6 +150,10 @@ Example:
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'rack-increase-pattern')]]" restamp=true>
       <things-editor-increase-pattern increase-pattern="{{value::change}}"></things-editor-increase-pattern>
+    </template>
+
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'stock-status')]]" restamp=true>
+      <things-editor-stock-status value="{{value}}"></things-editor-stock-status>
     </template>
 
   </template>
