@@ -23,8 +23,13 @@ Example:
       /* @apply(--things-variable-ruletype-container) */
       display: block;
     }
-    *{float:left;}
+    label {
+        @apply(--things-label);
+      }
 
+      input {
+        @apply(--things-input);
+      }
     div{
       border-bottom:1px solid #c0c0c0;
       width:100%;
@@ -38,11 +43,47 @@ Example:
     div[data-record] input {
       width: 20%;
     }
-
-    div[data-record] span {
-      float: left;
+    table{
+      width:93.5%;
+      margin:7px 0 7px 7px;
     }
-
+    table input{
+      width:44px;
+      margin:3px 0 2px 0;
+    }
+    table td span{
+      float:left;
+      padding:5px 0 0 0;
+    }
+    table td things-editor-color{
+      width:100px
+    }
+    table things-editor-color ::shadow input{
+      width:85%;height:17px;
+      margin:3px 0 2px 0;
+      font-size:12px;
+    }
+    table things-editor-color ::shadow #color{
+      top:2px;
+      margin-top:0px;
+    }
+    table td button{
+      margin-left:0
+    }
+    table th{
+      background-color:rgba(0,0,0,.1);
+      padding:2px 0;
+      text-align:center;
+    }
+    table *.things-editor-stock-status{
+      float:none !important
+    }
+    table td{
+      border-bottom:1px solid rgba(0,0,0,.1);
+    }
+    table tr.stock-new{
+      background-color:rgba(179,145,117,.3);
+    }
   </style>
 
     <legend>
@@ -50,13 +91,44 @@ Example:
     </legend>
 
     <div data-field>
-      <label>
+      <label class="stock-field">
         <things-i18n-msg msgid="label.field" auto>Field</things-i18n-msg>
       </label>
       <input type="text" value="{{_statusField::change}}">
     </div>
-
+    <table>
+      <tr>
+        <th>value &le; Field &lt; value</th>
+        <th>color</th>
+      </tr>
     <template id="range-repeater" is="dom-repeat" items="[[_ranges]]">
+      <tr data-record>
+        <td>
+          <input type="text" data-min placeholder="min" value="[[item.min]]"/>
+          <span>~</span>
+          <input type="text" data-max placeholder="max" value="[[item.max]]"/>
+        </td>
+        <td>
+          <things-editor-color data-color value="[[item.color]]" placeholder="color"></things-editor-color>
+          <button class="record-action" on-tap="_delete" tabindex="-1">-</button>
+        </td>
+      </tr>
+    </template>
+
+    <tr data-record-new class="stock-new">
+      <td>
+          <input type="text" data-min placeholder="min" value=""/>
+          <span>~</span>
+          <input type="text" data-max placeholder="max" value=""/>
+      </td>
+      <td>
+          <things-editor-color data-color value="" placeholder="color"></things-editor-color>
+          <button class="record-action" on-tap="_add" tabindex="-1">+</button>
+      </td>
+    </tr>
+  </table>
+
+  <!-- <template id="range-repeater" is="dom-repeat" items="[[_ranges]]">
       <div data-record>
         <input type="text" data-min placeholder="min" value="[[item.min]]"/>
         <span>&le;</span>
@@ -66,14 +138,14 @@ Example:
         <things-editor-color data-color value="[[item.color]]" placeholder="color"></things-editor-color>
         <button class="record-action" on-tap="_delete" tabindex="-1">-</button>
       </div>
-    </template>
+    </template> 
 
     <div data-record-new>
       <input type="text" data-min placeholder="min" value=""/>
       <input type="text" data-max placeholder="max" value=""/>
       <things-editor-color data-color value="" placeholder="color"></things-editor-color>
       <button class="record-action" on-tap="_add" tabindex="-1">+</button>
-    </div>
+    </div> -->
 
   </template>
 
