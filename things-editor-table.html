@@ -154,8 +154,8 @@ Example:
     </fieldset>
 
     <fieldset id="cell-fieldset">
-      <paper-button id="merge-cells" table-event>merge cells</paper-button>
-      <paper-button id="split-cells" table-event>split cells</paper-button>
+      <paper-button id="merge-cells" table-event hidden="[[!property.merge]]">merge cells</paper-button>
+      <paper-button id="split-cells" table-event hidden="[[!property.split]]">split cells</paper-button>
       <paper-button id="delete-row" table-event>delete row</paper-button>
       <paper-button id="delete-column" table-event>delete column</paper-button>
       <paper-button id="insert-above" table-event>insert above</paper-button>
@@ -191,6 +191,9 @@ Example:
           type: String,
           value: 'solid',
           notify: true
+        },
+        property: {
+          type: Object
         }
       },
 
