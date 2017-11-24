@@ -25,18 +25,20 @@ Example:
     }
     label {
         @apply(--things-label);
-      }
+    }
 
-      input {
-        @apply(--things-input);
-      }
+    input {
+      @apply(--things-input);
+    }
     div{
       border-bottom:1px solid #c0c0c0;
       width:100%;
     }
-    div:last-child{
+
+    div.no-border-bottom {
       border-bottom:none;
     }
+
     .record-action{
       @apply(--things-record-action-button)
     }
@@ -90,11 +92,23 @@ Example:
       <things-i18n-msg msgid="label.stock-status" auto>Stock Status</things-i18n-msg>
     </legend>
 
-    <div data-field>
+    <div data-field class="no-border-bottom">
       <label class="stock-field">
         <things-i18n-msg msgid="label.field" auto>Field</things-i18n-msg>
       </label>
       <input type="text" value="{{_statusField::change}}">
+    </div>
+    <div class="no-border-bottom">
+      <label class="default-color">
+        <things-i18n-msg msgid="label.default-color" auto>Default Color</things-i18n-msg>
+      </label>
+      <things-editor-color name="default-color" value="{{_defaultColor::change}}" placeholder="default color"></things-editor-color>
+    </div>
+    <div>
+      <label class="hide-empty-stock">
+        <things-i18n-msg msgid="label.hide-empty-stock" auto>Hide Empty Stock</things-i18n-msg>
+      </label>
+      <input type="checkbox" checked="{{_hideEmptyStock::change}}">
     </div>
     <table>
       <tr>
@@ -166,6 +180,12 @@ Example:
         _statusField: {
           type: String
         },
+        _defaultColor: {
+          type: String
+        },
+        _hideEmptyStock: {
+          type: Boolean
+        },
         _ranges: {
           type: Array
         }
@@ -189,6 +209,8 @@ Example:
       _valueChanged: function(value) {
         var val = value || this._getDefaultValue();
         this.set('_statusField', val.field);
+        this.set('_defaultColor', val.defaultColor);
+        this.set('_hideEmptyStock', val.hideEmptyStock);
         this.set('_ranges', val.ranges);
       },
 
@@ -199,17 +221,22 @@ Example:
         var input = e.target
         var value = input.value
 
-        var div = input.parentElement
+        var tr = input.closest('tr')
 
-        if(div.hasAttribute('data-field')) {
-          this.set('_statusField', value);
-        } else if(div.hasAttribute('data-record'))
-          this._build(true)
-        else if(div.hasAttribute('data-record-new') && input.hasAttribute('data-color'))
-          this._add()
+        if(tr) {
+          // if(tr.hasAttribute('data-field')) {
+          //   this.set('_statusField', value);
+          // } else 
+          if(tr.hasAttribute('data-record'))
+            this._build(true)
+          else if(tr.hasAttribute('data-record-new') && input.hasAttribute('data-color'))
+            this._add()
+        }
 
         this.set('value', {
           field: this.get('_statusField'),
+          defaultColor: this.get('_defaultColor'),
+          hideEmptyStock: this.get('_hideEmptyStock'),
           ranges: this.get('_ranges')
         });
 
@@ -239,11 +266,19 @@ Example:
             newRanges.push({min: min, max: max, color: color})
         }
 
-        if(newRanges.length > 0)
-          this.set('_ranges', newRanges);
-        else if(isDelete)
-          this.set('_ranges', [{}]);
-          
+        newRanges.sort(function(range1, range2) {
+          var min1 = range1.min;
+          var max1 = range1.max;
+          var min2 = range2.min;
+          var max2 = range2.max;
+
+          var val1 = min1 || max1;
+          var val2 = min2 || max2;
+
+          return val1 > val2
+        })
+
+        this.set('_ranges', newRanges);
       },
 
       _add: function(e) {
@@ -258,19 +293,20 @@ Example:
       },
 
       _delete: function(e) {
-        var record = e.target.parentElement
+        var record = e.target.closest('tr[data-record]')
         record.querySelector('[data-min]').value = ''
         record.querySelector('[data-max]').value = ''
         record.querySelector('[data-color]').value = ''
-        this._build(false, true)
+        this._build(false)
         this.fire('change')
       },
 
       _getDefaultValue: function() {
         return {
           field: '',
-          ranges: [{
-          }]
+          defaultColor: '',
+          hideEmptyStock: false,
+          ranges: []
         }
       },
 
