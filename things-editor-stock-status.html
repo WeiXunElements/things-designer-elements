@@ -262,20 +262,29 @@ Example:
           var input = inputs[inputs.length - 1]
           var color = input.value
 
-          if(max != undefined && color) 
-            newRanges.push({min: min, max: max, color: color})
+          if(min != undefined && max != undefined && color) 
+            newRanges.push({min: min.trim(), max: max.trim(), color: color.trim()})
         }
 
         newRanges.sort(function(range1, range2) {
           var min1 = range1.min;
-          var max1 = range1.max;
           var min2 = range2.min;
-          var max2 = range2.max;
 
-          var val1 = min1 || max1;
-          var val2 = min2 || max2;
+          var result = min1 - min2 
 
-          return val1 > val2
+          if(Number.isNaN(result)) {
+            var strMin1 = String(min1) 
+            var strMin2 = String(min2)
+
+            if(strMin1 > strMin2)
+              result = 1
+            else if(strMin1 == strMin2)
+              result = 0;
+            else
+              result = -1;
+          }
+
+          return result;
         })
 
         this.set('_ranges', newRanges);
