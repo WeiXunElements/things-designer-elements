@@ -104,12 +104,6 @@ Example:
       </label>
       <things-editor-color name="default-color" value="{{_defaultColor::change}}" placeholder="default color"></things-editor-color>
     </div>
-    <div>
-      <label class="hide-empty-stock">
-        <things-i18n-msg msgid="label.hide-empty-stock" auto>Hide Empty Stock</things-i18n-msg>
-      </label>
-      <input type="checkbox" checked="{{_hideEmptyStock::change}}">
-    </div>
     <table>
       <tr>
         <th>value &le; Field &lt; value</th>
@@ -183,9 +177,6 @@ Example:
         _defaultColor: {
           type: String
         },
-        _hideEmptyStock: {
-          type: Boolean
-        },
         _ranges: {
           type: Array
         }
@@ -210,7 +201,6 @@ Example:
         var val = value || this._getDefaultValue();
         this.set('_statusField', val.field);
         this.set('_defaultColor', val.defaultColor);
-        this.set('_hideEmptyStock', val.hideEmptyStock);
         this.set('_ranges', val.ranges);
       },
 
@@ -236,7 +226,6 @@ Example:
         this.set('value', {
           field: this.get('_statusField'),
           defaultColor: this.get('_defaultColor'),
-          hideEmptyStock: this.get('_hideEmptyStock'),
           ranges: this.get('_ranges')
         });
 
@@ -314,7 +303,6 @@ Example:
         return {
           field: '',
           defaultColor: '',
-          hideEmptyStock: false,
           ranges: []
         }
       },

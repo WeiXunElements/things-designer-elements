@@ -41,6 +41,18 @@ Example:
     <legend>
       <things-i18n-msg msgid="label.location-increase-pattern" auto>Increase Pattern</things-i18n-msg>
     </legend>
+    <label>
+      <things-i18n-msg msgid="label.start-section" auto>Start Section</things-i18n-msg>
+    </label>
+    <input type="number" data-start-section value="{{startSection::change}}">
+    <label>
+      <things-i18n-msg msgid="label.start-unit" auto>Start Unit</things-i18n-msg>
+    </label>
+    <input type="number" data-start-unit value="{{startUnit::change}}">
+    <label>
+        <things-i18n-msg msgid="label.skip-numbering" auto>Skip Numbering</things-i18n-msg>
+      </label>
+    <input type="checkbox" data-skip-numbering checked="{{skipNumbering::change}}">
     <div id="pattern-set" class="location-increase-pattern-btn">
       <paper-button data-value="cw">
         <iron-icon icon="editor:border-outer"></iron-icon>
@@ -49,7 +61,6 @@ Example:
         <iron-icon icon="editor:border-inner"></iron-icon>
       </paper-button>
     </div>
-    <input type="checkbox" data-skip-numbering checked="{{skipNumbering::change}}">
 
   </template>
 
@@ -62,6 +73,14 @@ Example:
       ],
 
       properties: {
+        startSection: {
+          type: Number,
+          value: 1
+        },
+        startUnit: {
+          type: Number,
+          value: 1
+        },
         skipNumbering: {
           type: Boolean,
           value: true
@@ -83,6 +102,8 @@ Example:
 
         this.fire('rack-table-cell-increment-set', {
           increasingDirection: target.getAttribute('data-value'),
+          startSection: this.startSection,
+          startUnit: this.startUnit,
           skipNumbering: this.skipNumbering
         })
 
