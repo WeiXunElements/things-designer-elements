@@ -1,0 +1,54 @@
+<!doctype html>
+<!--
+@license
+Copyright © HatioLab Inc. All rights reserved.
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+    <title>things-editor-code Demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+
+    <link rel="import" href="../things-editor-code.html">
+
+    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
+
+    <style is="custom-style" include="things-point-theme">
+      :root {
+        --things-editor-code: {
+          height: 300px;
+        }
+      }
+
+      textarea {
+        height: 100px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body unresolved>
+
+    <template is="dom-bind" id="app">
+
+      <p>An example of <code>&lt;things-editor-code&gt;</code>:</p>
+
+      <things-editor-code value="{{text}}">
+      </things-editor-code>
+
+      <textarea value="[[text]]"></textarea>
+
+    </template>
+
+    <script>
+      window.addEventListener('WebComponentsReady', function(e) {
+        var app = document.querySelector('#app')
+
+        app.text = "Hello, World"
+      })
+    </script>
+
+  </body>
+</html>
