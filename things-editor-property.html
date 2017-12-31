@@ -16,7 +16,7 @@ Copyright © HatioLab Inc. All rights reserved.
 <link rel="import" href="./things-editor-legend-status.html">
 <link rel="import" href="./things-editor-table.html">
 <link rel="import" href="./things-editor-action.html">
-<link rel="import" href="./things-editor-code.html">
+<link rel="import" href="./things-editor-script.html">
 <link rel="import" href="./things-editor-options.html">
 
 <!--
@@ -32,13 +32,13 @@ Example:
 
   <template>
     <style>
-       :host {}
+      :host {}
 
       label {
         text-transform: capitalize;
       }
 
-      things-editor-code {
+      things-editor-script {
         width: 94%;
         height: 180px;
         margin: -7px 0 7px 7px;
@@ -90,8 +90,8 @@ Example:
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'textarea')]]" restamp=true>
-      <things-editor-code theme="ace/theme/monokai" value="{{value}}" mode="[[_getLanguageMode(property.language)]]">
-      </things-editor-code>
+      <things-editor-script theme="ace/theme/monokai" value="{{value}}" mode="[[_getLanguageMode(property.language)]]">
+      </things-editor-script>
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'checkbox')]]" restamp=true>
