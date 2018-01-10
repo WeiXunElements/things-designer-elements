@@ -282,7 +282,7 @@ Example:
       _add: function(e) {
         this._build(true)
 
-        var inputs = this.querySelectorAll('[data-record-new] input:not([style*="display: none"])')
+        var inputs = this.querySelectorAll('[data-record-new] input:not([style*="display: none"]), [data-record-new] [data-color]:not([style*="display: none"])')
 
         for (var i = 0;i < inputs.length;i++) {
           let input = inputs[i]
