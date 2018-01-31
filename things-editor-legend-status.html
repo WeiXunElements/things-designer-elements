@@ -108,6 +108,7 @@ Example:
       <tr>
         <th>value &le; Field &lt; value</th>
         <th>color</th>
+        <th>disp. text</th>
       </tr>
     <template id="range-repeater" is="dom-repeat" items="[[_ranges]]">
       <tr data-record>
@@ -118,6 +119,9 @@ Example:
         </td>
         <td>
           <things-editor-color data-color value="[[item.color]]" placeholder="color"></things-editor-color>
+        </td>
+        <td>
+          <input type="text" data-description value="[[item.description]]" placeholder="display text">
           <button class="record-action" on-tap="_delete" tabindex="-1">-</button>
         </td>
       </tr>
@@ -132,6 +136,9 @@ Example:
       <td>
           <things-editor-color data-color value="" placeholder="color"></things-editor-color>
           <button class="record-action" on-tap="_add" tabindex="-1">+</button>
+      </td>
+      <td>
+          <input type="text" data-description value="" placeholder="display text">
       </td>
     </tr>
   </table>
@@ -244,6 +251,7 @@ Example:
 
           var min = record.querySelector('[data-min]').value
           var max = record.querySelector('[data-max]').value
+          var description = record.querySelector('[data-description]').value
           var inputs = record.querySelectorAll('[data-color]:not([style*="display: none"])')
           if(!inputs || inputs.length == 0)
             continue;
@@ -252,7 +260,7 @@ Example:
           var color = input.value
 
           if(min != undefined && max != undefined && color) 
-            newRanges.push({min: min.trim(), max: max.trim(), color: color.trim()})
+            newRanges.push({min: min.trim(), max: max.trim(), color: color.trim(), description: description.trim()})
         }
 
         newRanges.sort(function(range1, range2) {
