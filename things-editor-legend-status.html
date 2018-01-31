@@ -50,19 +50,20 @@ Example:
       margin:7px 0 7px 7px;
     }
     table input{
-      width:44px;
-      margin:3px 0 2px 0;
+      width:25px;
+      margin:3px 0 2px 0;padding:3px;
+      font-size:12px;
     }
     table td span{
       float:left;
       padding:5px 0 0 0;
     }
     table td things-editor-color{
-      width:100px
+      width:81px
     }
     table things-editor-color ::shadow input{
-      width:85%;height:17px;
-      margin:3px 0 2px 0;
+      width:70px;height:17px;
+      margin:3px 0 2px 0;padding:3px;
       font-size:12px;
     }
     table things-editor-color ::shadow #color{
@@ -86,6 +87,9 @@ Example:
     table tr.stock-new{
       background-color:rgba(179,145,117,.3);
     }
+    table td input[data-description]{
+      width:55px;
+    }
   </style>
 
     <legend>
@@ -106,21 +110,21 @@ Example:
     </div>
     <table>
       <tr>
-        <th>value &le; Field &lt; value</th>
+        <th>Min &le; Field &lt; Max</th>
         <th>color</th>
         <th>disp. text</th>
       </tr>
     <template id="range-repeater" is="dom-repeat" items="[[_ranges]]">
       <tr data-record>
-        <td>
+        <td style="width:92px">
           <input type="text" data-min placeholder="min" value="[[item.min]]"/>
           <span>~</span>
           <input type="text" data-max placeholder="max" value="[[item.max]]"/>
         </td>
-        <td>
+        <td style="width:80px">
           <things-editor-color data-color value="[[item.color]]" placeholder="color"></things-editor-color>
         </td>
-        <td>
+        <td style="width:85px">
           <input type="text" data-description value="[[item.description]]" placeholder="display text">
           <button class="record-action" on-tap="_delete" tabindex="-1">-</button>
         </td>
@@ -135,10 +139,10 @@ Example:
       </td>
       <td>
           <things-editor-color data-color value="" placeholder="color"></things-editor-color>
-          <button class="record-action" on-tap="_add" tabindex="-1">+</button>
       </td>
       <td>
           <input type="text" data-description value="" placeholder="display text">
+          <button class="record-action" on-tap="_add" tabindex="-1">+</button>
       </td>
     </tr>
   </table>
