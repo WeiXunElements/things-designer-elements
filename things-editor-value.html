@@ -103,6 +103,7 @@ Example:
       <option><things-i18n-msg msgid="label.dimension" auto>dimension</things-i18n-msg></option>
       <option><things-i18n-msg msgid="label.value" auto>value</things-i18n-msg></option>
       <option><things-i18n-msg msgid="label.data" auto>data</things-i18n-msg></option>
+      <option><things-i18n-msg msgid="label.options" auto>options</things-i18n-msg></option>
       <option><things-i18n-msg msgid="label.started" auto>started</things-i18n-msg></option>
       <option value="ref"><things-i18n-msg msgid="label.reference" auto>reference</things-i18n-msg></option>
     </select>
@@ -180,6 +181,7 @@ Example:
             this.valueType = 'color'
             break
           case 'data':
+          case 'options':
           case 'location':
           case 'dimension':
             this.valueType = 'object'
