@@ -230,11 +230,13 @@ Example:
         valueAsObject: {
           type: Object,
           notify: true,
-          value: {
-            red: undefined,
-            green: undefined,
-            blue: undefined,
-            alpha: 1
+          value: function() {
+            return {
+              red: undefined,
+              green: undefined,
+              blue: undefined,
+              alpha: 1
+            }
           }
         }
       },
@@ -277,13 +279,8 @@ Example:
         this.$["color-thumbnail"].style.backgroundColor = value
       },
 
-      _onColorStringChanged: function (valueAsObject) {
-        var color = tinycolor({
-          r: this.valueAsObject.red,
-          g: this.valueAsObject.green,
-          b: this.valueAsObject.blue,
-          a: this.valueAsObject.alpha,
-        })
+      _onColorStringChanged: function (colorString) {
+        var color = tinycolor(colorString)
 
         if (color.isValid()) {
           this.set("value", color.toString())
@@ -312,8 +309,8 @@ Example:
 
         var picker = this.create('paper-color-picker', {
           shape: 'huebox',
-          color: this.valueAsObject,
-          colorAsString: this.colorString,
+          color: color,
+          colorAsString: color.toString(),
           allowAlpha: true,
           alwaysShowAlpha: true,
           type: "hsl"
@@ -321,12 +318,14 @@ Example:
 
         if (color.isValid()) {
           let rgb = color.toRgb()
-
-          picker._initialAlphaValueHack = color.getAlpha()
+          let alpha = color.getAlpha();
+          picker._initialAlphaValueHack = alpha;
 
           picker.set('immediateColor.red', rgb.r)
           picker.set('immediateColor.green', rgb.g)
           picker.set('immediateColor.blue', rgb.b)
+          if(alpha != undefined)
+            picker.set('immediateColor.alpha', alpha)
         }
 
         this.appendChild(picker);
