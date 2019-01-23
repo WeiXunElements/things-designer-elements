@@ -1,2 +1,6 @@
 bower_components
 npm-debug.log
+
+yarn.lock
+pacakge-lock.json
+node_modules

@@ -1,41 +1,41 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
 @license
 Copyright © HatioLab Inc. All rights reserved.
 -->
-<link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
-<link rel="import" href="../../bower_components/iron-icons/editor-icons.html">
-<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html" />
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html" />
+<link rel="import" href="../../bower_components/iron-icons/editor-icons.html" />
+<link rel="import" href="../../bower_components/iron-image/iron-image.html" />
 
-<link rel="import" href="../../bower_components/things-designer-elements/things-editor-multiple-color.html">
-<link rel="import" href="../../bower_components/things-designer-elements/things-editor-number-input.html">
+<link rel="import" href="../../bower_components/things-designer-elements/things-editor-multiple-color.html" />
+<link rel="import" href="../../bower_components/things-designer-elements/things-editor-number-input.html" />
 
 <dom-module id="things-editor-chartjs-properties-mixed">
   <template>
     <style>
       :host {
-        @apply(--things-properties-panel);
+        @apply (--things-properties-panel);
       }
 
       label {
-        @apply(--things-label);
+        @apply (--things-label);
       }
 
       input {
-        @apply(--things-input);
+        @apply (--things-input);
       }
 
       fieldset {
-        @apply(--things-fieldset);
+        @apply (--things-fieldset);
       }
 
       legend {
-        @apply(--things-fieldset-legend);
+        @apply (--things-fieldset-legend);
       }
 
       select {
-        @apply(--things-select);
+        @apply (--things-select);
         background: url(/images/bg-input-select.png) 100% 50% no-repeat #fff;
       }
 
@@ -50,7 +50,7 @@ Copyright © HatioLab Inc. All rights reserved.
         width: 229px;
         height: 25px;
         margin: -5px 0 0 7px;
-        border: 1px solid rgba(0, 0, 0, .2);
+        border: 1px solid rgba(0, 0, 0, 0.2);
         border-width: 1px 1px 0 1px;
       }
 
@@ -59,8 +59,8 @@ Copyright © HatioLab Inc. All rights reserved.
       }
 
       paper-tab {
-        background-color: rgba(0, 0, 0, .2);
-        border: 1px solid rgba(0, 0, 0, .07);
+        background-color: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(0, 0, 0, 0.07);
         border-width: 0 1px 0 0;
         padding: 0 5px;
         color: #fff;
@@ -68,7 +68,7 @@ Copyright © HatioLab Inc. All rights reserved.
       }
 
       paper-tab[disabled] {
-        background-color: rgba(0, 0, 0, .1);
+        background-color: rgba(0, 0, 0, 0.1);
       }
 
       paper-tab:last-child {
@@ -76,13 +76,13 @@ Copyright © HatioLab Inc. All rights reserved.
       }
 
       paper-tab.iron-selected {
-        background-color: rgba(255, 255, 255, .5);
+        background-color: rgba(255, 255, 255, 0.5);
         color: #585858;
       }
 
       .tab-content {
-        background-color: rgba(255, 255, 255, .5);
-        border: 1px solid rgba(0, 0, 0, .2);
+        background-color: rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(0, 0, 0, 0.2);
         border-width: 0 1px 1px 1px;
         margin: 0 7px 10px 7px;
         padding: 7px 5px 0 5px;
@@ -96,7 +96,7 @@ Copyright © HatioLab Inc. All rights reserved.
         width: 52%;
       }
 
-      .same-width input[type="checkbox"] {
+      .same-width input[type='checkbox'] {
         width: 15px;
       }
 
@@ -107,28 +107,19 @@ Copyright © HatioLab Inc. All rights reserved.
 
     <form class="content" method="post">
       <fieldset class="same-width">
-        <legend>
-          <things-i18n-msg msgid="label.chart" auto>Chart</things-i18n-msg>
-        </legend>
-        <label>
-          <things-i18n-msg msgid="label.theme" auto>theme</things-i18n-msg>
-        </label>
+        <legend><things-i18n-msg msgid="label.chart" auto>Chart</things-i18n-msg></legend>
+        <label> <things-i18n-msg msgid="label.theme" auto>theme</things-i18n-msg> </label>
         <select class="select-content" value="{{values.options.theme::change}}">
           <option value="dark">dark</option>
           <option value="light">light</option>
         </select>
 
         <div class="merge-column">
-          <label>
-            <things-i18n-msg msgid="label.legend" auto>Legend</things-i18n-msg>
-          </label>
-          <input type="checkbox" checked="{{values.options.legend.display::change}}"
-            required></input>
+          <label> <things-i18n-msg msgid="label.legend" auto>Legend</things-i18n-msg> </label>
+          <input type="checkbox" checked="{{values.options.legend.display::change}}" required />
         </div>
         <template is="dom-if" if="[[values.options.legend.display]]">
-          <label>
-            <things-i18n-msg msgid="label.position" auto>Position</things-i18n-msg>
-          </label>
+          <label> <things-i18n-msg msgid="label.position" auto>Position</things-i18n-msg> </label>
           <select class="select-content" value="{{values.options.legend.position::change}}">
             <option value="top">top</option>
             <option value="right">right</option>
@@ -136,135 +127,96 @@ Copyright © HatioLab Inc. All rights reserved.
             <option value="left">left</option>
           </select>
         </template>
-        <label>
-          <things-i18n-msg msgid="label.stacked" auto>Stacked</things-i18n-msg>
-        </label>
-        <input type="checkbox" checked="{{values.options.stacked::change}}"
-          required></input>
-        <label>
-          <things-i18n-msg msgid="label.multi-axis" auto>Multi Axis</things-i18n-msg>
-        </label>
-        <input type="checkbox" checked="{{values.options.multiAxis::change}}"
-          required></input>
+        <label> <things-i18n-msg msgid="label.multi-axis" auto>Multi Axis</things-i18n-msg> </label>
+        <input type="checkbox" checked="{{values.options.multiAxis::change}}" required />
       </fieldset>
       <fieldset>
-        <legend>
-          <things-i18n-msg msgid="label.series" auto>Series</things-i18n-msg>
-        </legend>
-        <paper-tabs selected="{{currentSeriesIndex}}">
-          <template is="dom-repeat" items="{{values.data.datasets}}" index-as="index">
+        <legend><things-i18n-msg msgid="label.series" auto>Series</things-i18n-msg></legend>
+        <paper-tabs selected="{{ currentSeriesIndex }}">
+          <template is="dom-repeat" items="{{ values.data.datasets }}" index-as="index">
             <paper-tab data-series="[[_computeSeriesTabIndex(index)]]">[[_computeSeriesTabIndex(index)]]</paper-tab>
           </template>
           <paper-tab>
+            <!-- prettier-ignore-attribute on-tap -->
             <paper-icon-button icon="add-circle" on-tap="onTapAddTab"></paper-icon-button>
           </paper-tab>
         </paper-tabs>
         <div class="tab-content">
-          <label>
-            <things-i18n-msg msgid="label.data-key" auto>Data Key</things-i18n-msg>
-          </label>
-          <input type="text" value="{{series.dataKey::change}}"></input>
+          <label> <things-i18n-msg msgid="label.data-key" auto>Data Key</things-i18n-msg> </label>
+          <input type="text" value="{{series.dataKey::change}}" />
           <template is="dom-if" if="[[_isTypeof(values.type, 'bar')]]">
-            <label>
-              <things-i18n-msg msgid="label.type" auto>type</things-i18n-msg>
-            </label>
+            <label> <things-i18n-msg msgid="label.type" auto>type</things-i18n-msg> </label>
             <select class="select-content" value="{{series.type::change}}">
               <option value="bar" selected>bar</option>
               <option value="line">line</option>
             </select>
           </template>
-          <label>
-            <things-i18n-msg msgid="label.label" auto>label</things-i18n-msg>
-          </label>
-          <input type="text" value="{{series.label::change}}"></input>
+          <label> <things-i18n-msg msgid="label.label" auto>label</things-i18n-msg> </label>
+          <input type="text" value="{{series.label::change}}" />
           <template is="dom-if" if="[[_isTypeof(series.type, 'line')]]">
-            <label>
-              <things-i18n-msg msgid="label.line-tension" auto>line tension</things-i18n-msg>
-            </label>
+            <label> <things-i18n-msg msgid="label.line-tension" auto>line tension</things-i18n-msg> </label>
             <select class="select-content" value="{{series.lineTension::change}}">
               <option value="0.4">smooth</option>
               <option value="0">angled</option>
             </select>
           </template>
+          <label> <things-i18n-msg msgid="label.color" auto>color</things-i18n-msg> </label>
+          <things-editor-color value="{{series.color::change}}"></things-editor-color>
           <template is="dom-if" if="[[_isTypeof(series.type, 'line')]]">
-            <label>
-              <things-i18n-msg msgid="label.border-color" auto>border color</things-i18n-msg>
-            </label>
-            <things-editor-color value="{{series.borderColor::change}}"></things-editor-color>
-            <label>
-              <things-i18n-msg msgid="label.border-width" auto>border width</things-i18n-msg>
-            </label>
-            <input is="things-editor-number-input" number="{{series.borderWidth::change}}"></input>
+            <label> <things-i18n-msg msgid="label.thickness" auto>thickness</things-i18n-msg> </label>
+            <input is="things-editor-number-input" number="{{series.borderWidth::change}}" />
           </template>
-          <label>
-            <things-i18n-msg msgid="label.background-color" auto>background color</things-i18n-msg>
-          </label>
-          <things-editor-color value="{{series.backgroundColor::change}}"></things-editor-color>
           <template is="dom-if" if="[[_isTypeof(series.type, 'line')]]">
-            <label>
-              <things-i18n-msg msgid="label.point-shape" auto>point shape</things-i18n-msg>
-            </label>
+            <label> <things-i18n-msg msgid="label.point-shape" auto>point shape</things-i18n-msg> </label>
             <select class="select-content" value="{{series.pointStyle::change}}">
-              <option value="circle">circle</option>
-              <option value="triangle">triangle</option>
-              <option value="rect">rect</option>
-              <option value="rectRot">diamond</option>
-              <option value="cross">cross</option>
-              <option value="crossRot">X</option>
-              <option value="star">star</option>
-              <option value="line">Line</option>
-              <option value="dash">Dash</option>
+              <option value="circle">⚬</option>
+              <option value="triangle">▵</option>
+              <option value="rect">□</option>
+              <option value="rectRot">◇</option>
+              <option value="cross">+</option>
+              <option value="crossRot">⨉</option>
+              <option value="star">✱</option>
+              <option value="line">―</option>
+              <option value="dash">┄</option>
             </select>
-            <label>
-              <things-i18n-msg msgid="label.point-size" auto>point size</things-i18n-msg>
-            </label>
-            <input type="number" value-as-number="{{series.pointRadius::change}}"></input>
-            <label>
-              <things-i18n-msg msgid="label.point-bg-color" auto>point BG color</things-i18n-msg>
-            </label>
-            <things-editor-color value="{{series.pointBackgroundColor::change}}"></things-editor-color>
+            <label> <things-i18n-msg msgid="label.point-size" auto>point size</things-i18n-msg> </label>
+            <input type="number" value-as-number="{{series.pointRadius::change}}" />
           </template>
+          <label> <things-i18n-msg msgid="label.stack-group" auto>stack group</things-i18n-msg> </label>
+          <input type="text" value="{{series.stack::change}}" required />
           <template is="dom-if" if="[[_isTypeof(series.type, 'line')]]">
-            <label>
-              <things-i18n-msg msgid="label.fill" auto>fill</things-i18n-msg>
-            </label>
-            <input type="checkbox" checked="{{series.fill::change}}" required></input>
+            <label> <things-i18n-msg msgid="label.fill" auto>fill</things-i18n-msg> </label>
+            <input type="checkbox" checked="{{series.fill::change}}" required />
           </template>
-          <label>
-            <things-i18n-msg msgid="label.target-axis" auto>target axis</things-i18n-msg>
-          </label>
+          <label> <things-i18n-msg msgid="label.target-axis" auto>target axis</things-i18n-msg> </label>
           <select class="select-content" value="{{series.yAxisID::change}}">
             <option value="left">left</option>
             <option value="right">right</option>
           </select>
-          <label>
-            <things-i18n-msg msgid="label.value-prefix" auto>Value Prefix</things-i18n-msg>
-          </label>
-          <input type="text" value="{{series.valuePrefix::change}}"></input>
-          <label>
-            <things-i18n-msg msgid="label.value-suffix" auto>Value suffix</things-i18n-msg>
-          </label>
-          <input type="text" value="{{series.valueSuffix::change}}"></input>
+          <label> <things-i18n-msg msgid="label.value-prefix" auto>Value Prefix</things-i18n-msg> </label>
+          <input type="text" value="{{series.valuePrefix::change}}" />
+          <label> <things-i18n-msg msgid="label.value-suffix" auto>Value suffix</things-i18n-msg> </label>
+          <input type="text" value="{{series.valueSuffix::change}}" />
           <div>
-            <label>
-              <things-i18n-msg msgid="label.value-display" auto>Value Display</things-i18n-msg>
-            </label>
-            <input type="checkbox" checked="{{series.displayValue::change}}"
-              required></input>
+            <label> <things-i18n-msg msgid="label.value-display" auto>Value Display</things-i18n-msg> </label>
+            <input type="checkbox" checked="{{series.displayValue::change}}" required />
           </div>
           <template is="dom-if" if="[[series.displayValue]]">
             <div>
-              <label>
-                <things-i18n-msg msgid="label.font-color" auto>Font Color</things-i18n-msg>
-              </label>
+              <label> <things-i18n-msg msgid="label.font-color" auto>Font Color</things-i18n-msg> </label>
               <things-editor-color value="{{series.defaultFontColor::change}}"></things-editor-color>
-              <label>
-                <things-i18n-msg msgid="label.font-size" auto>Font Size</things-i18n-msg>
-              </label>
-              <input is="things-editor-number-input" number="{{series.defaultFontSize::change}}"></input>
+              <label> <things-i18n-msg msgid="label.font-size" auto>Font Size</things-i18n-msg> </label>
+              <input is="things-editor-number-input" number="{{series.defaultFontSize::change}}" />
+              <label> <things-i18n-msg msgid="label.position" auto>Position</things-i18n-msg> </label>
+              <select value="{{series.dataLabelAnchor::change}}">
+                <option value="start">Start</option>
+                <option value="center" selected>Center</option>
+                <option value="end">End</option>
+              </select>
             </div>
           </template>
           <template is="dom-if" if="[[!isOnly(values.data.datasets)]]">
+            <!-- prettier-ignore-attribute on-tap -->
             <paper-button on-tap="onTapRemoveCurrentTab">
               <iron-icon icon="icons:delete"></iron-icon>Remove Tab
             </paper-button>
@@ -272,131 +224,88 @@ Copyright © HatioLab Inc. All rights reserved.
         </div>
       </fieldset>
       <fieldset class="same-width">
-        <legend>
-          <things-i18n-msg msgid="label.x-axes" auto>X Axes</things-i18n-msg>
-        </legend>
-        <label>
-          <things-i18n-msg msgid="label.data-key" auto>Data Key</things-i18n-msg>
-        </label>
-        <input type="text" value="{{values.data.labelDataKey::change}}"></input>
-        <label>
-          <things-i18n-msg msgid="label.title" auto>Title</things-i18n-msg>
-        </label>
-        <input type="text" value="{{values.options.scales.xAxes.0.axisTitle::change}}"></input>
-        <label>
-          <things-i18n-msg msgid="label.thickness" auto>Thickness</things-i18n-msg>
-        </label>
-        <input type="number" value-as-number="{{values.options.scales.xAxes.0.barThickness::change}}"></input>
-        <label>
-          <things-i18n-msg msgid="label.grid-line" auto>Grid Line</things-i18n-msg>
-        </label>
-        <input type="checkbox" checked="{{values.options.xGridLine::change}}"
-          required></input>
-        <label>
-          <things-i18n-msg msgid="label.display-tick" auto>Display Tick</things-i18n-msg>
-        </label>
-        <input type="checkbox" checked="{{values.options.scales.xAxes.0.ticks.display::change}}"
-          required></input>
-        <legend>
-          <things-i18n-msg msgid="label.y-axes" auto>Y Axes</things-i18n-msg>
-        </legend>
-        <label>
-          <things-i18n-msg msgid="label.title" auto>Title</things-i18n-msg>
-        </label>
-        <input type="text" value="{{values.options.scales.yAxes.0.axisTitle::change}}"></input>
-        <label>
-          <things-i18n-msg msgid="label.axis-min-auto" auto>Min Auto</things-i18n-msg>
-        </label>
-        <input type="checkbox" checked="{{values.options.scales.yAxes.0.ticks.autoMin::change}}"
-          required></input>
-        <label>
-          <things-i18n-msg msgid="label.axis-max-auto" auto>Max Auto</things-i18n-msg>
-        </label>
-        <input type="checkbox" checked="{{values.options.scales.yAxes.0.ticks.autoMax::change}}"
-          required></input>
+        <legend><things-i18n-msg msgid="label.x-axes" auto>X Axes</things-i18n-msg></legend>
+        <label> <things-i18n-msg msgid="label.data-key" auto>Data Key</things-i18n-msg> </label>
+        <input type="text" value="{{values.data.labelDataKey::change}}" />
+        <label> <things-i18n-msg msgid="label.title" auto>Title</things-i18n-msg> </label>
+        <input type="text" value="{{values.options.scales.xAxes.0.axisTitle::change}}" />
+        <template is="dom-if" if="[[_hasBarSeries]]">
+          <label> <things-i18n-msg msgid="label.bar-spacing" auto>Bar Spacing</things-i18n-msg> </label>
+          <input
+            type="number"
+            min="0"
+            max="1"
+            step="0.1"
+            value-as-number="{{values.options.scales.xAxes.0.barSpacing::change}}"
+          />
+          <label> <things-i18n-msg msgid="label.tick-spacing" auto>Tick Spacing</things-i18n-msg> </label>
+          <input
+            type="number"
+            min="0"
+            max="1"
+            step="0.1"
+            value-as-number="{{values.options.scales.xAxes.0.categorySpacing::change}}"
+          />
+        </template>
+        <label> <things-i18n-msg msgid="label.grid-line" auto>Grid Line</things-i18n-msg> </label>
+        <input type="checkbox" checked="{{values.options.xGridLine::change}}" required />
+        <label> <things-i18n-msg msgid="label.display-tick" auto>Display Tick</things-i18n-msg> </label>
+        <input type="checkbox" checked="{{values.options.scales.xAxes.0.ticks.display::change}}" required />
+        <legend><things-i18n-msg msgid="label.y-axes" auto>Y Axes</things-i18n-msg></legend>
+        <label> <things-i18n-msg msgid="label.title" auto>Title</things-i18n-msg> </label>
+        <input type="text" value="{{values.options.scales.yAxes.0.axisTitle::change}}" />
+        <label> <things-i18n-msg msgid="label.axis-min-auto" auto>Min Auto</things-i18n-msg> </label>
+        <input type="checkbox" checked="{{values.options.scales.yAxes.0.ticks.autoMin::change}}" required />
+        <label> <things-i18n-msg msgid="label.axis-max-auto" auto>Max Auto</things-i18n-msg> </label>
+        <input type="checkbox" checked="{{values.options.scales.yAxes.0.ticks.autoMax::change}}" required />
         <div>
           <template is="dom-if" if="[[!values.options.scales.yAxes.0.ticks.autoMin]]">
-            <label>
-              <things-i18n-msg msgid="label.axis-min" auto>Min</things-i18n-msg>
-            </label>
-            <input type="number" value="{{values.options.scales.yAxes.0.ticks.min::change}}"></input>
+            <label> <things-i18n-msg msgid="label.axis-min" auto>Min</things-i18n-msg> </label>
+            <input type="number" value="{{values.options.scales.yAxes.0.ticks.min::change}}" />
           </template>
           <template is="dom-if" if="[[!values.options.scales.yAxes.0.ticks.autoMax]]">
-            <label>
-              <things-i18n-msg msgid="label.axis-max" auto>Max</things-i18n-msg>
-            </label>
-            <input type="number" value="{{values.options.scales.yAxes.0.ticks.max::change}}"></input>
+            <label> <things-i18n-msg msgid="label.axis-max" auto>Max</things-i18n-msg> </label>
+            <input type="number" value="{{values.options.scales.yAxes.0.ticks.max::change}}" />
           </template>
-          <label>
-            <things-i18n-msg msgid="label.axis-step-size" auto>StepSize</things-i18n-msg>
-          </label>
-          <input type="number" value="{{values.options.scales.yAxes.0.ticks.stepSize::change}}"></input>
+          <label> <things-i18n-msg msgid="label.axis-step-size" auto>StepSize</things-i18n-msg> </label>
+          <input type="number" value="{{values.options.scales.yAxes.0.ticks.stepSize::change}}" />
         </div>
-        <label>
-          <things-i18n-msg msgid="label.grid-line" auto>Grid Line</things-i18n-msg>
-        </label>
-        <input type="checkbox" checked="{{values.options.yGridLine::change}}"
-          required></input>
-        <label>
-          <things-i18n-msg msgid="label.display-tick" auto>Display Tick</things-i18n-msg>
-        </label>
-        <input type="checkbox" checked="{{values.options.scales.yAxes.0.ticks.display::change}}"
-          required></input>
+        <label> <things-i18n-msg msgid="label.grid-line" auto>Grid Line</things-i18n-msg> </label>
+        <input type="checkbox" checked="{{values.options.yGridLine::change}}" required />
+        <label> <things-i18n-msg msgid="label.display-tick" auto>Display Tick</things-i18n-msg> </label>
+        <input type="checkbox" checked="{{values.options.scales.yAxes.0.ticks.display::change}}" required />
         <template is="dom-if" if="[[values.options.multiAxis]]">
-          <legend>
-            <things-i18n-msg msgid="label.y-2nd-axes" auto>Y 2nd Axes</things-i18n-msg>
-          </legend>
-          <label>
-            <things-i18n-msg msgid="label.title" auto>Title</things-i18n-msg>
-          </label>
-          <input type="text" value="{{values.options.scales.yAxes.1.axisTitle::change}}"></input>
-          <label>
-            <things-i18n-msg msgid="label.axis-min-auto" auto>Min Auto</things-i18n-msg>
-          </label>
-          <input type="checkbox" checked="{{values.options.scales.yAxes.1.ticks.autoMin::change}}"
-            required></input>
-          <label>
-            <things-i18n-msg msgid="label.axis-max-auto" auto>Max Auto</things-i18n-msg>
-          </label>
-          <input type="checkbox" checked="{{values.options.scales.yAxes.1.ticks.autoMax::change}}"
-            required></input>
+          <legend><things-i18n-msg msgid="label.y-2nd-axes" auto>Y 2nd Axes</things-i18n-msg></legend>
+          <label> <things-i18n-msg msgid="label.title" auto>Title</things-i18n-msg> </label>
+          <input type="text" value="{{values.options.scales.yAxes.1.axisTitle::change}}" />
+          <label> <things-i18n-msg msgid="label.axis-min-auto" auto>Min Auto</things-i18n-msg> </label>
+          <input type="checkbox" checked="{{values.options.scales.yAxes.1.ticks.autoMin::change}}" required />
+          <label> <things-i18n-msg msgid="label.axis-max-auto" auto>Max Auto</things-i18n-msg> </label>
+          <input type="checkbox" checked="{{values.options.scales.yAxes.1.ticks.autoMax::change}}" required />
           <div>
             <template is="dom-if" if="[[!values.options.scales.yAxes.1.ticks.autoMin]]">
-              <label>
-                <things-i18n-msg msgid="label.axis-min" auto>Min</things-i18n-msg>
-              </label>
-              <input type="number" value="{{values.options.scales.yAxes.1.ticks.min::change}}"></input>
+              <label> <things-i18n-msg msgid="label.axis-min" auto>Min</things-i18n-msg> </label>
+              <input type="number" value="{{values.options.scales.yAxes.1.ticks.min::change}}" />
             </template>
             <template is="dom-if" if="[[!values.options.scales.yAxes.1.ticks.autoMax]]">
-              <label>
-                <things-i18n-msg msgid="label.axis-max" auto>Max</things-i18n-msg>
-              </label>
-              <input type="number" value="{{values.options.scales.yAxes.1.ticks.max::change}}"></input>
+              <label> <things-i18n-msg msgid="label.axis-max" auto>Max</things-i18n-msg> </label>
+              <input type="number" value="{{values.options.scales.yAxes.1.ticks.max::change}}" />
             </template>
-            <label>
-              <things-i18n-msg msgid="label.axis-step-size" auto>StepSize</things-i18n-msg>
-            </label>
-            <input type="number" value="{{values.options.scales.yAxes.1.ticks.stepSize::change}}"></input>
+            <label> <things-i18n-msg msgid="label.axis-step-size" auto>StepSize</things-i18n-msg> </label>
+            <input type="number" value="{{values.options.scales.yAxes.1.ticks.stepSize::change}}" />
           </div>
-          <label>
-            <things-i18n-msg msgid="label.grid-line" auto>Grid Line</things-i18n-msg>
-          </label>
-          <input type="checkbox" checked="{{values.options.y2ndGridLine::change}}"
-            required></input>
-          <label>
-            <things-i18n-msg msgid="label.display-tick" auto>Display Tick</things-i18n-msg>
-          </label>
-          <input type="checkbox" checked="{{values.options.scales.yAxes.1.ticks.display::change}}"
-            required></input>
+          <label> <things-i18n-msg msgid="label.grid-line" auto>Grid Line</things-i18n-msg> </label>
+          <input type="checkbox" checked="{{values.options.y2ndGridLine::change}}" required />
+          <label> <things-i18n-msg msgid="label.display-tick" auto>Display Tick</things-i18n-msg> </label>
+          <input type="checkbox" checked="{{values.options.scales.yAxes.1.ticks.display::change}}" required />
         </template>
       </fieldset>
     </form>
-
   </template>
 
   <script>
-    (function () {
-      'use strict';
+    ;(function() {
+      'use strict'
 
       Polymer({
         is: 'things-editor-chartjs-properties-mixed',
@@ -417,15 +326,16 @@ Copyright © HatioLab Inc. All rights reserved.
           _changedBySelf: {
             type: Boolean,
             value: false
+          },
+          _hasBarSeries: {
+            type: Boolean,
+            computed: '_computeHasBarSeries(values)'
           }
         },
 
-        observers: [
-          'onValuesChanged(values.*)',
-          'onCurrentSeriesIndexChanged(currentSeriesIndex)'
-        ],
+        observers: ['onValuesChanged(values.*)', 'onCurrentSeriesIndexChanged(currentSeriesIndex)'],
 
-        onValuesChanged: function (values) {
+        onValuesChanged: function(values) {
           // if(this._valueChanging)
           //   return
           // this._valueChanging = true
@@ -440,10 +350,10 @@ Copyright © HatioLab Inc. All rights reserved.
             }
 
             // values가 바뀌면 datasets[0]을 선택한다.
-            this.set('currentSeriesIndex', -1);
-            this.set('currentSeriesIndex', 0);
+            this.set('currentSeriesIndex', -1)
+            this.set('currentSeriesIndex', 0)
             // this._valueChanging = false
-            return;
+            return
           }
 
           // values 하위의 무언가가 변경되면 values를 deep clone하여 다시 set.
@@ -453,62 +363,59 @@ Copyright © HatioLab Inc. All rights reserved.
           // this._valueChanging = false
         },
 
-        onCurrentSeriesIndexChanged: function (currentSeriesIndex) {
-          if (currentSeriesIndex < 0)
-            return
+        onCurrentSeriesIndexChanged: function(currentSeriesIndex) {
+          if (currentSeriesIndex < 0) return
 
           // currentSeriesIndex가 바뀌면 series와 datasets[currentSeriesIndex]의 path를 link
           this.unlinkPaths('series')
           this.set('series', {})
 
-          if (!this.get('values.data.datasets'))
-            return
+          if (!this.get('values.data.datasets')) return
 
-          this.set('series', this.values.data.datasets[currentSeriesIndex])
+          var series = this.values.data.datasets[currentSeriesIndex]
+
+          var oldVersionColor = series.backgroundColor
+          if (series.type == 'line') oldVersionColor = series.borderColor
+          if (series.type == 'radar') oldVersionColor = series.borderColor
+          series.color = series.color || oldVersionColor
+
+          this.set('series', series)
           this.linkPaths('series', 'values.data.datasets.' + currentSeriesIndex)
         },
 
-        _isTypeof: function (seriesType, type) {
-          if (seriesType == type)
-            return true
+        _isTypeof: function(seriesType, type) {
+          if (seriesType == type) return true
         },
 
-        onTapAddTab: function (e) {
-          if (!this.get('values.data.datasets'))
-            return
+        onTapAddTab: function(e) {
+          if (!this.get('values.data.datasets')) return
 
-          var lastSeriesIndex = this.values.data.datasets.length;
-          var chartType = this.values.type;
+          var lastSeriesIndex = this.values.data.datasets.length
+          var chartType = this.values.type
 
-          var addSeriesOption;
-          if (chartType == 'line') {
-            addSeriesOption = {
-              label: 'new series',
-              type: 'line',
-              data: [],
-              borderWidth: 4,
-              borderPointRadius: 4,
-              dataKey: '',
-              yAxisID: 'left',
-              fill: false
-            }
-          } else {
-            addSeriesOption = {
-              label: 'new series',
-              type: 'bar',
-              data: [],
-              borderWidth: 0,
-              dataKey: '',
-              yAxisID: 'left'
-            }
+          var color
+          if (tinycolor) color = tinycolor.random()
+
+          var addSeriesOption = {
+            label: `series ${lastSeriesIndex + 1}`,
+            type: 'bar',
+            data: [],
+            borderWidth: 1,
+            dataKey: '',
+            yAxisID: 'left',
+            color: color.toRgbString(),
+            pointStyle: 'circle',
+            pointRadius: 4,
+            lineTension: 0.4
           }
-
+          addSeriesOption.chartType = chartType
+          if (chartType == 'line') addSeriesOption.type = chartType
 
           this.values.data.datasets.push(addSeriesOption)
 
           this.notifySplices('values.data.datasets', [
             { index: lastSeriesIndex, removed: [], addedCount: 1, object: this.values.data.datasets, type: 'splice' }
-          ]);
+          ])
 
           this.set('currentSeriesIndex', -1)
           this.set('currentSeriesIndex', lastSeriesIndex)
@@ -516,22 +423,19 @@ Copyright © HatioLab Inc. All rights reserved.
           this.fire('change')
         },
 
-        onTapRemoveCurrentTab: function (e) {
+        onTapRemoveCurrentTab: function(e) {
+          if (!this.get('values.data.datasets')) return
 
-          if (!this.get('values.data.datasets'))
-            return
-
-          var currIndex = this.currentSeriesIndex;
-          var removed = this.values.data.datasets.splice(currIndex, 1);
+          var currIndex = this.currentSeriesIndex
+          var removed = this.values.data.datasets.splice(currIndex, 1)
 
           this.notifySplices('values.data.datasets', [
             { index: currIndex, removed: removed, addedCount: 0, object: this.values.data.datasets, type: 'splice' }
-          ]);
+          ])
 
           currIndex--
 
-          if (currIndex < 0)
-            currIndex = 0
+          if (currIndex < 0) currIndex = 0
 
           this.set('currentSeriesIndex', -1)
           this.set('currentSeriesIndex', currIndex)
@@ -539,18 +443,23 @@ Copyright © HatioLab Inc. All rights reserved.
           this.fire('change')
         },
 
-        isOnly: function (datasets) {
-          if (datasets && datasets.length === 1)
-            return true
+        isOnly: function(datasets) {
+          if (datasets && datasets.length === 1) return true
         },
 
-        _computeSeriesTabIndex: function (index) {
+        _computeSeriesTabIndex: function(index) {
           return index + 1
+        },
+
+        _computeHasBarSeries: function(chart) {
+          var hasBarSeries = false
+          hasBarSeries = chart.data.datasets.some(function(s) {
+            return s.type == 'bar'
+          })
+
+          return hasBarSeries
         }
-
       })
-
-    })();
-
+    })()
   </script>
 </dom-module>
