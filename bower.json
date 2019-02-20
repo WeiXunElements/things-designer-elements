@@ -1,6 +1,6 @@
 {
   "name": "things-designer-elements",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "authors": ["Hatio Lab. <heartyoh@hatiolab.com>"],
   "description": "Elements for property editing",
   "keywords": ["web-component", "polymer", "seed"],
@@ -15,7 +15,6 @@
     "paper-color-picker": "ThingsElements/paper-color-picker",
     "ace-builds": "~1.2.0",
     "TinyColor": "bgrins/TinyColor",
-    "things-elements": "ThingsElements/things-elements",
     "codemirror": "^5.33.0"
   },
   "devDependencies": {
