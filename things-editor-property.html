@@ -65,6 +65,21 @@ Example:
         box-sizing: border-box;
         width: calc(100% - 37px);
       }
+
+      things-gltf-selector {
+        width: 55%;
+        display: inline-block;
+        position: relative;
+      }
+
+      things-gltf-selector ::shadow label {
+        display: none;
+      }
+
+      things-gltf-selector ::shadow input {
+        box-sizing: border-box;
+        width: calc(100% - 37px);
+      }
     </style>
 
     <template is="dom-if" if="[[_isExist(label)]]" restamp=true>
@@ -136,6 +151,13 @@ Example:
         base-url-alias="[[property.baseUrlAlias]]" value="{{value}}" default-storage="[[property.defaultStorage]]" storage-filters="[[property.storageFilters]]"
         use-upload="[[property.useUpload]]">
       </things-image-selector>
+    </template>
+
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'gltf-selector')]]" restamp=true>
+      <things-gltf-selector on-things-gltf-changed="_onThingsGltfChanged" display-field="[[property.displayField]]" display-full-url="[[property.displayFullUrl]]"
+        base-url-alias="[[property.baseUrlAlias]]" value="{{value}}" default-storage="[[property.defaultStorage]]" storage-filters="[[property.storageFilters]]"
+        use-upload="[[property.useUpload]]">
+      </things-gltf-selector>
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'options')]]" restamp=true>
