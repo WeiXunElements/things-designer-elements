@@ -84,7 +84,7 @@ Example:
 
     <template is="dom-if" if="[[_isExist(label)]]" restamp=true>
       <label>
-          <things-i18n-msg msgid="[[_msgId]]" auto>[[label]]</things-i18n-msg>
+        <things-i18n-msg msgid="[[_msgId]]" auto>[[label]]</things-i18n-msg>
       </label>
     </template>
 
@@ -117,7 +117,8 @@ Example:
     <template is="dom-if" if="[[_isTypeofEditor(type, 'select')]]" restamp=true>
       <select value="{{value::change}}">
         <template is="dom-repeat" items="[[property.options]]">
-          <option value="[[_getOptionValue(item)]]" selected="[[_isSelected(value,item)]]">[[_getOptionDisplay(item)]]</option>
+          <option value="[[_getOptionValue(item)]]" selected="[[_isSelected(value,item)]]">[[_getOptionDisplay(item)]]
+          </option>
         </template>
       </select>
     </template>
@@ -131,7 +132,8 @@ Example:
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'gradient-color-stops')]]" restamp=true>
-      <things-editor-color-stops type="gradient" value="{{value::change}}" min="[[property.min]]" max="[[property.max]]" />
+      <things-editor-color-stops type="gradient" value="{{value::change}}" min="[[property.min]]"
+        max="[[property.max]]" />
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'multiple-color')]]" restamp=true>
@@ -147,15 +149,17 @@ Example:
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'image-selector')]]" restamp=true>
-      <things-image-selector on-things-image-changed="_onThingsImageChanged" display-field="[[property.displayField]]" display-full-url="[[property.displayFullUrl]]"
-        base-url-alias="[[property.baseUrlAlias]]" value="{{value}}" default-storage="[[property.defaultStorage]]" storage-filters="[[property.storageFilters]]"
+      <things-image-selector on-things-image-changed="_onThingsImageChanged" display-field="[[property.displayField]]"
+        display-full-url="[[property.displayFullUrl]]" base-url-alias="[[property.baseUrlAlias]]" value="{{value}}"
+        default-storage="[[property.defaultStorage]]" storage-filters="[[property.storageFilters]]"
         use-upload="[[property.useUpload]]">
       </things-image-selector>
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'gltf-selector')]]" restamp=true>
-      <things-gltf-selector on-things-gltf-changed="_onThingsGltfChanged" display-field="[[property.displayField]]" display-full-url="[[property.displayFullUrl]]"
-        base-url-alias="[[property.baseUrlAlias]]" value="{{value}}" default-storage="[[property.defaultStorage]]" storage-filters="[[property.storageFilters]]"
+      <things-gltf-selector on-things-gltf-changed="_onThingsGltfChanged" display-field="[[property.displayField]]"
+        display-full-url="[[property.displayFullUrl]]" base-url-alias="[[property.baseUrlAlias]]" value="{{value}}"
+        default-storage="[[property.defaultStorage]]" storage-filters="[[property.storageFilters]]"
         use-upload="[[property.useUpload]]">
       </things-gltf-selector>
     </template>
@@ -226,6 +230,14 @@ Example:
       },
 
       _onThingsImageChanged: function (e) {
+        if (!this.property)
+          return
+
+        this.set("value", e.detail)
+        this.fire("change")
+      },
+
+      _onThingsGltfChanged: function (e) {
         if (!this.property)
           return
 
