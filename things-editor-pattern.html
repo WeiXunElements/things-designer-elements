@@ -67,9 +67,10 @@ Example:
 
     <things-i18n-msg msgid="label.image" msg="{{ lImage }}" auto hidden>image</things-i18n-msg>
 
+    <!-- prettier-ignore-attribute on-things-image-changed -->
     <things-image-selector
       id="image-selector"
-      on-things-image-changed="(_onThingsValueChanged)"
+      on-things-image-changed="_onThingsValueChanged"
       label="[[lImage]]"
       detail-fields=""
       display-field="id"
