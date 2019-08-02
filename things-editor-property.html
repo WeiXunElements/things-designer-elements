@@ -18,6 +18,7 @@ Copyright © HatioLab Inc. All rights reserved.
 <link rel="import" href="./things-editor-action.html">
 <link rel="import" href="./things-editor-script.html">
 <link rel="import" href="./things-editor-options.html">
+<link rel="import" href="./things-editor-cjmarker-content.html">
 <link rel="import" href="./things-editor-chartjs-properties.html">
 
 <!--
@@ -166,6 +167,10 @@ Example:
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'options')]]" restamp=true>
       <things-editor-options options="{{value}}" />
+    </template>
+
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'cjmarker-content')]]" restamp=true>
+      <things-editor-cjmarker-content options="{{value}}" />
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'editor-table')]]" restamp=true>
