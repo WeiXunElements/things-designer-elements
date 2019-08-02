@@ -94,7 +94,8 @@ Example:
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'number')]]" restamp=true>
-      <input is="things-editor-number-input" type="number" number="{{value::change}}" placeholder="[[placeholder]]">
+      <input is="things-editor-number-input" type="number" number="{{value::change}}" min="[[property.min]]"
+        step="[[property.step]]" max="[[property.max]]" placeholder="[[placeholder]]">
     </template>
 
     <template is="dom-if" if="[[_isTypeofEditor(type, 'angle')]]" restamp=true>
