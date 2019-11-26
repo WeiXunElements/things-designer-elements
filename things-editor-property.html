@@ -103,7 +103,7 @@ Example:
     </template>
 
 
-    <template is="dom-if" if="[[_isTypeofEditor(type, 'string')]]" restamp=true>
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'string' || 'id-input')]]" restamp=true>
       <input type="text" value="{{value::change}}" placeholder="[[placeholder]]">
     </template>
 
