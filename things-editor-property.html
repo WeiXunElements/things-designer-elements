@@ -117,6 +117,11 @@ Example:
       <input type="text" value="{{value::change}}" placeholder="[[placeholder]]" />
     </template>
 
+
+    <template is="dom-if" if="[[_isTypeofEditor(type, 'board-selector')]]" restamp="true">
+      <input type="text" value="{{value::change}}" placeholder="[[placeholder]]" />
+    </template>
+
     <template is="dom-if" if="[[_isTypeofEditor(type, 'textarea')]]" restamp="true">
       <things-editor-script theme="ace/theme/monokai" value="{{value}}" mode="[[_getLanguageMode(property.language)]]">
       </things-editor-script>
