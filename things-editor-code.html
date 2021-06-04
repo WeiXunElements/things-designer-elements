@@ -1,12 +1,12 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer.html" />
 
-<link rel="stylesheet" href="../codemirror/lib/codemirror.css">
-<link rel="stylesheet" href="../codemirror/addon/display/fullscreen.css">
-<link rel="stylesheet" href="../codemirror/theme/night.css">
+<link rel="stylesheet" href="../codemirror/lib/codemirror.css" />
+<link rel="stylesheet" href="../codemirror/addon/display/fullscreen.css" />
+<link rel="stylesheet" href="../codemirror/theme/night.css" />
 
 <!--
 polymer element for code-mirror code editor.
@@ -21,14 +21,13 @@ Example:
 -->
 
 <dom-module id="things-editor-code">
-
   <template>
     <style>
       :host {
         display: block;
         position: relative;
 
-        @apply(--things-editor-code);
+        @apply (--things-editor-code);
       }
 
       textarea {
@@ -44,13 +43,12 @@ Example:
     </style>
 
     <textarea></textarea>
-
   </template>
 
   <script src="../codemirror/lib/codemirror.js"></script>
   <script src="../codemirror/mode/javascript/javascript.js"></script>
   <script src="../codemirror/addon/display/fullscreen.js"></script>
-  
+
   <script>
     Polymer({
       is: 'things-editor-code',
@@ -61,53 +59,47 @@ Example:
          */
         value: {
           type: String,
-          notify: true
-        }
+          notify: true,
+        },
       },
 
-      observers: [
-        '_valueChanged(value)'
-      ],
+      observers: ['_valueChanged(value)'],
 
       attached: function () {
-
         if (!this.editor) {
-          this.editor = CodeMirror.fromTextArea(this.querySelector("textarea"), {
+          this.editor = CodeMirror.fromTextArea(this.querySelector('textarea'), {
             value: this.value,
             mode: 'javascript',
             tabSize: 2,
             lineNumbers: false,
             showCursorWhenSelecting: true,
-            theme: "night",
+            theme: 'night',
             extraKeys: {
-              "F11": function(cm) {
-                cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+              F11: function (cm) {
+                cm.setOption('fullScreen', !cm.getOption('fullScreen'))
               },
-              "Esc": function(cm) {
-                cm.setOption("fullScreen", !cm.getOption("fullScreen"))
-              }
-            }
-          });
-    
-          this.editor.on('change', e => {
+              Esc: function (cm) {
+                cm.setOption('fullScreen', !cm.getOption('fullScreen'))
+              },
+            },
+          })
+
+          this.editor.on('change', (e) => {
             this._changedOnThis = true
-            this.set('value', this.editor.getValue());
+            this.set('value', this.editor.getValue())
             this._changedOnThis = false
           })
         }
       },
 
-      _valueChanged (value) {
+      _valueChanged(value) {
         if (this._changedOnThis) {
-          this.dispatchEvent(new CustomEvent('change'));
+          this.dispatchEvent(new CustomEvent('change'))
           return
         }
-    
-        if (this.editor)
-          this.editor.setValue(value == undefined ? '' : String(value))
-      }
 
-    });
+        if (this.editor) this.editor.setValue(value == undefined ? '' : String(value))
+      },
+    })
   </script>
-
 </dom-module>

@@ -1,6 +1,6 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
 <link rel="import" href="../polymer/polymer.html" />
 
@@ -117,17 +117,17 @@ Example:
 
       properties: {
         value: {
-          notify: true
-        }
+          notify: true,
+        },
       },
 
       listeners: {
-        'value-changed': 'onChangedValue'
+        'value-changed': 'onChangedValue',
       },
 
       observers: ['onChangedAnimation(animation.*)'],
 
-      onChangedValue: function(changed, after) {
+      onChangedValue: function (changed, after) {
         if (this.changedOnThis) {
           return
         }
@@ -142,7 +142,7 @@ Example:
         this.animation = Object.assign({}, value)
       },
 
-      onChangedAnimation: function(changed) {
+      onChangedAnimation: function (changed) {
         if (changed.path.indexOf('animation.') !== 0) return
 
         this.changedOnThis = true
@@ -153,29 +153,29 @@ Example:
         this.changedOnThis = false
       },
 
-      _isOutline: function(type) {
+      _isOutline: function (type) {
         return type == 'outline'
       },
 
-      _isRotation: function(type) {
+      _isRotation: function (type) {
         return type == 'rotation'
       },
 
-      _isVibration: function(type) {
+      _isVibration: function (type) {
         return type == 'vibration'
       },
 
-      _isHeartbeat: function(type) {
+      _isHeartbeat: function (type) {
         return type == 'heartbeat'
       },
 
-      _isMoving: function(type) {
+      _isMoving: function (type) {
         return type == 'moving'
       },
 
-      _isFade: function(type) {
+      _isFade: function (type) {
         return type == 'fade'
-      }
+      },
     })
   </script>
 </dom-module>

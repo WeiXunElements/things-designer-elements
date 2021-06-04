@@ -1,6 +1,6 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
 
 <link rel="import" href="../polymer/polymer.html" />
@@ -117,7 +117,6 @@ Example:
       <input type="text" value="{{value::change}}" placeholder="[[placeholder]]" />
     </template>
 
-
     <template is="dom-if" if="[[_isTypeofEditor(type, 'board-selector')]]" restamp="true">
       <input type="text" value="{{value::change}}" placeholder="[[placeholder]]" />
     </template>
@@ -134,8 +133,8 @@ Example:
     <template is="dom-if" if="[[_isTypeofEditor(type, 'select')]]" restamp="true">
       <select value="{{value::change}}">
         <template is="dom-repeat" items="[[property.options]]">
-          <option value="[[_getOptionValue(item)]]" selected="[[_isSelected(value,item)]]"
-            >[[_getOptionDisplay(item)]]
+          <option value="[[_getOptionValue(item)]]" selected="[[_isSelected(value,item)]]">
+            [[_getOptionDisplay(item)]]
           </option>
         </template>
       </select>
@@ -233,77 +232,77 @@ Example:
       properties: {
         value: {
           notify: true,
-          observer: '_valueChanged'
+          observer: '_valueChanged',
         },
         type: String,
         label: String,
         property: {
           type: Object,
           notify: true,
-          value: {}
+          value: {},
         },
         _msgId: {
           type: String,
-          computed: '_computeLabelId(label)'
-        }
+          computed: '_computeLabelId(label)',
+        },
       },
 
-      _isTypeofEditor: function(editorType, type) {
+      _isTypeofEditor: function (editorType, type) {
         return editorType == type
       },
 
-      _isExist: function(label) {
+      _isExist: function (label) {
         var str = String(label || '')
         return label != ''
       },
 
-      _valueChanged: function(value) {
+      _valueChanged: function (value) {
         if (!this.get('observe')) return
 
         this.get('observe').call(this, value)
       },
 
-      _onThingsImageChanged: function(e) {
+      _onThingsImageChanged: function (e) {
         if (!this.property) return
 
         this.set('value', e.detail)
         this.fire('change')
       },
 
-      _onThingsGltfChanged: function(e) {
+      _onThingsGltfChanged: function (e) {
         if (!this.property) return
 
         this.set('value', e.detail)
         this.fire('change')
       },
 
-      _computeLabelId: function(label) {
+      _computeLabelId: function (label) {
         if (label.indexOf('label.') >= 0) return label
 
         return 'label.' + label
       },
 
-      _getOptionValue: function(item) {
+      _getOptionValue: function (item) {
         if (typeof item == 'string') return item
 
         return item.value
       },
 
-      _getOptionDisplay: function(item) {
+      _getOptionDisplay: function (item) {
         if (typeof item == 'string') return item
 
         return item.display
       },
 
-      _isSelected: function(value, item) {
+      _isSelected: function (value, item) {
         return value == this._getOptionValue(item)
       },
 
-      _getLanguageMode: function(language) {
+      _getLanguageMode: function (language) {
         var prefix = 'ace/mode/'
 
         return language ? prefix + language : null
-      }
+      },
     })
   </script>
 </dom-module>

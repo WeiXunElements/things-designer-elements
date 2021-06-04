@@ -1,6 +1,6 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
 <link rel="import" href="../polymer/polymer.html" />
 
@@ -121,48 +121,48 @@ Example:
          * Image Search & Upload Storage
          */
         imageStorage: {
-          type: String
+          type: String,
         },
 
         image: {
           type: String,
-          notify: true
+          notify: true,
         },
 
         offsetX: {
           type: Number,
-          notify: true
+          notify: true,
         },
 
         offsetY: {
           type: Number,
-          notify: true
+          notify: true,
         },
 
         width: {
           type: Number,
-          notify: true
+          notify: true,
         },
 
         height: {
           type: Number,
-          notify: true
+          notify: true,
         },
 
         align: {
           type: String,
-          notify: true
+          notify: true,
         },
 
         fitPattern: {
           type: Boolean,
-          notify: true
-        }
+          notify: true,
+        },
       },
 
-      _onThingsValueChanged: function(e) {
+      _onThingsValueChanged: function (e) {
         this.set('image', e.target.value)
-      }
+      },
     })
   </script>
 </dom-module>

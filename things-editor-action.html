@@ -1,10 +1,10 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../iron-icons/iron-icons.html">
-<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../polymer/polymer.html" />
+<link rel="import" href="../iron-icons/iron-icons.html" />
+<link rel="import" href="../paper-icon-button/paper-icon-button.html" />
 
 <!--
 An element providing a solution to no problem in particular.
@@ -22,7 +22,8 @@ Example:
 <dom-module id="things-editor-action">
   <template>
     <style>
-       :host {}
+      :host {
+      }
     </style>
 
     <paper-icon-button icon$="[[icon]]" on-click="_onClick"></paper-icon-button>
@@ -33,12 +34,12 @@ Example:
       is: 'things-editor-action',
 
       properties: {
-        icon: String
+        icon: String,
       },
 
       _onClick: function (e) {
         this.fire('action-editor-clicked', this.action)
-      }
+      },
     })
   </script>
 </dom-module>

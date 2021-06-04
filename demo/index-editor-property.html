@@ -1,19 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes" />
     <title>things-editor-property Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
 
-    <link rel="import" href="../things-editor-properties.html">
-    <link rel="import" href="../things-editor-property.html">
+    <link rel="import" href="../things-editor-properties.html" />
+    <link rel="import" href="../things-editor-property.html" />
 
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
+    <link rel="import" href="../bower_components/things-theme/things-point-theme.html" />
 
     <style is="custom-style" include="things-point-theme">
       textarea {
@@ -23,64 +23,57 @@ Copyright © HatioLab Inc. All rights reserved.
     </style>
   </head>
   <body unresolved>
-
     <template is="dom-bind" id="app">
-
       <p>An example of <code>&lt;things-editor-property&gt;</code>:</p>
 
-      <things-editor-properties id="properties"
-                                target="{{value}}"
-                                props="[[props]]">
-        <things-editor-property label="NUMBER"
-                                name="number"
-                                type="number"
-                                value="{{value.number}}"
-                                property="[[property]]">
+      <things-editor-properties id="properties" target="{{value}}" props="[[props]]">
+        <things-editor-property
+          label="NUMBER"
+          name="number"
+          type="number"
+          value="{{value.number}}"
+          property="[[property]]"
+        >
         </things-editor-property>
 
-        <things-editor-property label="ANGLE"
-                                name="angle"
-                                type="angle"
-                                value="{{value.angle}}"
-                                property="[[property]]">
+        <things-editor-property label="ANGLE" name="angle" type="angle" value="{{value.angle}}" property="[[property]]">
         </things-editor-property>
 
-        <things-editor-property label="COLOR"
-                                name="color"
-                                type="color"
-                                value="{{value.color}}"
-                                property="[[property]]">
+        <things-editor-property label="COLOR" name="color" type="color" value="{{value.color}}" property="[[property]]">
         </things-editor-property>
 
-        <things-editor-property label="COLOR STOPS"
-                                name="solidColorStops"
-                                type="solid-color-stops"
-                                value="{{value.solidColorStops}}"
-                                property="[[property]]">
+        <things-editor-property
+          label="COLOR STOPS"
+          name="solidColorStops"
+          type="solid-color-stops"
+          value="{{value.solidColorStops}}"
+          property="[[property]]"
+        >
         </things-editor-property>
 
-        <things-editor-property label="COLOR STOPS"
-                                name="gradientColorStops"
-                                type="gradient-color-stops"
-                                value="{{value.gradientColorStops}}"
-                                property="[[property]]">
+        <things-editor-property
+          label="COLOR STOPS"
+          name="gradientColorStops"
+          type="gradient-color-stops"
+          value="{{value.gradientColorStops}}"
+          property="[[property]]"
+        >
         </things-editor-property>
       </things-editor-properties>
 
-      <br/>
+      <br />
       <textarea value="[[text]]"></textarea>
-
     </template>
 
     <script>
-      window.addEventListener('WebComponentsReady', function(e) {
+      window.addEventListener('WebComponentsReady', function (e) {
         var app = document.querySelector('#app')
 
         app.props = []
 
         app.property = {
           min: 0,
-          max: 500
+          max: 500,
         }
 
         app.value = {
@@ -88,14 +81,13 @@ Copyright © HatioLab Inc. All rights reserved.
           angle: 3.14,
           color: 'red',
           solidColorStops: [],
-          gradientColorStops: []
+          gradientColorStops: [],
         }
 
-        app.$.properties.addEventListener('change', function() {
-          app.text = JSON.stringify(app.value, null, "\t")
+        app.$.properties.addEventListener('change', function () {
+          app.text = JSON.stringify(app.value, null, '\t')
         })
       })
     </script>
-
   </body>
 </html>

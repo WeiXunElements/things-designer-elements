@@ -1,12 +1,12 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer.html" />
 
-<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html" />
 
-<link rel="import" href="./things-editor-color.html">
+<link rel="import" href="./things-editor-color.html" />
 
 <!--
 색상 배열을 편집하는 컴포넌트이다.
@@ -26,17 +26,17 @@ Example:
 <dom-module id="things-editor-multiple-color">
   <template>
     <style>
-       :host {
+      :host {
         display: inline-block;
-        @apply(--things-editor-multiple-color)
+        @apply (--things-editor-multiple-color);
       }
 
       things-editor-color {
-        width: 90px
+        width: 90px;
       }
 
-      things-editor-color::shadow input[type="text"] {
-        width: 87%
+      things-editor-color::shadow input[type='text'] {
+        width: 87%;
       }
 
       things-editor-color::shadow a#color {
@@ -44,10 +44,10 @@ Example:
         margin: -31px 4px 0 0;
       }
 
-      input[type="button"] {
+      input[type='button'] {
         width: 22px;
         height: 25px;
-        border: 1px solid rgba(0, 0, 0, .15);
+        border: 1px solid rgba(0, 0, 0, 0.15);
         position: relative;
         top: -2px;
         padding-top: 0px;
@@ -60,27 +60,22 @@ Example:
 
     <template is="dom-repeat" items="[[values]]">
       <div>
+        <input type="button" value="+" on-click="_appendEditorColor" data-index="[[index]]" />
 
-        <input type="button" value="+" on-click="_appendEditorColor" data-index="[[index]]">
-
-        <things-editor-color value="{{item}}">
-        </things-editor-color>
+        <things-editor-color value="{{item}}"> </things-editor-color>
 
         <template is="dom-if" if="[[!_isOnly(item, index)]]">
-          <input type="button" value="-" on-click="_removeEditorColor" data-index="[[index]]">
+          <input type="button" value="-" on-click="_removeEditorColor" data-index="[[index]]" />
         </template>
       </div>
     </template>
-
   </template>
 
   <script>
     Polymer({
       is: 'things-editor-multiple-color',
 
-      behaviors: [
-        Polymer.IronResizableBehavior
-      ],
+      behaviors: [Polymer.IronResizableBehavior],
 
       properties: {
         /**
@@ -90,25 +85,23 @@ Example:
         values: {
           type: Array,
           value: [],
-          notify: true
-        }
+          notify: true,
+        },
       },
 
       listeners: {
         // 'iron-resize': '_onIronResize',
-        'change': '_onValueChanged'
+        change: '_onValueChanged',
       },
 
-      observers: [
-
-      ],
+      observers: [],
 
       _onValueChanged: function (e) {
         this.set('values', this.values.splice(0))
       },
 
       _appendEditorColor: function (e) {
-        var values = this.values;
+        var values = this.values
         values.splice(e.target.dataIndex + 1, 0, 'black')
 
         this.values = []
@@ -121,10 +114,8 @@ Example:
       _removeEditorColor: function (e) {
         var values = []
         for (var i = 0; i < this.values.length; i++) {
-          if (i === e.target.dataIndex)
-            continue;
-          else
-            values.push(this.values[i])
+          if (i === e.target.dataIndex) continue
+          else values.push(this.values[i])
         }
 
         this.values = []
@@ -135,12 +126,10 @@ Example:
       },
 
       _isOnly: function (item, index) {
-        if (this.values.length === 1)
-          return true
+        if (this.values.length === 1) return true
 
         return false
-      }
-
+      },
     })
   </script>
 </dom-module>

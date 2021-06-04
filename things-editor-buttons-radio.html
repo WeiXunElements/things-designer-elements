@@ -1,10 +1,10 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer.html" />
 
-<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-button/paper-button.html" />
 
 <!--
 여러 버튼 중에서 하나만 눌리거나, 모두 눌리지 않은 상태만을 갖는 라디오 형태의 버튼이다.
@@ -24,18 +24,17 @@ Example:
 <dom-module id="things-editor-buttons-radio">
   <template>
     <style>
-       :host {
+      :host {
         width: 65%;
         display: inline-block;
       }
 
-       ::content>paper-button {
-        @apply(--things-editor-buttons-radio-button)
+      ::content > paper-button {
+        @apply (--things-editor-buttons-radio-button);
       }
     </style>
 
     <content select="paper-button"></content>
-
   </template>
 
   <script>
@@ -49,16 +48,16 @@ Example:
         value: {
           type: Object,
           notify: true,
-          observer: '_onValueChanged'
+          observer: '_onValueChanged',
         },
 
         mandatory: {
-          type: Boolean
-        }
+          type: Boolean,
+        },
       },
 
       listeners: {
-        'tap': "_onTapButton"
+        tap: '_onTapButton',
       },
 
       ready: function () {
@@ -70,39 +69,31 @@ Example:
       },
 
       _onValueChanged: function (value) {
-
         Array.from(this.querySelectorAll('paper-button')).forEach(function (button) {
-          if (value === button.getAttribute('data-value'))
-            button.active = true
-          else
-            button.active = false
+          if (value === button.getAttribute('data-value')) button.active = true
+          else button.active = false
         })
       },
 
       _onTapButton: function (e) {
-        var target = e.target;
+        var target = e.target
 
-        while (!target.hasAttribute('data-value') && target !== this)
-          target = target.parentElement;
+        while (!target.hasAttribute('data-value') && target !== this) target = target.parentElement
 
-        if (target === this)
-          return;
+        if (target === this) return
 
         var old = this.value
 
         if (!this.mandatory) {
-          if (target.active)
-            this.value = target.getAttribute('data-value')
-          else
-            this.value = null
+          if (target.active) this.value = target.getAttribute('data-value')
+          else this.value = null
         } else {
           this.value = target.getAttribute('data-value')
           target.active = true
         }
 
-        if (old !== this.value)
-          this.fire('change', this.value)
-      }
-    });
+        if (old !== this.value) this.fire('change', this.value)
+      },
+    })
   </script>
 </dom-module>

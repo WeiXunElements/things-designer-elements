@@ -1,27 +1,27 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes" />
 
     <title>things-editor-shadow Demo</title>
 
     <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
 
-    <link rel="import" href="../things-editor-shadow.html">
+    <link rel="import" href="../things-editor-shadow.html" />
 
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
+    <link rel="import" href="../bower_components/things-theme/things-point-theme.html" />
 
     <style is="custom-style" include="things-point-theme">
       :root {
         --things-editor-shadow: {
           background: lightgray;
         }
-      };
+      }
 
       textarea {
         width: 600px;
@@ -30,23 +30,18 @@ Copyright © HatioLab Inc. All rights reserved.
     </style>
   </head>
   <body unresolved>
-
     <template is="dom-bind" id="app">
-
       <p>An example of <code>&lt;things-editor-shadow&gt;</code>:</p>
 
       <textarea value="[[text]]"></textarea>
 
       <p>Shadow Style</p>
 
-      <things-editor-shadow id="editor"
-                            value="{{value}}">
-      </things-editor-shadow>
-
+      <things-editor-shadow id="editor" value="{{value}}"> </things-editor-shadow>
     </template>
 
     <script>
-      window.addEventListener('WebComponentsReady', function(e) {
+      window.addEventListener('WebComponentsReady', function (e) {
         var app = document.querySelector('#app')
 
         app.value = {
@@ -54,14 +49,13 @@ Copyright © HatioLab Inc. All rights reserved.
           left: 1,
           top: 2,
           color: 'black',
-          alpha: 0.8
+          alpha: 0.8,
         }
 
-        app.$.editor.addEventListener('change', function() {
-          app.text = JSON.stringify(app.value, null, "\t")
+        app.$.editor.addEventListener('change', function () {
+          app.text = JSON.stringify(app.value, null, '\t')
         })
       })
     </script>
-
   </body>
 </html>

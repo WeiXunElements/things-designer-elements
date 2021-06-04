@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
 <link rel="import" href="../../bower_components/polymer/polymer.html" />
 <link rel="import" href="../../bower_components/paper-styles/paper-styles.html" />
@@ -232,30 +232,30 @@ Copyright © HatioLab Inc. All rights reserved.
   </template>
 
   <script>
-    ;(function() {
+    ;(function () {
       'use strict'
       Polymer({
         is: 'things-editor-chartjs-properties-hbar',
         properties: {
           values: {
             type: Object,
-            notify: true
+            notify: true,
           },
           series: {
             type: Object,
-            value: {}
+            value: {},
           },
           currentSeriesIndex: {
             type: Number,
-            value: -1
+            value: -1,
           },
           _changedBySelf: {
             type: Boolean,
-            value: false
-          }
+            value: false,
+          },
         },
         observers: ['onValuesChanged(values.*)', 'onCurrentSeriesIndexChanged(currentSeriesIndex)'],
-        onValuesChanged: function(values) {
+        onValuesChanged: function (values) {
           // if(this._valueChanging)
           //   return
           // this._valueChanging = true
@@ -279,7 +279,7 @@ Copyright © HatioLab Inc. All rights reserved.
           this._changedBySelf = false
           // this._valueChanging = false
         },
-        onCurrentSeriesIndexChanged: function(currentSeriesIndex) {
+        onCurrentSeriesIndexChanged: function (currentSeriesIndex) {
           if (currentSeriesIndex < 0) return
           // currentSeriesIndex가 바뀌면 series와 datasets[currentSeriesIndex]의 path를 link
           this.unlinkPaths('series')
@@ -294,7 +294,7 @@ Copyright © HatioLab Inc. All rights reserved.
           this.set('series', series)
           this.linkPaths('series', 'values.data.datasets.' + currentSeriesIndex)
         },
-        onTapAddTab: function(e) {
+        onTapAddTab: function (e) {
           if (!this.get('values.data.datasets')) return
           var lastSeriesIndex = this.values.data.datasets.length
 
@@ -306,21 +306,21 @@ Copyright © HatioLab Inc. All rights reserved.
             data: [],
             borderWidth: 1,
             dataKey: '',
-            color: color.toRgbString()
+            color: color.toRgbString(),
           })
           this.notifySplices('values.data.datasets', [
-            { index: lastSeriesIndex, removed: [], addedCount: 1, object: this.values.data.datasets, type: 'splice' }
+            { index: lastSeriesIndex, removed: [], addedCount: 1, object: this.values.data.datasets, type: 'splice' },
           ])
           this.set('currentSeriesIndex', -1)
           this.set('currentSeriesIndex', lastSeriesIndex)
           this.fire('change')
         },
-        onTapRemoveCurrentTab: function(e) {
+        onTapRemoveCurrentTab: function (e) {
           if (!this.get('values.data.datasets')) return
           var currIndex = this.currentSeriesIndex
           var removed = this.values.data.datasets.splice(currIndex, 1)
           this.notifySplices('values.data.datasets', [
-            { index: currIndex, removed: removed, addedCount: 0, object: this.values.data.datasets, type: 'splice' }
+            { index: currIndex, removed: removed, addedCount: 0, object: this.values.data.datasets, type: 'splice' },
           ])
           currIndex--
           if (currIndex < 0) currIndex = 0
@@ -328,12 +328,12 @@ Copyright © HatioLab Inc. All rights reserved.
           this.set('currentSeriesIndex', currIndex)
           this.fire('change')
         },
-        isOnly: function(datasets) {
+        isOnly: function (datasets) {
           if (datasets && datasets.length === 1) return true
         },
-        _computeSeriesTabIndex: function(index) {
+        _computeSeriesTabIndex: function (index) {
           return index + 1
-        }
+        },
       })
     })()
   </script>

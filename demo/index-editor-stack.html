@@ -1,26 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes" />
     <title>things-editor-stack Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
 
-    <link rel="import" href="../things-editor-stack.html">
-    <link rel="import" href="../things-editor-properties.html">
+    <link rel="import" href="../things-editor-stack.html" />
+    <link rel="import" href="../things-editor-properties.html" />
 
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
+    <link rel="import" href="../bower_components/things-theme/things-point-theme.html" />
 
     <style is="custom-style" include="things-point-theme">
       :root {
         --things-editor-stack: {
           background: lightgray;
         }
-      };
+      }
 
       textarea {
         width: 600px;
@@ -29,50 +29,48 @@ Copyright © HatioLab Inc. All rights reserved.
     </style>
   </head>
   <body unresolved>
-
     <template is="dom-bind" id="app">
-
       <p>An example of <code>&lt;things-editor-stack&gt;</code>:</p>
 
       <things-editor-properties id="properties" target="{{value}}">
-
         <p>Stack</p>
 
-        <things-editor-stack type="gradient"
-                             stack="{{value.stack}}"
-                             activeIndex="{{value.activeIndex}}">
+        <things-editor-stack type="gradient" stack="{{value.stack}}" activeIndex="{{value.activeIndex}}">
         </things-editor-stack>
-
       </things-editor-properties>
 
       <textarea value="[[text]]"></textarea>
-
     </template>
 
     <script>
-      window.addEventListener('WebComponentsReady', function(e) {
+      window.addEventListener('WebComponentsReady', function (e) {
         var app = document.querySelector('#app')
 
-        app.$.properties.addEventListener('target-changed', function() {
-          app.text = JSON.stringify(app.value.stack, null, "\t")
+        app.$.properties.addEventListener('target-changed', function () {
+          app.text = JSON.stringify(app.value.stack, null, '\t')
         })
 
         app.value = {
-          stack: [{
-            name: 'blue'
-          }, {
-            name: 'green'
-          }, {
-            name: 'yellow'
-          }, {
-            name: 'red'
-          }, {
-            name: 'black'
-          }],
-          activeIndex: 0
+          stack: [
+            {
+              name: 'blue',
+            },
+            {
+              name: 'green',
+            },
+            {
+              name: 'yellow',
+            },
+            {
+              name: 'red',
+            },
+            {
+              name: 'black',
+            },
+          ],
+          activeIndex: 0,
         }
       })
     </script>
-
   </body>
 </html>

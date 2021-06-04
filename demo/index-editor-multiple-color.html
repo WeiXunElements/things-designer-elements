@@ -1,25 +1,25 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes" />
     <title>things-editor-multiple-color Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
 
-    <link rel="import" href="../things-editor-multiple-color.html">
+    <link rel="import" href="../things-editor-multiple-color.html" />
 
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
+    <link rel="import" href="../bower_components/things-theme/things-point-theme.html" />
 
     <style is="custom-style" include="things-point-theme">
       :root {
         --things-editor-multiple-color: {
           background: lightgray;
         }
-      };
+      }
 
       textarea {
         width: 600px;
@@ -28,24 +28,21 @@ Copyright © HatioLab Inc. All rights reserved.
     </style>
   </head>
   <body unresolved>
-
     <template is="dom-bind" id="app">
-
       <p>An example of <code>&lt;things-editor-multiple-color&gt;</code>:</p>
 
-      <things-editor-multiple-color values="{{values}}">
-      </things-editor-multiple-color>
+      <things-editor-multiple-color values="{{values}}"> </things-editor-multiple-color>
 
       <textarea value="[[text]]"></textarea>
 
-      <input id="btn" type="button" value="색상값 확인">
+      <input id="btn" type="button" value="색상값 확인" />
     </template>
 
     <script>
-      window.addEventListener('WebComponentsReady', function(e) {
+      window.addEventListener('WebComponentsReady', function (e) {
         var app = document.querySelector('#app')
 
-        app.$.btn.addEventListener('click', function() {
+        app.$.btn.addEventListener('click', function () {
           app.text = app.values.join()
         })
 
@@ -53,6 +50,5 @@ Copyright © HatioLab Inc. All rights reserved.
         app.values = ['blue', 'green', 'yellow', 'red', 'black']
       })
     </script>
-
   </body>
 </html>

@@ -1,62 +1,61 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes" />
     <title>things-editor-value-map Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
 
-    <link rel="import" href="../things-editor-value-map.html">
+    <link rel="import" href="../things-editor-value-map.html" />
 
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
+    <link rel="import" href="../bower_components/things-theme/things-point-theme.html" />
 
     <style is="custom-style" include="things-point-theme">
-    textarea {
-      width: 600px;
-      height: 300px;
-    }
+      textarea {
+        width: 600px;
+        height: 300px;
+      }
     </style>
   </head>
   <body unresolved>
-
     <template is="dom-bind" id="app">
       <p>An example of <code>&lt;things-editor-value-map&gt;</code>:</p>
 
       <textarea value="[[text]]"></textarea>
 
-      <things-editor-value-map id="editor"
-                               map="{{value.map}}"
-                               key-type="[[value.type]]"
-                               value-type="[[value.valueType]]">
+      <things-editor-value-map
+        id="editor"
+        map="{{value.map}}"
+        key-type="[[value.type]]"
+        value-type="[[value.valueType]]"
+      >
       </things-editor-value-map>
-
     </template>
 
     <script>
-      window.addEventListener('WebComponentsReady', function(e) {
+      window.addEventListener('WebComponentsReady', function (e) {
         var app = document.querySelector('#app')
 
         app.set('value', {
-          type: "string",
-          valueType: "boolean",
+          type: 'string',
+          valueType: 'boolean',
           map: {
-            '1': true,
-            '2': false,
-            'default': true
-          }
+            1: true,
+            2: false,
+            default: true,
+          },
         })
 
-        app.$.editor._changed = function(map) {
-          app.text = JSON.stringify(app.value, null, "\t")
+        app.$.editor._changed = function (map) {
+          app.text = JSON.stringify(app.value, null, '\t')
         }
 
-        app.$.editor._addComplexObserverEffect('_changed(map)');
+        app.$.editor._addComplexObserverEffect('_changed(map)')
       })
     </script>
-
   </body>
 </html>

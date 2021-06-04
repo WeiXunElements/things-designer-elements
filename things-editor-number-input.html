@@ -1,8 +1,8 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer.html" />
 
 <!--
 Number 값이 undefined 또는 NaN인 경우에 Exception을 방지하기 위한 input의 확장 엘리먼트이다.
@@ -17,25 +17,24 @@ Example:
 
 <dom-module id="things-editor-number-input">
   <script>
-    (function () {
-      'use strict';
+    ;(function () {
+      'use strict'
 
       Polymer({
         is: 'things-editor-number-input',
         extends: 'input',
 
         properties: {
-
           number: {
             type: Number,
             notify: true,
             reflectToAttribute: true,
-            observer: "_onChangeNumber"
-          }
+            observer: '_onChangeNumber',
+          },
         },
 
         listeners: {
-          'change': "_onChangeValue"
+          change: '_onChangeValue',
         },
 
         created() {
@@ -43,39 +42,37 @@ Example:
         },
 
         _onChangeNumber(number) {
-          if (this._onSelf)
-            return;
+          if (this._onSelf) return
 
-          this._onSelf = true;
+          this._onSelf = true
 
           /* 외부에서 바인딩된 변수의 값을 바꾼 경우 */
 
           if (isNaN(Number(number))) {
-            this.value = null;
+            this.value = null
           } else {
-            this.value = Number(number);
+            this.value = Number(number)
           }
 
-          this._onSelf = false;
+          this._onSelf = false
         },
 
         _onChangeValue(e) {
-          if (this._onSelf)
-            return;
+          if (this._onSelf) return
 
-          this._onSelf = true;
+          this._onSelf = true
 
           /* 에디터에서 값을 바꾼 경우 */
 
           if (isNaN(Number(this.value))) {
-            this.number = undefined;
+            this.number = undefined
           } else {
-            this.number = Number(this.value);
+            this.number = Number(this.value)
           }
 
-          this._onSelf = false;
-        }
-      });
-    })();
+          this._onSelf = false
+        },
+      })
+    })()
   </script>
 </dom-module>

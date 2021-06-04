@@ -1,26 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes" />
     <title>things-editor-color-stops Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
 
-    <link rel="import" href="../things-editor-color-stops.html">
-    <link rel="import" href="../things-editor-properties.html">
+    <link rel="import" href="../things-editor-color-stops.html" />
+    <link rel="import" href="../things-editor-properties.html" />
 
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
+    <link rel="import" href="../bower_components/things-theme/things-point-theme.html" />
 
     <style is="custom-style" include="things-point-theme">
       :root {
         --things-editor-color-stops: {
           background: lightgray;
         }
-      };
+      }
 
       textarea {
         width: 600px;
@@ -29,65 +29,59 @@ Copyright © HatioLab Inc. All rights reserved.
     </style>
   </head>
   <body unresolved>
-
     <template is="dom-bind" id="app">
-
       <p>An example of <code>&lt;things-editor-color-stops&gt;</code>:</p>
 
       <things-editor-properties id="properties" target="{{xx}}">
-
         <p>Solid</p>
 
-        <things-editor-color-stops type="solid"
-                                   value="{{xx.colorStops}}"
-                                   min="[[xx.min]]"
-                                   max="[[xx.max]]">
+        <things-editor-color-stops type="solid" value="{{xx.colorStops}}" min="[[xx.min]]" max="[[xx.max]]">
         </things-editor-color-stops>
 
         <p>Gradient</p>
 
-        <things-editor-color-stops type="gradient"
-                                   value="{{xx.colorStops}}"
-                                   min="[[xx.min]]"
-                                   max="[[xx.max]]">
+        <things-editor-color-stops type="gradient" value="{{xx.colorStops}}" min="[[xx.min]]" max="[[xx.max]]">
         </things-editor-color-stops>
-
       </things-editor-properties>
 
       <textarea value="[[text]]"></textarea>
-
     </template>
 
     <script>
-      window.addEventListener('WebComponentsReady', function(e) {
+      window.addEventListener('WebComponentsReady', function (e) {
         var app = document.querySelector('#app')
 
-        app.$.properties.addEventListener('change', function() {
-          app.text = JSON.stringify(app.xx.colorStops, null, "\t")
+        app.$.properties.addEventListener('change', function () {
+          app.text = JSON.stringify(app.xx.colorStops, null, '\t')
         })
 
         app.xx = {
           min: 50,
           max: 100,
-          colorStops: [{
-            color: 'blue',
-            position: 50
-          }, {
-            color: 'green',
-            position: 60
-          }, {
-            color: 'yellow',
-            position: 75
-          }, {
-            color: 'red',
-            position: 90
-          }, {
-            color: 'black',
-            position: 100
-          }]
+          colorStops: [
+            {
+              color: 'blue',
+              position: 50,
+            },
+            {
+              color: 'green',
+              position: 60,
+            },
+            {
+              color: 'yellow',
+              position: 75,
+            },
+            {
+              color: 'red',
+              position: 90,
+            },
+            {
+              color: 'black',
+              position: 100,
+            },
+          ],
         }
       })
     </script>
-
   </body>
 </html>

@@ -1,16 +1,16 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer.html" />
 
-<link rel="import" href="../iron-pages/iron-pages.html">
-<link rel="import" href="../paper-radio-button/paper-radio-button.html">
-<link rel="import" href="../paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../iron-pages/iron-pages.html" />
+<link rel="import" href="../paper-radio-button/paper-radio-button.html" />
+<link rel="import" href="../paper-radio-group/paper-radio-group.html" />
 
-<link rel="import" href="./things-editor-color.html">
-<link rel="import" href="./things-editor-gradient.html">
-<link rel="import" href="./things-editor-pattern.html">
+<link rel="import" href="./things-editor-color.html" />
+<link rel="import" href="./things-editor-gradient.html" />
+<link rel="import" href="./things-editor-pattern.html" />
 
 <!--
 An element providing a solution to no problem in particular.
@@ -27,9 +27,9 @@ Example:
 <dom-module id="things-editor-color-style">
   <template>
     <style>
-       :host {
+      :host {
         display: block;
-        @apply(--things-editor-color-style)
+        @apply (--things-editor-color-style);
       }
 
       paper-radio-button {
@@ -37,7 +37,7 @@ Example:
       }
 
       .icon-only-label {
-        @apply(--things-properties-icon-only-label);
+        @apply (--things-properties-icon-only-label);
         background: url(/images/icon-properties-label.png) no-repeat;
         float: left;
         margin-top: 0;
@@ -68,29 +68,38 @@ Example:
     </paper-radio-group>
 
     <iron-pages attr-for-selected="fill-type" selected="[[fillType]]">
-      <div fill-type="no">
-      </div>
+      <div fill-type="no"></div>
 
       <div fill-type="solid">
         <label class="icon-only-label color"></label>
-        <things-editor-color value="{{solid}}">
-        </things-editor-color>
-
+        <things-editor-color value="{{solid}}"> </things-editor-color>
       </div>
 
       <div fill-type="gradient">
-        <things-editor-gradient type="{{gradient.type}}" rotation="{{gradient.rotation}}" center="{{gradient.center}}" color-stops="{{gradient.colorStops}}"
-          rotate-with-shapes="{{gradient.rotateWithShapes}}">
+        <things-editor-gradient
+          type="{{gradient.type}}"
+          rotation="{{gradient.rotation}}"
+          center="{{gradient.center}}"
+          color-stops="{{gradient.colorStops}}"
+          rotate-with-shapes="{{gradient.rotateWithShapes}}"
+        >
         </things-editor-gradient>
       </div>
 
       <div fill-type="pattern">
-        <things-editor-pattern image="{{pattern.image}}" image-storage="[[imageStorage]]" offset-x="{{pattern.offsetX}}" offset-y="{{pattern.offsetY}}"
-          width="{{pattern.width}}" height="{{pattern.height}}" align="{{pattern.align}}" fit-pattern="{{pattern.fitPattern}}">
+        <things-editor-pattern
+          image="{{pattern.image}}"
+          image-storage="[[imageStorage]]"
+          offset-x="{{pattern.offsetX}}"
+          offset-y="{{pattern.offsetY}}"
+          width="{{pattern.width}}"
+          height="{{pattern.height}}"
+          align="{{pattern.align}}"
+          fit-pattern="{{pattern.fitPattern}}"
+        >
         </things-editor-pattern>
       </div>
     </iron-pages>
-
   </template>
 
   <script>
@@ -99,7 +108,7 @@ Example:
 
       properties: {
         value: {
-          notify: true
+          notify: true,
         },
 
         /**
@@ -107,24 +116,18 @@ Example:
          */
         imageStorage: {
           type: String,
-          value: 'image'
-        }
+          value: 'image',
+        },
       },
 
       listeners: {
-        'value-changed': 'onChangedValue'
+        'value-changed': 'onChangedValue',
       },
 
-      observers: [
-        'onChandedGradient(gradient.*)',
-        'onChangedPattern(pattern.*)',
-        'onChangedSolid(solid)'
-      ],
+      observers: ['onChandedGradient(gradient.*)', 'onChangedPattern(pattern.*)', 'onChangedSolid(solid)'],
 
       onChangedValue: function (changed, after) {
-
-        if (this.changedOnThis)
-          return
+        if (this.changedOnThis) return
 
         var value = after.value
 
@@ -138,7 +141,7 @@ Example:
           return
         }
 
-        switch (typeof (value)) {
+        switch (typeof value) {
           case 'string':
             this.fillType = 'solid'
             this.solid = value
@@ -147,29 +150,29 @@ Example:
             this.pattern = null
             break
           case 'object':
-
             this.fillType = value.type
 
             if (value.type === 'gradient') {
-
               this.gradient = {
                 type: value.gradientType || 'linear',
-                colorStops: value.colorStops || [{
-                  position: 0,
-                  color: this.solid || '#000000'
-                }, {
-                  position: 1,
-                  color: this.solid || '#FFFFFF'
-                }],
+                colorStops: value.colorStops || [
+                  {
+                    position: 0,
+                    color: this.solid || '#000000',
+                  },
+                  {
+                    position: 1,
+                    color: this.solid || '#FFFFFF',
+                  },
+                ],
                 rotation: parseFloat(value.rotation) || 0,
                 center: value.center,
-                rotateWithShapes: true
+                rotateWithShapes: true,
               }
 
               this.pattern = null
               this.solid = null
             } else if (value.type === 'pattern') {
-
               this.pattern = {
                 image: value.image,
                 offsetX: parseInt(value.offsetX) || 0,
@@ -177,7 +180,7 @@ Example:
                 width: parseInt(value.width),
                 height: parseInt(value.height),
                 align: value.align,
-                fitPattern: value.fitPattern
+                fitPattern: value.fitPattern,
               }
 
               this.gradient = null
@@ -190,8 +193,7 @@ Example:
       },
 
       onChangedSolid: function (value) {
-        if (this.fillType !== 'solid')
-          return
+        if (this.fillType !== 'solid') return
 
         this.changedOnThis = true
 
@@ -208,38 +210,43 @@ Example:
             if (!this.gradient) {
               this.gradient = {
                 type: 'linear',
-                colorStops: [{
-                  position: 0,
-                  color: this.solid || '#000000'
-                }, {
-                  position: 1,
-                  color: this.solid || '#FFFFFF'
-                }],
+                colorStops: [
+                  {
+                    position: 0,
+                    color: this.solid || '#000000',
+                  },
+                  {
+                    position: 1,
+                    color: this.solid || '#FFFFFF',
+                  },
+                ],
                 rotation: 0,
                 center: 'center',
-                rotateWithShapes: true
+                rotateWithShapes: true,
               }
             }
 
             this.value = {
               type: 'gradient',
               gradientType: this.gradient.type || 'linear',
-              colorStops: this.gradient.colorStops || [{
-                position: 0,
-                color: this.solid || '#000000'
-              }, {
-                position: 1,
-                color: this.solid || '#FFFFFF'
-              }],
+              colorStops: this.gradient.colorStops || [
+                {
+                  position: 0,
+                  color: this.solid || '#000000',
+                },
+                {
+                  position: 1,
+                  color: this.solid || '#FFFFFF',
+                },
+              ],
               rotation: parseFloat(this.gradient.rotation) || 0,
               center: this.gradient.center,
-              rotateWithShapes: this.gradient.rotateWithShapes
+              rotateWithShapes: this.gradient.rotateWithShapes,
             }
             break
 
           case 'pattern':
-            if (!this.pattern)
-              this.pattern = {}
+            if (!this.pattern) this.pattern = {}
 
             this.value = {
               type: 'pattern',
@@ -249,13 +256,12 @@ Example:
               width: parseInt(this.pattern.width),
               height: parseInt(this.pattern.height),
               align: this.pattern.align,
-              fitPattern: this.pattern.fitPattern
+              fitPattern: this.pattern.fitPattern,
             }
             break
 
           case 'solid':
-            if (!this.solid)
-              this.solid = '#FFFFFF'
+            if (!this.solid) this.solid = '#FFFFFF'
             this.value = this.solid
             break
 
@@ -273,15 +279,13 @@ Example:
          * 이 점을 감안해서, 외부 변경에 대한 대응을 해야 한다.
          */
 
-        if (this.fillType !== 'gradient')
-          return
+        if (this.fillType !== 'gradient') return
 
         this.changedOnThis = true
 
         var gradient = this.gradient
 
-        if (!gradient)
-          gradient = {}
+        if (!gradient) gradient = {}
 
         this.value = {
           type: 'gradient',
@@ -289,23 +293,20 @@ Example:
           colorStops: gradient.colorStops || [],
           rotation: parseFloat(gradient.rotation) || 0,
           center: gradient.center,
-          rotateWithShapes: gradient.rotateWithShapes
+          rotateWithShapes: gradient.rotateWithShapes,
         }
 
         this.changedOnThis = false
       },
 
       onChangedPattern: function (after) {
-
-        if (this.fillType !== 'pattern')
-          return
+        if (this.fillType !== 'pattern') return
 
         this.changedOnThis = true
 
         var pattern = this.pattern
 
-        if (!pattern)
-          pattern = {}
+        if (!pattern) pattern = {}
 
         this.value = {
           type: 'pattern',
@@ -315,13 +316,11 @@ Example:
           width: parseInt(pattern.width),
           height: parseInt(pattern.height),
           align: pattern.align,
-          fitPattern: pattern.fitPattern
+          fitPattern: pattern.fitPattern,
         }
 
         this.changedOnThis = false
-
-      }
-
-    });
+      },
+    })
   </script>
 </dom-module>

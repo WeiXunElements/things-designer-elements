@@ -1,46 +1,46 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
-<link rel="import" href="../../bower_components/iron-icons/editor-icons.html">
-<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html" />
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html" />
+<link rel="import" href="../../bower_components/iron-icons/editor-icons.html" />
+<link rel="import" href="../../bower_components/iron-image/iron-image.html" />
 
-<link rel="import" href="../../bower_components/things-designer-elements/things-editor-multiple-color.html">
-<link rel="import" href="../../bower_components/things-designer-elements/things-editor-number-input.html">
+<link rel="import" href="../../bower_components/things-designer-elements/things-editor-multiple-color.html" />
+<link rel="import" href="../../bower_components/things-designer-elements/things-editor-number-input.html" />
 
-<link rel="import" href="./things-editor-chartjs-properties-hbar.html">
-<link rel="import" href="./things-editor-chartjs-properties-mixed.html">
-<link rel="import" href="./things-editor-chartjs-properties-pie.html">
-<link rel="import" href="./things-editor-chartjs-properties-radar.html">
+<link rel="import" href="./things-editor-chartjs-properties-hbar.html" />
+<link rel="import" href="./things-editor-chartjs-properties-mixed.html" />
+<link rel="import" href="./things-editor-chartjs-properties-pie.html" />
+<link rel="import" href="./things-editor-chartjs-properties-radar.html" />
 
 <dom-module id="things-editor-chartjs-properties">
   <template>
     <style>
       :host {
-        @apply(--things-properties-panel);
+        @apply (--things-properties-panel);
       }
 
       label {
-        @apply(--things-label);
+        @apply (--things-label);
       }
 
       input {
-        @apply(--things-input);
+        @apply (--things-input);
       }
 
       fieldset {
-        @apply(--things-fieldset);
+        @apply (--things-fieldset);
       }
 
       legend {
-        @apply(--things-fieldset-legend);
+        @apply (--things-fieldset-legend);
       }
 
       select {
-        @apply(--things-select);
+        @apply (--things-select);
         background: url(/images/bg-input-select.png) 100% 50% no-repeat #fff;
       }
 
@@ -55,7 +55,7 @@ Copyright © HatioLab Inc. All rights reserved.
         width: 229px;
         height: 25px;
         margin: -5px 0 0 7px;
-        border: 1px solid rgba(0, 0, 0, .2);
+        border: 1px solid rgba(0, 0, 0, 0.2);
         border-width: 1px 1px 0 1px;
       }
 
@@ -64,8 +64,8 @@ Copyright © HatioLab Inc. All rights reserved.
       }
 
       paper-tab {
-        background-color: rgba(0, 0, 0, .2);
-        border: 1px solid rgba(0, 0, 0, .07);
+        background-color: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(0, 0, 0, 0.07);
         border-width: 0 1px 0 0;
         padding: 0 5px;
         color: #fff;
@@ -73,7 +73,7 @@ Copyright © HatioLab Inc. All rights reserved.
       }
 
       paper-tab[disabled] {
-        background-color: rgba(0, 0, 0, .1);
+        background-color: rgba(0, 0, 0, 0.1);
       }
 
       paper-tab:last-child {
@@ -81,13 +81,13 @@ Copyright © HatioLab Inc. All rights reserved.
       }
 
       paper-tab.iron-selected {
-        background-color: rgba(255, 255, 255, .5);
+        background-color: rgba(255, 255, 255, 0.5);
         color: #585858;
       }
 
       .tab-content {
-        background-color: rgba(255, 255, 255, .5);
-        border: 1px solid rgba(0, 0, 0, .2);
+        background-color: rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(0, 0, 0, 0.2);
         border-width: 0 1px 1px 1px;
         margin: 0 7px 10px 7px;
         padding: 7px 5px 0 5px;
@@ -101,7 +101,7 @@ Copyright © HatioLab Inc. All rights reserved.
         width: 52%;
       }
 
-      .same-width input[type="checkbox"] {
+      .same-width input[type='checkbox'] {
         width: 15px;
       }
 
@@ -111,57 +111,45 @@ Copyright © HatioLab Inc. All rights reserved.
     </style>
 
     <template is="dom-if" if="[[isTypeof(values.type, 'line')]]">
-      <things-editor-chartjs-properties-mixed values="{{values}}">
-      </things-editor-chartjs-properties-mixed>
+      <things-editor-chartjs-properties-mixed values="{{values}}"> </things-editor-chartjs-properties-mixed>
     </template>
     <template is="dom-if" if="[[isTypeof(values.type, 'horizontalBar')]]">
-      <things-editor-chartjs-properties-hbar values="{{values}}">
-      </things-editor-chartjs-properties-hbar>
+      <things-editor-chartjs-properties-hbar values="{{values}}"> </things-editor-chartjs-properties-hbar>
     </template>
     <template is="dom-if" if="[[isTypeof(values.type, 'bar')]]">
-      <things-editor-chartjs-properties-mixed values="{{values}}">
-      </things-editor-chartjs-properties-mixed>
+      <things-editor-chartjs-properties-mixed values="{{values}}"> </things-editor-chartjs-properties-mixed>
     </template>
     <template is="dom-if" if="[[isTypeof(values.type, 'pie')]]">
-      <things-editor-chartjs-properties-pie values="{{values}}">
-      </things-editor-chartjs-properties-pie>
+      <things-editor-chartjs-properties-pie values="{{values}}"> </things-editor-chartjs-properties-pie>
     </template>
     <template is="dom-if" if="[[isTypeof(values.type, 'doughnut')]]">
-      <things-editor-chartjs-properties-pie values="{{values}}">
-      </things-editor-chartjs-properties-pie>
+      <things-editor-chartjs-properties-pie values="{{values}}"> </things-editor-chartjs-properties-pie>
     </template>
     <template is="dom-if" if="[[isTypeof(values.type, 'polarArea')]]">
-      <things-editor-chartjs-properties-pie values="{{values}}">
-      </things-editor-chartjs-properties-pie>
+      <things-editor-chartjs-properties-pie values="{{values}}"> </things-editor-chartjs-properties-pie>
     </template>
     <template is="dom-if" if="[[isTypeof(values.type, 'radar')]]">
-      <things-editor-chartjs-properties-radar values="{{values}}">
-      </things-editor-chartjs-properties-radar>
+      <things-editor-chartjs-properties-radar values="{{values}}"> </things-editor-chartjs-properties-radar>
     </template>
-
   </template>
 
   <script>
-    (function () {
-      'use strict';
+    ;(function () {
+      'use strict'
 
       Polymer({
         is: 'things-editor-chartjs-properties',
 
         properties: {
           values: {
-            notify: true
-          }
+            notify: true,
+          },
         },
 
         isTypeof: function (typeA, typeB) {
-          if (typeA == typeB)
-            return true
-        }
-
+          if (typeA == typeB) return true
+        },
       })
-
-    })();
-
+    })()
   </script>
 </dom-module>

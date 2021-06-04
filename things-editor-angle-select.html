@@ -1,8 +1,8 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer.html" />
 
 <!--
 Degree 각도 값을 입력 받아서, radian 값으로 변환해주는 input의 확장 엘리먼트이다.
@@ -17,8 +17,8 @@ Example:
 
 <dom-module id="things-editor-angle-select">
   <script>
-    (function () {
-      'use strict';
+    ;(function () {
+      'use strict'
 
       Polymer({
         is: 'things-editor-angle-select',
@@ -31,7 +31,7 @@ Example:
           value: {
             type: String,
             notify: true,
-            reflectToAttribute: true
+            reflectToAttribute: true,
           },
 
           /**
@@ -39,22 +39,18 @@ Example:
            */
           radian: {
             type: Number,
-            notify: true
-          }
+            notify: true,
+          },
         },
 
         listeners: {
-          'change': "_onChangeValue"
+          change: '_onChangeValue',
         },
 
-        observers: [
-          "_onChangeDegree(value)",
-          "_onChangeRadian(radian)"
-        ],
+        observers: ['_onChangeDegree(value)', '_onChangeRadian(radian)'],
 
         created() {
-          if (!this.getAttribute('placeholder'))
-            this.setAttribute('placeholder', '°')
+          if (!this.getAttribute('placeholder')) this.setAttribute('placeholder', '°')
         },
 
         _onChangeValue(e) {
@@ -62,19 +58,17 @@ Example:
         },
 
         _onChangeRadian(radian) {
-          if (this._dont_loop)
-            return
+          if (this._dont_loop) return
 
           var PI_2 = Math.PI * 2
-          var value = (((radian % PI_2) + PI_2) % PI_2) * 180 / Math.PI
+          var value = ((((radian % PI_2) + PI_2) % PI_2) * 180) / Math.PI
 
           var nearest_option = -1
           var diff
 
           Array.from(this.options).forEach(function (option, index) {
             let gap = Math.abs(Number(value) - Number(option.value)) % 360
-            if (gap > 180)
-              gap = 360 - gap
+            if (gap > 180) gap = 360 - gap
 
             if (nearest_option == -1) {
               nearest_option = index
@@ -96,8 +90,8 @@ Example:
           this._dont_loop = true
           this.set('radian', degree * (Math.PI / 180))
           this._dont_loop = false
-        }
-      });
-    })();
+        },
+      })
+    })()
   </script>
 </dom-module>

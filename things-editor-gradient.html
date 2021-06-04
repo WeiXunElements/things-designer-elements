@@ -1,16 +1,16 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer.html" />
 
-<link rel="import" href="../iron-pages/iron-pages.html">
-<link rel="import" href="../paper-menu/paper-menu.html">
-<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../iron-pages/iron-pages.html" />
+<link rel="import" href="../paper-menu/paper-menu.html" />
+<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html" />
+<link rel="import" href="../paper-item/paper-item.html" />
 
-<link rel="import" href="./things-editor-angle-input.html">
-<link rel="import" href="./things-editor-color-stops.html">
+<link rel="import" href="./things-editor-angle-input.html" />
+<link rel="import" href="./things-editor-color-stops.html" />
 
 <!--
 An element providing a solution to no problem in particular.
@@ -28,9 +28,9 @@ Example:
 <dom-module id="things-editor-gradient">
   <template>
     <style>
-       :host {
+      :host {
         display: block;
-        @apply(--things-editor-gradient)
+        @apply (--things-editor-gradient);
       }
 
       .gradient-direction {
@@ -46,44 +46,44 @@ Example:
         float: left;
       }
 
-      .gradient-direction [name=lefttop-to-rightbottom] {
-        background-position: 50% 4px
+      .gradient-direction [name='lefttop-to-rightbottom'] {
+        background-position: 50% 4px;
       }
 
-      .gradient-direction [name=top-to-bottom] {
-        background-position: 50% -46px
+      .gradient-direction [name='top-to-bottom'] {
+        background-position: 50% -46px;
       }
 
-      .gradient-direction [name=righttop-to-leftbottom] {
-        background-position: 50% -96px
+      .gradient-direction [name='righttop-to-leftbottom'] {
+        background-position: 50% -96px;
       }
 
-      .gradient-direction [name=right-to-left] {
-        background-position: 50% -146px
+      .gradient-direction [name='right-to-left'] {
+        background-position: 50% -146px;
       }
 
-      .gradient-direction [name=rightbottom-to-lefttop] {
-        background-position: 50% -196px
+      .gradient-direction [name='rightbottom-to-lefttop'] {
+        background-position: 50% -196px;
       }
 
-      .gradient-direction [name=bottom-to-top] {
-        background-position: 50% -246px
+      .gradient-direction [name='bottom-to-top'] {
+        background-position: 50% -246px;
       }
 
-      .gradient-direction [name=leftbottom-to-righttop] {
-        background-position: 50% -296px
+      .gradient-direction [name='leftbottom-to-righttop'] {
+        background-position: 50% -296px;
       }
 
-      .gradient-direction [name=left-to-right] {
-        background-position: 50% -346px
+      .gradient-direction [name='left-to-right'] {
+        background-position: 50% -346px;
       }
 
-      .gradient-direction [name=center-to-corner] {
-        background-position: 50% -396px
+      .gradient-direction [name='center-to-corner'] {
+        background-position: 50% -396px;
       }
 
       .gradient-direction paper-item[focused] {
-        background-color: rgba(255, 246, 143, .5);
+        background-color: rgba(255, 246, 143, 0.5);
       }
 
       .gradient-direction paper-item:focus:before {
@@ -91,11 +91,11 @@ Example:
       }
 
       label {
-        @apply(--things-label);
+        @apply (--things-label);
       }
 
       select {
-        @apply(--things-select);
+        @apply (--things-select);
         background: url(/images/bg-input-select.png) 100% 50% no-repeat #fff;
       }
 
@@ -116,12 +116,12 @@ Example:
       }
 
       .full-width input {
-        @apply(--things-input);
+        @apply (--things-input);
         width: 28%;
       }
 
       .icon-only-label {
-        @apply(--things-properties-icon-only-label);
+        @apply (--things-properties-icon-only-label);
         top: 0 !important;
         width: 30px !important;
         background: url(/images/icon-properties-label.png) no-repeat;
@@ -137,7 +137,7 @@ Example:
         width: 65%;
       }
 
-       :host::shadow .merge-column {
+      :host::shadow .merge-column {
         margin: 0 0 7px 10px;
       }
     </style>
@@ -149,7 +149,7 @@ Example:
         <option>radial</option>
       </select>
       <label class="icon-only-label color"></label>
-      <input is="things-editor-angle-input" type="number" radian="{{rotation}}">
+      <input is="things-editor-angle-input" type="number" radian="{{rotation}}" />
     </div>
 
     <label>direction</label>
@@ -168,7 +168,6 @@ Example:
             <paper-item name="center-to-corner"></paper-item>
           </paper-menu>
         </paper-dropdown-menu>
-
       </div>
 
       <div gradient-type="radial">
@@ -182,84 +181,79 @@ Example:
           </paper-menu>
         </paper-dropdown-menu>
       </div>
-
     </iron-pages>
 
     <!-- <label>gradient stops</label> -->
 
-    <things-editor-color-stops type="gradient" value="{{colorStops}}">
-    </things-editor-color-stops>
+    <things-editor-color-stops type="gradient" value="{{colorStops}}"> </things-editor-color-stops>
 
     <div class="merge-column">
-      <input type="checkbox" checked="{{rotateWithShapes::change}}" required> Rotate with shapes
+      <input type="checkbox" checked="{{rotateWithShapes::change}}" required /> Rotate with shapes
     </div>
-
   </template>
 
   <script>
-    (function () {
-      'use strict';
+    ;(function () {
+      'use strict'
       Polymer({
         is: 'things-editor-gradient',
         properties: {
           type: {
             notify: true,
-            value: 'linear'
+            value: 'linear',
           },
           rotation: {
             notify: true,
             type: Number,
-            value: Math.PI / 4
+            value: Math.PI / 4,
           },
           center: {
             notify: true,
-            value: 'center'
+            value: 'center',
           },
           colorStops: {
-            notify: true
+            notify: true,
           },
           rotateWithShapes: {
             type: Boolean,
             notify: true,
-            value: false
-          }
+            value: false,
+          },
         },
-        observers: [
-          'onChangeDirection(direction)'
-        ],
+        observers: ['onChangeDirection(direction)'],
         onChangeDirection: function (after) {
           var rotation
           switch (after) {
-            case "lefttop-to-rightbottom":
+            case 'lefttop-to-rightbottom':
               rotation = 45
               break
-            case "top-to-bottom":
+            case 'top-to-bottom':
               rotation = 90
               break
-            case "righttop-to-leftbottom":
+            case 'righttop-to-leftbottom':
               rotation = 135
               break
-            case "right-to-left":
+            case 'right-to-left':
               rotation = 180
               break
-            case "rightbottom-to-lefttop":
+            case 'rightbottom-to-lefttop':
               rotation = 215
               break
-            case "bottom-to-top":
+            case 'bottom-to-top':
               rotation = 270
               break
-            case "leftbottom-to-righttop":
+            case 'leftbottom-to-righttop':
               rotation = 315
               break
-            case "left-to-right":
+            case 'left-to-right':
               rotation = 0
               break
             default:
               return
           }
-          this.rotation = rotation / 360 * Math.PI * 2
-        }
+          this.rotation = (rotation / 360) * Math.PI * 2
+        },
       })
-    })();
+    })()
   </script>
 </dom-module>

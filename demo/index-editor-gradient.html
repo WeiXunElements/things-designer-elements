@@ -1,82 +1,84 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes" />
     <title>things-editor-gradient Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
 
-    <link rel="import" href="../things-editor-gradient.html">
+    <link rel="import" href="../things-editor-gradient.html" />
 
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
+    <link rel="import" href="../bower_components/things-theme/things-point-theme.html" />
 
     <style is="custom-style" include="things-point-theme">
-    :root {
-      --things-editor-gradient: {
-        background: yellow;
+      :root {
+        --things-editor-gradient: {
+          background: yellow;
+        }
       }
-    };
 
-    div{
-      display: inline-flex;
-    }
-    #linear-target {
-      width: 200px;
-      height: 200px;
-      background: linear-gradient(45deg, blue, red 30%, yellow 60%, green 80%, black);
-    }
-    #radial-target {
-      display: inline-block;
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle, blue, red 30%, yellow 60%, green 80%, black);
-    }
+      div {
+        display: inline-flex;
+      }
+      #linear-target {
+        width: 200px;
+        height: 200px;
+        background: linear-gradient(45deg, blue, red 30%, yellow 60%, green 80%, black);
+      }
+      #radial-target {
+        display: inline-block;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle, blue, red 30%, yellow 60%, green 80%, black);
+      }
     </style>
   </head>
   <body unresolved>
-
     <template is="dom-bind" id="app">
       <p>An example of <code>&lt;things-editor-gradient&gt;</code>:</p>
       <div>
-        <div id='linear-target'></div>
-        <div id='radial-target'></div>
+        <div id="linear-target"></div>
+        <div id="radial-target"></div>
       </div>
 
-      <things-editor-gradient id="editor"
-                              type="{{gradient.type}}"
-                              rotation="{{gradient.rotation}}"
-                              center="{{gradient.center}}"
-                              color-stops="{{gradient.colorStops}}"
-                              rotate-with-shapes="{{gradient.rotateWithShapes}}">
+      <things-editor-gradient
+        id="editor"
+        type="{{gradient.type}}"
+        rotation="{{gradient.rotation}}"
+        center="{{gradient.center}}"
+        color-stops="{{gradient.colorStops}}"
+        rotate-with-shapes="{{gradient.rotateWithShapes}}"
+      >
       </things-editor-gradient>
-
     </template>
 
     <script>
-      window.addEventListener('WebComponentsReady', function(e) {
+      window.addEventListener('WebComponentsReady', function (e) {
         var app = document.querySelector('#app')
 
         app.gradient = {
           type: 'linear',
           rotation: Math.PI / 4,
-          colorStops: [{
-            color: 'red',
-            position: 0
-          }, {
-            color: 'blue',
-            position: 1
-          }]
+          colorStops: [
+            {
+              color: 'red',
+              position: 0,
+            },
+            {
+              color: 'blue',
+              position: 1,
+            },
+          ],
         }
 
-        app.$.editor.addEventListener('change', function() {
+        app.$.editor.addEventListener('change', function () {
           console.log(app.gradient)
         })
       })
     </script>
-
   </body>
 </html>

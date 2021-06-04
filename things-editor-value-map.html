@@ -1,9 +1,9 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="./things-editor-color.html">
+<link rel="import" href="../polymer/polymer.html" />
+<link rel="import" href="./things-editor-color.html" />
 
 <!--
 An element providing a solution to no problem in particular.
@@ -23,8 +23,8 @@ Example:
 <dom-module id="things-editor-value-map">
   <template>
     <style>
-       :host {
-        @apply(--things-variable-ruletype-container)
+      :host {
+        @apply (--things-variable-ruletype-container);
       }
 
       * {
@@ -51,7 +51,7 @@ Example:
         border-radius: 0 !important;
         margin-bottom: 0 !important;
         padding: 1px 19px 1px 3px !important;
-        font-size: 12px !important
+        font-size: 12px !important;
       }
 
       things-editor-color::shadow a {
@@ -61,10 +61,10 @@ Example:
       }
 
       things-editor-color::shadow a span {
-        height: 13px !important
+        height: 13px !important;
       }
 
-      input[type="checkbox"] {
+      input[type='checkbox'] {
         width: initial !important;
         margin-top: 6px;
       }
@@ -79,7 +79,7 @@ Example:
       }
 
       .record-action {
-        @apply(--things-record-action-button)
+        @apply (--things-record-action-button);
       }
     </style>
 
@@ -118,22 +118,32 @@ Example:
     </div>
 
     <div data-record>
-      <input type="text" data-key value="default" disabled/>
+      <input type="text" data-key value="default" disabled />
       <template is="dom-if" if="[[_isBooleanType(valueType)]]">
         <input type="checkbox" data-value checked="{{map.default::change}}" data-value-type$="[[valueType]]" />
       </template>
       <template is="dom-if" if="[[!_isBooleanType(valueType)]]">
         <template is="dom-if" if="[[_isColorType(valueType)]]">
-          <things-editor-color data-value value="{{map.default}}" placeholder="value" tabindex="-1"></things-editor-color>
+          <things-editor-color
+            data-value
+            value="{{map.default}}"
+            placeholder="value"
+            tabindex="-1"
+          ></things-editor-color>
         </template>
         <template is="dom-if" if="[[!_isColorType(valueType)]]">
-          <input type="text" data-value placeholder="value" value="{{map.default}}" placeholder="value" data-value-type$="[[valueType]]"
+          <input
+            type="text"
+            data-value
+            placeholder="value"
+            value="{{map.default}}"
+            placeholder="value"
+            data-value-type$="[[valueType]]"
           />
         </template>
       </template>
       <button class="record-action" on-tap="_sort" tabindex="-1">&gt;</button>
     </div>
-
   </template>
 
   <script>
@@ -144,20 +154,20 @@ Example:
         map: {
           type: Object,
           notify: true,
-          value: {}
+          value: {},
         },
         keyType: {
           notify: true,
-          value: 'string'
+          value: 'string',
         },
         valueType: {
           notify: true,
-          value: 'string'
-        }
+          value: 'string',
+        },
       },
 
       listeners: {
-        'change': '_onChange'
+        change: '_onChange',
       },
 
       _isColorType: function (type) {
@@ -171,29 +181,25 @@ Example:
       _defaultValue: function (type) {
         switch (type || this.valueType) {
           case 'color':
-            return '#000000';
+            return '#000000'
           case 'boolean':
           case 'checkbox':
-            return false;
+            return false
           default:
             return ''
         }
       },
 
       _onChange: function (e) {
-
-        if (this._changingNow)
-          return
+        if (this._changingNow) return
 
         this._changingNow = true
 
         var input = e.target
         var value
 
-        if (input.type == 'checkbox')
-          value = Boolean(input.checked)
-        else
-          value = input.value
+        if (input.type == 'checkbox') value = Boolean(input.checked)
+        else value = input.value
 
         var div = input.parentElement
 
@@ -201,14 +207,11 @@ Example:
         if (div.hasAttribute('data-record')) {
           var dataList = div.querySelectorAll('[data-value]:not([hidden])')
           for (var i = 0; i < dataList.length; i++)
-            if (dataList[i] !== input)
-              dataList[i].value = value || this._defaultValue()
+            if (dataList[i] !== input) dataList[i].value = value || this._defaultValue()
         }
 
-        if (div.hasAttribute('data-record'))
-          this._build()
-        else if (div.hasAttribute('data-record-new') && input.hasAttribute('data-value'))
-          this._add()
+        if (div.hasAttribute('data-record')) this._build()
+        else if (div.hasAttribute('data-record-new') && input.hasAttribute('data-value')) this._add()
 
         e.stopPropagation()
 
@@ -216,10 +219,8 @@ Example:
       },
 
       _build: function (includeNewRecord) {
-        if (includeNewRecord)
-          var records = this.querySelectorAll('[data-record],[data-record-new]')
-        else
-          var records = this.querySelectorAll('[data-record]')
+        if (includeNewRecord) var records = this.querySelectorAll('[data-record],[data-record-new]')
+        else var records = this.querySelectorAll('[data-record]')
 
         var newmap = {}
 
@@ -228,20 +229,16 @@ Example:
 
           var key = record.querySelector('[data-key]').value
           var inputs = record.querySelectorAll('[data-value]:not([style*="display: none"])')
-          if (!inputs || inputs.length == 0)
-            continue;
+          if (!inputs || inputs.length == 0) continue
 
           var input = inputs[inputs.length - 1]
 
           var value
 
-          if (input.type == 'checkbox')
-            value = Boolean(input.checked)
-          else
-            value = input.value
+          if (input.type == 'checkbox') value = Boolean(input.checked)
+          else value = input.value
 
-          if (key)
-            newmap[key] = value || this._defaultValue()
+          if (key) newmap[key] = value || this._defaultValue()
         }
 
         this.set('map', newmap)
@@ -252,11 +249,10 @@ Example:
         var array = []
 
         for (var key in map) {
-          if (key == 'default')
-            continue
+          if (key == 'default') continue
           array.push({
             key: key,
-            value: map[key]
+            value: map[key],
           })
         }
 
@@ -264,19 +260,21 @@ Example:
       },
 
       _sort: function (e) {
+        var sorter =
+          this.keyType === 'number'
+            ? function (a, b) {
+                return parseFloat(b.key) < parseFloat(a.key)
+              }
+            : function (a, b) {
+                return b.key < a.key
+              }
 
-        var sorter = this.keyType === 'number' ?
-          function (a, b) {
-            return parseFloat(b.key) < parseFloat(a.key)
-          } :
-          function (a, b) {
-            return b.key < a.key
-          }
-
-        var map = this._toArray(this.map).sort(sorter).reduce(function (sum, i) {
-          sum[i.key] = i.value
-          return sum
-        }, {})
+        var map = this._toArray(this.map)
+          .sort(sorter)
+          .reduce(function (sum, i) {
+            sum[i.key] = i.value
+            return sum
+          }, {})
 
         map.default = this.map.default
 
@@ -291,10 +289,8 @@ Example:
         for (var i = 0; i < inputs.length; i++) {
           let input = inputs[i]
 
-          if (input.type == 'checkbox')
-            input.checked = false
-          else
-            input.value = this._defaultValue(input.type)
+          if (input.type == 'checkbox') input.checked = false
+          else input.value = this._defaultValue(input.type)
         }
 
         inputs[0].focus()
@@ -304,8 +300,7 @@ Example:
         var record = e.target.parentElement
         record.querySelector('[data-key]').value = ''
         this._build()
-      }
-
-    });
+      },
+    })
   </script>
 </dom-module>

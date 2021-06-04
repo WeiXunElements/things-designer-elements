@@ -1,24 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes" />
     <title>things-editor-properties Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
 
-    <link rel="import" href="../things-editor-properties.html">
-    <link rel="import" href="../things-editor-property.html">
+    <link rel="import" href="../things-editor-properties.html" />
+    <link rel="import" href="../things-editor-property.html" />
 
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
+    <link rel="import" href="../bower_components/things-theme/things-point-theme.html" />
 
     <style is="custom-style" include="things-point-theme">
       textarea {
-          width: 600px;
-          height: 300px;
+        width: 600px;
+        height: 300px;
       }
 
       #target {
@@ -29,74 +29,76 @@ Copyright © HatioLab Inc. All rights reserved.
     </style>
   </head>
   <body unresolved>
-
     <template is="dom-bind" id="app">
-
       <p>An example of <code>&lt;things-editor-properties&gt;</code>:</p>
       <div>
         <textarea spellcheck="false">[[propertyValueText]]</textarea>
       </div>
 
-      <things-editor-properties id="properties"
-                                target="{{value}}"
-                                props="{{props}}">
-      </things-editor-properties>
-
+      <things-editor-properties id="properties" target="{{value}}" props="{{props}}"> </things-editor-properties>
     </template>
 
     <script>
-      window.addEventListener('WebComponentsReady', function(e) {
+      window.addEventListener('WebComponentsReady', function (e) {
         var app = document.querySelector('#app')
 
-        app.props = [{
-          type: 'number',
-          label: 'NUMBER',
-          name: 'number',
-          property: 'number'
-        }, {
-          type: 'checkbox',
-          label: 'CHECKBOX',
-          name: 'checkbox',
-          property: 'checkbox'
-        }, {
-          type: 'color',
-          label: 'COLOR',
-          name: 'color',
-          property: 'color'
-        }, {
-          type: 'solid-color-stops',
-          label: 'COLOR STOPS',
-          name: 'colorStops',
-          property: {
-            min: 0,
-            max: 100
-          }
-        }, {
-          type: 'textarea',
-          label: 'LONG TEXT',
-          name: 'longtext'
-        }]
+        app.props = [
+          {
+            type: 'number',
+            label: 'NUMBER',
+            name: 'number',
+            property: 'number',
+          },
+          {
+            type: 'checkbox',
+            label: 'CHECKBOX',
+            name: 'checkbox',
+            property: 'checkbox',
+          },
+          {
+            type: 'color',
+            label: 'COLOR',
+            name: 'color',
+            property: 'color',
+          },
+          {
+            type: 'solid-color-stops',
+            label: 'COLOR STOPS',
+            name: 'colorStops',
+            property: {
+              min: 0,
+              max: 100,
+            },
+          },
+          {
+            type: 'textarea',
+            label: 'LONG TEXT',
+            name: 'longtext',
+          },
+        ]
 
         app.value = {
           number: 100.9,
           color: 'red',
-          colorStops: [{
-            position: 50,
-            color: 'blue'
-          }, {
-            position: 80,
-            color: 'red'
-          }], 
-          longtext: 'HAHAHAHAHAHAHAHA'
+          colorStops: [
+            {
+              position: 50,
+              color: 'blue',
+            },
+            {
+              position: 80,
+              color: 'red',
+            },
+          ],
+          longtext: 'HAHAHAHAHAHAHAHA',
         }
 
-        app.$.properties.addEventListener('change', function(e) {
-          app.propertyValueText = JSON.stringify(app.value, "null", "\t");
+        app.$.properties.addEventListener('change', function (e) {
+          app.propertyValueText = JSON.stringify(app.value, 'null', '\t')
         })
 
-        app.$.properties.fire('change');
+        app.$.properties.fire('change')
       })
     </script>
-
   </body>
 </html>

@@ -1,56 +1,51 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes" />
     <title>things-editor-value Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
 
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
+    <link rel="import" href="../bower_components/things-theme/things-point-theme.html" />
 
-    <link rel="import" href="../things-editor-value.html">
+    <link rel="import" href="../things-editor-value.html" />
 
     <style is="custom-style" include="things-point-theme">
-    textarea {
-      width: 600px;
-      height: 300px;
-    }
+      textarea {
+        width: 600px;
+        height: 300px;
+      }
     </style>
   </head>
   <body unresolved>
-
     <template is="dom-bind" id="app">
       <p>An example of <code>&lt;things-editor-value&gt;</code>:</p>
 
       <textarea value="[[text]]"></textarea>
 
-      <things-editor-value id="editor"
-                           mapping="{{mapping}}"
-                           type="[[type]]">
-      </things-editor-value>
+      <things-editor-value id="editor" mapping="{{mapping}}" type="[[type]]"> </things-editor-value>
     </template>
 
     <script>
-      window.addEventListener('WebComponentsReady', function(e) {
+      window.addEventListener('WebComponentsReady', function (e) {
         var app = document.querySelector('#app')
 
-        app.type = "string"
+        app.type = 'string'
         app.mapping = {
           target: '#special',
           property: 'text',
           rule: 'eval',
-          param: 'return "blue"'
+          param: 'return "blue"',
         }
 
-        app.$.editor.addEventListener('value-change', function(e) {
-          app.text = JSON.stringify(app.mapping, null, "\t")
+        app.$.editor.addEventListener('value-change', function (e) {
+          app.text = JSON.stringify(app.mapping, null, '\t')
         })
       })
     </script>
-
   </body>
 </html>

@@ -1,17 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes" />
     <title>things-editor-color Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
-    <link rel="import" href="../things-editor-color.html">
+    <link rel="import" href="../things-editor-color.html" />
 
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
+    <link rel="import" href="../bower_components/things-theme/things-point-theme.html" />
 
     <style is="custom-style" include="things-point-theme">
       #target {
@@ -22,29 +22,24 @@ Copyright © HatioLab Inc. All rights reserved.
     </style>
   </head>
   <body unresolved>
-
     <template is="dom-bind" id="app">
-
       <p>An example of <code>&lt;things-editor-color&gt;</code>:</p>
 
       <div id="target"></div>
 
-      <things-editor-color id="editor" value="{{value}}">
-      </things-editor-color>
-
+      <things-editor-color id="editor" value="{{value}}"> </things-editor-color>
     </template>
 
     <script>
-      window.addEventListener('WebComponentsReady', function(e) {
+      window.addEventListener('WebComponentsReady', function (e) {
         var app = document.querySelector('#app')
 
-        app.value = "red"
+        app.value = 'red'
 
-        app.$.editor.addEventListener('change', function() {
+        app.$.editor.addEventListener('change', function () {
           app.$.target.style.background = app.$.editor.tinycolor(app.$.editor.value)
         })
       })
     </script>
-
   </body>
 </html>

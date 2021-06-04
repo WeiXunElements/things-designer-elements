@@ -1,8 +1,8 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer.html" />
 
 <!--
 An element providing a solution to no problem in particular.
@@ -27,7 +27,7 @@ Example:
         float: left;
       }
 
-      input[type="checkbox"] {
+      input[type='checkbox'] {
         width: initial !important;
         margin-top: 6px;
       }
@@ -42,7 +42,7 @@ Example:
       }
 
       .record-action {
-        @apply(--things-record-action-button)
+        @apply (--things-record-action-button);
       }
     </style>
 
@@ -61,7 +61,6 @@ Example:
       <input type="text" data-unit placeholder="unit" value="[[item.unit]]" />
       <button class="record-action" on-tap="_add" tabindex="-1">+</button>
     </div>
-
   </template>
 
   <script>
@@ -72,23 +71,21 @@ Example:
         options: {
           type: Array,
           notify: true,
-          value: []
-        }
+          value: [],
+        },
       },
 
       attached() {
-        if (!this.boundOnChange)
-          this.boundOnChange = this._onChange.bind(this);
+        if (!this.boundOnChange) this.boundOnChange = this._onChange.bind(this)
 
-        this.addEventListener('change', this.boundOnChange);
+        this.addEventListener('change', this.boundOnChange)
       },
 
       detached() {
-        this.removeEventListener('change', this.boundOnChange);
+        this.removeEventListener('change', this.boundOnChange)
       },
 
       _onChange: function (e) {
-
         this._changingNow = true
 
         var input = e.target
@@ -96,17 +93,13 @@ Example:
 
         var div = input.parentElement
 
-        if (div.hasAttribute('data-record'))
-          this._build(true)
-        else if (div.hasAttribute('data-record-new') && input.hasAttribute('data-unit'))
-          this._add()
+        if (div.hasAttribute('data-record')) this._build(true)
+        else if (div.hasAttribute('data-record-new') && input.hasAttribute('data-unit')) this._add()
       },
 
       _build: function (includeNewRecord, callback) {
-        if (includeNewRecord)
-          var records = this.querySelectorAll('[data-record],[data-record-new]')
-        else
-          var records = this.querySelectorAll('[data-record]')
+        if (includeNewRecord) var records = this.querySelectorAll('[data-record],[data-record-new]')
+        else var records = this.querySelectorAll('[data-record]')
 
         var newoptions = []
 
@@ -116,8 +109,7 @@ Example:
           var name = record.querySelector('[data-name]').value
           var qtyInputs = record.querySelectorAll('[data-qty]:not([style*="display: none"])')
           var unitInputs = record.querySelectorAll('[data-unit]:not([style*="display: none"])')
-          if ((!qtyInputs || qtyInputs.length == 0) && (!unitInputs || unitInputs.length == 0))
-            continue;
+          if ((!qtyInputs || qtyInputs.length == 0) && (!unitInputs || unitInputs.length == 0)) continue
 
           var qtyInput = qtyInputs[qtyInputs.length - 1]
           var qtyValue = qtyInput.value
@@ -129,7 +121,7 @@ Example:
             newoptions.push({
               name: name,
               qty: qtyValue || name,
-              unit: unitValue || name
+              unit: unitValue || name,
             })
         }
 
@@ -157,8 +149,7 @@ Example:
         this._build(false, () => {
           this.fire('change')
         })
-      }
-
-    });
+      },
+    })
   </script>
 </dom-module>

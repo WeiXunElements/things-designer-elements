@@ -1,77 +1,75 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes" />
     <title>things-editor-buttons-radio Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
 
-    <link rel="import" href="../things-editor-buttons-radio.html">
+    <link rel="import" href="../things-editor-buttons-radio.html" />
 
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
+    <link rel="import" href="../bower_components/things-theme/things-point-theme.html" />
 
     <style is="custom-style" include="things-point-theme">
       :root {
         --things-editor-buttons-radio-button: {
-          background:url(../images/icon-properties.png) 85% 2px no-repeat;
+          background: url(../images/icon-properties.png) 85% 2px no-repeat;
         }
       }
 
-      paper-button[data-value=left] {
-        background-position:50%  -395px
+      paper-button[data-value='left'] {
+        background-position: 50% -395px;
       }
-      paper-button[data-value=center] {
-        background-position:50%  -495px
+      paper-button[data-value='center'] {
+        background-position: 50% -495px;
       }
-      paper-button[data-value=right] {
-        background-position:50%  -595px
+      paper-button[data-value='right'] {
+        background-position: 50% -595px;
       }
-      paper-button[data-value=justify] {
-        background-position:50%  -695px
+      paper-button[data-value='justify'] {
+        background-position: 50% -695px;
       }
-      paper-button[data-value=top] {
-        background-position:50%  -795px
+      paper-button[data-value='top'] {
+        background-position: 50% -795px;
       }
-      paper-button[data-value=middle] {
-        background-position:50%  -895px
+      paper-button[data-value='middle'] {
+        background-position: 50% -895px;
       }
-      paper-button[data-value=bottom] {
-        background-position:50%  -995px
+      paper-button[data-value='bottom'] {
+        background-position: 50% -995px;
       }
-      paper-button[data-value=bold] {
-        background-position:40% -1095px
+      paper-button[data-value='bold'] {
+        background-position: 40% -1095px;
       }
-      paper-button[data-value=italic] {
-        background-position:50% -1195px
+      paper-button[data-value='italic'] {
+        background-position: 50% -1195px;
       }
-      paper-button[data-value=underline] {
-        background-position:50% -1295px
+      paper-button[data-value='underline'] {
+        background-position: 50% -1295px;
       }
-      paper-button[data-value=strike] {
-        background-position:50% -1395px
+      paper-button[data-value='strike'] {
+        background-position: 50% -1395px;
       }
-      paper-button[data-value=uppercase] {
-        background-position:50% -1495px
+      paper-button[data-value='uppercase'] {
+        background-position: 50% -1495px;
       }
-      paper-button[data-value=lowercase] {
-        background-position:50% -1595px
+      paper-button[data-value='lowercase'] {
+        background-position: 50% -1595px;
       }
-      paper-button[data-value=superscript] {
-        background-position:50% -1695px
+      paper-button[data-value='superscript'] {
+        background-position: 50% -1695px;
       }
-      paper-button[data-value=subscript] {
-        background-position:50% -1795px
+      paper-button[data-value='subscript'] {
+        background-position: 50% -1795px;
       }
     </style>
   </head>
   <body unresolved>
-
     <template is="dom-bind" id="app">
-
       <p>An example of <code>&lt;things-editor-buttons-radio&gt;</code>:</p>
 
       <things-editor-buttons-radio id="editor1" value="{{text}}" mandatory>
@@ -99,26 +97,28 @@ Copyright © HatioLab Inc. All rights reserved.
       </things-editor-buttons-radio>
 
       <textarea value="[[value]]"></textarea>
-
     </template>
 
     <script>
-      window.addEventListener('WebComponentsReady', function(e) {
+      window.addEventListener('WebComponentsReady', function (e) {
         var app = document.querySelector('#app')
 
-        this.addEventListener('click', function(e) {
-          app.value = JSON.stringify({
-            text: app.text,
-            align: app.align,
-            baseline: app.baseline
-          }, null, "\t")
+        this.addEventListener('click', function (e) {
+          app.value = JSON.stringify(
+            {
+              text: app.text,
+              align: app.align,
+              baseline: app.baseline,
+            },
+            null,
+            '\t'
+          )
         })
 
-        app.text = "uppercase"
-        app.align = "center"
-        app.baseline = "bottom"
+        app.text = 'uppercase'
+        app.align = 'center'
+        app.baseline = 'bottom'
       })
     </script>
-
   </body>
 </html>

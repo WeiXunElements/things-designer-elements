@@ -1,26 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes" />
     <title>things-editor-action Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
 
-    <link rel="import" href="../things-editor-action.html">
+    <link rel="import" href="../things-editor-action.html" />
 
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
+    <link rel="import" href="../bower_components/things-theme/things-point-theme.html" />
+    <link rel="import" href="../bower_components/things-theme/things-point-theme.html" />
 
     <style is="custom-style" include="things-point-theme">
       :root {
         --things-editor-action: {
           background: lightgray;
         }
-      };
+      }
 
       textarea {
         width: 600px;
@@ -29,27 +29,21 @@ Copyright © HatioLab Inc. All rights reserved.
     </style>
   </head>
   <body unresolved>
-
     <template is="dom-bind" id="app">
-
       <p>An example of <code>&lt;things-editor-action&gt;</code>:</p>
 
-      <things-editor-action id="action"
-                            icon="remove-circle"
-                            on-action-editor-clicked="onAction">
+      <things-editor-action id="action" icon="remove-circle" on-action-editor-clicked="onAction">
       </things-editor-action>
-
     </template>
 
     <script>
-      window.addEventListener('WebComponentsReady', function(e) {
-        var app = document.querySelector('#app');
+      window.addEventListener('WebComponentsReady', function (e) {
+        var app = document.querySelector('#app')
 
-        app.onAction = function(e) {
-          alert("action")
+        app.onAction = function (e) {
+          alert('action')
         }
       })
     </script>
-
   </body>
 </html>

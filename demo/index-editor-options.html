@@ -1,19 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes" />
     <title>things-editor-options Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-    
-    <link rel="import" href="../things-editor-options.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html" />
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html" />
+
+    <link rel="import" href="../things-editor-options.html" />
 
     <custom-style>
       <style include="demo-pages-shared-styles">
@@ -25,43 +25,43 @@ Copyright © HatioLab Inc. All rights reserved.
     </custom-style>
   </head>
   <body unresolved>
-
     <div class="vertical-section-container centered">
-
       <h3>An example of <code>&lt;things-editor-options&gt;</code>:</h3>
 
-      <demo-snippet><template>
-        <dom-bind><template>
-          <textarea value="[[text]]"></textarea>
+      <demo-snippet
+        ><template>
+          <dom-bind
+            ><template>
+              <textarea value="[[text]]"></textarea>
 
-          <things-editor-options id="editor"
-                                 options="{{options}}">
-          </things-editor-options>
+              <things-editor-options id="editor" options="{{options}}"> </things-editor-options> </template
+          ></dom-bind>
 
-        </template></dom-bind>
+          <script>
+            window.addEventListener('WebComponentsReady', function (e) {
+              var app = document.querySelector('dom-bind')
 
-        <script>
-          window.addEventListener('WebComponentsReady', function(e) {
-            var app = document.querySelector('dom-bind')
+              app.set('options', [
+                {
+                  value: 'A',
+                  text: 'A',
+                },
+                {
+                  value: 'B',
+                  text: 'B',
+                },
+              ])
 
-            app.set('options', [{
-              value: 'A',
-              text: 'A'
-            }, {
-              value: 'B',
-              text: 'B'
-            }])
+              app.$.editor._changed = (options) => {
+                console.log('changed', options)
+                app.text = JSON.stringify(options, null, '\t')
+              }
 
-            app.$.editor._changed = options => {
-              console.log('changed', options)
-              app.text = JSON.stringify(options, null, "\t")
-            }
-
-            app.$.editor._createPropertyObserver('options', '_changed', true);
-          })
-        </script>
-      </template></demo-snippet>
+              app.$.editor._createPropertyObserver('options', '_changed', true)
+            })
+          </script>
+        </template></demo-snippet
+      >
     </div>
-
   </body>
 </html>

@@ -1,9 +1,9 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../paper-color-picker/paper-color-picker.html">
+<link rel="import" href="../polymer/polymer.html" />
+<link rel="import" href="../paper-color-picker/paper-color-picker.html" />
 <script src="../TinyColor/dist/tinycolor-min.js"></script>
 
 <!--
@@ -171,21 +171,21 @@ Example:
 <dom-module id="things-editor-color">
   <template>
     <style>
-       :host {
-        @apply(--things-editor-color)
+      :host {
+        @apply (--things-editor-color);
       }
 
-      input[type=text] {
-        @apply(--things-editor-color-input-text);
+      input[type='text'] {
+        @apply (--things-editor-color-input-text);
         font-size: 13px;
       }
 
-      input[type=alpha] {
-        @apply(--things-editor-color-input-alpha)
+      input[type='alpha'] {
+        @apply (--things-editor-color-input-alpha);
       }
 
-      input[type=button] {
-        @apply(--things-editor-color-input-color)
+      input[type='button'] {
+        @apply (--things-editor-color-input-color);
       }
 
       #color {
@@ -200,7 +200,7 @@ Example:
         font-size: 0;
       }
 
-      #color>span {
+      #color > span {
         display: inline-block;
         width: 15px;
         height: 14px;
@@ -209,13 +209,12 @@ Example:
       }
     </style>
 
-    <input id="text" type="text" value="{{value}}" placeholder="[[placeholder]]">
+    <input id="text" type="text" value="{{value}}" placeholder="[[placeholder]]" />
     <a id="color" type="button" on-click="showPicker">
       <span id="color-thumbnail"></span>
     </a>
 
     <!-- <paper-color-picker shape="huebox" color={{valueAsObject}} color-as-string={{colorString}} allow-alpha always-show-alpha type="hsl"></paper-color-picker> -->
-
   </template>
 
   <script>
@@ -225,65 +224,63 @@ Example:
       properties: {
         value: {
           type: String,
-          notify: true
+          notify: true,
         },
         valueAsObject: {
           type: Object,
           notify: true,
-          value: function() {
+          value: function () {
             return {
               red: undefined,
               green: undefined,
               blue: undefined,
-              alpha: 1
+              alpha: 1,
             }
-          }
-        }
+          },
+        },
       },
 
       listeners: {
-        'text.change': '_onInputChanged'
+        'text.change': '_onInputChanged',
       },
 
-      observers: [
-        '_onValueChanged(value)',
-        '_onColorStringChanged(colorString)'
-      ],
+      observers: ['_onValueChanged(value)', '_onColorStringChanged(colorString)'],
 
       _onValueChanged: function (v) {
-        var value = tinycolor(this.value);
+        var value = tinycolor(this.value)
         var isChanged = false
         if (value.isValid()) {
           var rgbValue = value.toRgb()
 
-          isChanged = !(this.valueAsObject.red == rgbValue.r
-            && this.valueAsObject.green == rgbValue.g
-            && this.valueAsObject.blue == rgbValue.b
-            && this.valueAsObject.alpha == rgbValue.a)
+          isChanged = !(
+            this.valueAsObject.red == rgbValue.r &&
+            this.valueAsObject.green == rgbValue.g &&
+            this.valueAsObject.blue == rgbValue.b &&
+            this.valueAsObject.alpha == rgbValue.a
+          )
 
           if (isChanged) {
             this.valueAsObject = {
               red: rgbValue.r,
               green: rgbValue.g,
               blue: rgbValue.b,
-              alpha: rgbValue.a || 1
+              alpha: rgbValue.a || 1,
             }
           }
-
         } else {
           this.valueAsObject = {
-            alpha: 1
+            alpha: 1,
           }
         }
 
-        this.$["color-thumbnail"].style.backgroundColor = value
+        this.$['color-thumbnail'].style.backgroundColor = value
       },
 
       _onColorStringChanged: function (colorString) {
         var color = tinycolor(colorString)
 
         if (color.isValid()) {
-          this.set("value", color.toString())
+          this.set('value', color.toString())
           this.fire('change')
         }
       },
@@ -299,12 +296,10 @@ Example:
       tinycolor: function (color) {
         var colorObj = tinycolor(color)
 
-        if (colorObj.isValid())
-          return colorObj.toRgbString()
+        if (colorObj.isValid()) return colorObj.toRgbString()
       },
 
       showPicker: function () {
-
         var color = tinycolor(this.value)
 
         var picker = this.create('paper-color-picker', {
@@ -313,37 +308,34 @@ Example:
           colorAsString: color.toString(),
           allowAlpha: true,
           alwaysShowAlpha: true,
-          type: "hsl"
-        });
+          type: 'hsl',
+        })
 
         if (color.isValid()) {
           let rgb = color.toRgb()
-          let alpha = color.getAlpha();
-          picker._initialAlphaValueHack = alpha;
+          let alpha = color.getAlpha()
+          picker._initialAlphaValueHack = alpha
 
           picker.set('immediateColor.red', rgb.r)
           picker.set('immediateColor.green', rgb.g)
           picker.set('immediateColor.blue', rgb.b)
-          if(alpha != undefined)
-            picker.set('immediateColor.alpha', alpha)
+          if (alpha != undefined) picker.set('immediateColor.alpha', alpha)
         }
 
-        this.appendChild(picker);
+        this.appendChild(picker)
 
-        var self = this;
+        var self = this
         function _() {
-          if (picker.colorAsString)
-            self.colorString = picker.colorAsString;
-          picker.removeEventListener("iron-overlay-closed", _)
-          picker.parentNode.removeChild(picker);
+          if (picker.colorAsString) self.colorString = picker.colorAsString
+          picker.removeEventListener('iron-overlay-closed', _)
+          picker.parentNode.removeChild(picker)
         }
-        picker.addEventListener("iron-overlay-closed", _);
+        picker.addEventListener('iron-overlay-closed', _)
 
         setTimeout(function () {
-          picker.open();
+          picker.open()
         })
-      }
-
+      },
     })
   </script>
 </dom-module>

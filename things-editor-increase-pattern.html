@@ -1,21 +1,21 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer.html" />
 
-<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
-<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../paper-menu/paper-menu.html">
-<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html" />
+<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html" />
+<link rel="import" href="../paper-menu/paper-menu.html" />
+<link rel="import" href="../paper-item/paper-item.html" />
 
-<link rel="import" href="../iron-icons/editor-icons.html">
+<link rel="import" href="../iron-icons/editor-icons.html" />
 
-<link rel="import" href="../things-i18n-msg/things-i18n-msg.html">
+<link rel="import" href="../things-i18n-msg/things-i18n-msg.html" />
 
-<link rel="import" href="./things-editor-buttons-radio.html">
-<link rel="import" href="./things-editor-color.html">
-<link rel="import" href="./things-editor-number-input.html">
+<link rel="import" href="./things-editor-buttons-radio.html" />
+<link rel="import" href="./things-editor-color.html" />
+<link rel="import" href="./things-editor-number-input.html" />
 
 <!--
 테이블 셀의 좌,우,상,하 경계선의 스타일을 편집하는 컴포넌트이다.
@@ -32,9 +32,9 @@ Example:
 <dom-module id="things-editor-increase-pattern">
   <template>
     <style>
-      #pattern-set{
-        padding:0 10px;
-        overflow:hidden;
+      #pattern-set {
+        padding: 0 10px;
+        overflow: hidden;
       }
     </style>
 
@@ -67,44 +67,38 @@ Example:
         <iron-icon icon="editor:border-horizontal"></iron-icon>
       </paper-button>
     </div>
-
   </template>
 
   <script>
     Polymer({
       is: 'things-editor-increase-pattern',
 
-      behaviors: [
-        Polymer.IronResizableBehavior
-      ],
+      behaviors: [Polymer.IronResizableBehavior],
 
       properties: {
         increasePattern: {
           type: String,
           value: '+u+s',
-          notify: true
-        }
+          notify: true,
+        },
       },
 
       listeners: {
-        'pattern-set.tap': '_onTapType'
+        'pattern-set.tap': '_onTapType',
       },
 
       _onTapType: function (e) {
-        var target = e.target;
+        var target = e.target
 
-        while (!target.hasAttribute('data-value') && target !== this)
-          target = target.parentElement;
+        while (!target.hasAttribute('data-value') && target !== this) target = target.parentElement
 
-        if (target === this)
-          return;
+        if (target === this) return
 
         this.set('increasePattern', target.getAttribute('data-value'))
         this.fire('change', target.getAttribute('data-value'))
 
-        e.stopPropagation();
-      }
-
+        e.stopPropagation()
+      },
     })
   </script>
 </dom-module>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
 <link rel="import" href="../../bower_components/polymer/polymer.html" />
 <link rel="import" href="../../bower_components/paper-styles/paper-styles.html" />
@@ -163,7 +163,7 @@ Copyright © HatioLab Inc. All rights reserved.
   </template>
 
   <script>
-    ;(function() {
+    ;(function () {
       'use strict'
 
       Polymer({
@@ -172,17 +172,17 @@ Copyright © HatioLab Inc. All rights reserved.
         properties: {
           values: {
             type: Object,
-            notify: true
+            notify: true,
           },
           series: {
             type: Object,
-            value: {}
-          }
+            value: {},
+          },
         },
 
         observers: ['onValuesChanged(values.*)'],
 
-        onValuesChanged: function(values) {
+        onValuesChanged: function (values) {
           // if(this._valueChanging)
           //   return
           // this._valueChanging = true
@@ -206,7 +206,7 @@ Copyright © HatioLab Inc. All rights reserved.
           // values 하위의 무언가가 변경되면 values를 deep clone하여 다시 set.
           this.set('values', Object.assign({}, values.base))
           // this._valueChanging = false
-        }
+        },
       })
     })()
   </script>

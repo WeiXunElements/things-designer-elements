@@ -1,10 +1,10 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer.html" />
 
-<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html" />
 
 <!--
 스택 구조를 편집하는 컴포넌트이다.
@@ -23,9 +23,9 @@ Example:
 <dom-module id="things-editor-stack">
   <template>
     <style>
-       :host {
+      :host {
         display: block;
-        @apply(--things-editor-stack);
+        @apply (--things-editor-stack);
       }
 
       #add-floor {
@@ -54,30 +54,29 @@ Example:
       }
     </style>
 
-    <button id='add-floor'>+</button>
+    <button id="add-floor">+</button>
 
     <template id="floors" is="dom-repeat" items="[[stack]]" sort="_sortReverse">
       <template is="dom-if" if="{{_isActive(item)}}">
-        <div class="active" on-click="_onClickToActive">[[item.name]]
+        <div class="active" on-click="_onClickToActive">
+          [[item.name]]
           <button on-click="_onClickRemoveFloor">-</button>
         </div>
       </template>
       <template is="dom-if" if="{{!_isActive(item)}}">
-        <div on-click="_onClickToActive">[[item.name]]
+        <div on-click="_onClickToActive">
+          [[item.name]]
           <button on-click="_onClickRemoveFloor">-</button>
         </div>
       </template>
     </template>
-
   </template>
 
   <script>
     Polymer({
       is: 'things-editor-stack',
 
-      behaviors: [
-        Polymer.IronResizableBehavior
-      ],
+      behaviors: [Polymer.IronResizableBehavior],
 
       properties: {
         /**
@@ -85,7 +84,7 @@ Example:
          */
         stack: {
           type: Array,
-          notify: true
+          notify: true,
         },
 
         /**
@@ -94,70 +93,63 @@ Example:
         activeIndex: {
           type: Number,
           notify: true,
-          value: 0
-        }
+          value: 0,
+        },
       },
 
       listeners: {
         'iron-resize': '_onIronResize',
-        'add-floor.click': '_onClickAddFloor'
+        'add-floor.click': '_onClickAddFloor',
       },
 
-      _onChangeProps: function (min, max, type) {
-      },
+      _onChangeProps: function (min, max, type) {},
 
-      _onChangeValue: function (change) {
-      },
+      _onChangeValue: function (change) {},
 
-      _onIronResize: function (e) {
-      },
+      _onIronResize: function (e) {},
 
       _onClickAddFloor: function (e) {
         this.push('stack', {
-          name: ''
+          name: '',
         })
       },
 
       _onClickToActive: function (e) {
-        if (e.target.tagName != 'DIV')
-          return;
+        if (e.target.tagName != 'DIV') return
 
-        var model = e.model;
+        var model = e.model
 
-        this.activeIndex = this.stack.indexOf(model.item);
+        this.activeIndex = this.stack.indexOf(model.item)
 
-        this.classFollows('active', e.target, this.querySelector('div.active'));
+        this.classFollows('active', e.target, this.querySelector('div.active'))
       },
 
       _onClickRemoveFloor: function (e) {
-        var model = e.model;
-        var idx = this.stack.indexOf(model.item);
+        var model = e.model
+        var idx = this.stack.indexOf(model.item)
 
-        this.splice('stack', idx, 1);
+        this.splice('stack', idx, 1)
 
-        if (this.activeIndex >= this.stack.length && this.activeIndex > 0)
-          this.activeIndex--;
+        if (this.activeIndex >= this.stack.length && this.activeIndex > 0) this.activeIndex--
 
         this.async(function () {
-          var oldActive = this.querySelector('div.active');
-          var idx = this.stack.length - this.activeIndex - 1;
-          var newActive = this.querySelector('div:nth-of-type(' + (idx + 1) + ')');
+          var oldActive = this.querySelector('div.active')
+          var idx = this.stack.length - this.activeIndex - 1
+          var newActive = this.querySelector('div:nth-of-type(' + (idx + 1) + ')')
 
-          if (oldActive !== newActive)
-            this.classFollows('active', newActive, oldActive);
+          if (oldActive !== newActive) this.classFollows('active', newActive, oldActive)
         })
       },
 
       _sortReverse: function (a, b) {
-        return this.stack.indexOf(a) < this.stack.indexOf(b);
+        return this.stack.indexOf(a) < this.stack.indexOf(b)
       },
 
       _isActive: function (item) {
-        var index = this.stack.indexOf(item);
+        var index = this.stack.indexOf(item)
 
-        return (index === this.activeIndex);
-      }
-
+        return index === this.activeIndex
+      },
     })
   </script>
 </dom-module>

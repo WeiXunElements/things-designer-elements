@@ -1,21 +1,21 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer.html" />
 
-<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
-<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../paper-menu/paper-menu.html">
-<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html" />
+<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html" />
+<link rel="import" href="../paper-menu/paper-menu.html" />
+<link rel="import" href="../paper-item/paper-item.html" />
 
-<link rel="import" href="../iron-icons/editor-icons.html">
+<link rel="import" href="../iron-icons/editor-icons.html" />
 
-<link rel="import" href="../things-i18n-msg/things-i18n-msg.html">
+<link rel="import" href="../things-i18n-msg/things-i18n-msg.html" />
 
-<link rel="import" href="./things-editor-buttons-radio.html">
-<link rel="import" href="./things-editor-color.html">
-<link rel="import" href="./things-editor-number-input.html">
+<link rel="import" href="./things-editor-buttons-radio.html" />
+<link rel="import" href="./things-editor-color.html" />
+<link rel="import" href="./things-editor-number-input.html" />
 
 <!--
 테이블 셀의 좌,우,상,하 경계선의 스타일을 편집하는 컴포넌트이다.
@@ -32,21 +32,21 @@ Example:
 <dom-module id="things-editor-table">
   <template>
     <style>
-       :host {
+      :host {
         display: block;
-        @apply(--things-editor-table)
+        @apply (--things-editor-table);
       }
 
       fieldset {
-        padding: 0
+        padding: 0;
       }
 
       label {
-        @apply(--things-label);
+        @apply (--things-label);
       }
 
       .icon-only-label {
-        @apply(--things-properties-icon-only-label);
+        @apply (--things-properties-icon-only-label);
       }
 
       things-editor-color {
@@ -58,15 +58,15 @@ Example:
       }
 
       paper-dropdown-menu::shadow .underline .unfocused-line {
-        background-color: #ccc
+        background-color: #ccc;
       }
 
       paper-dropdown-menu::shadow .underline .focused-line {
-        background-color: var(--things-secondary-color)
+        background-color: var(--things-secondary-color);
       }
 
       paper-dropdown-menu::shadow input {
-        margin-bottom: 0px
+        margin-bottom: 0px;
       }
 
       #border-set paper-button {
@@ -76,7 +76,7 @@ Example:
       }
 
       .full-width things-editor-color::shadow #detail * {
-        float: none !important
+        float: none !important;
       }
 
       #cell-fieldset {
@@ -90,7 +90,7 @@ Example:
       }
     </style>
 
-    <fieldset id='border-fieldset'>
+    <fieldset id="border-fieldset">
       <legend>
         <things-i18n-msg msgid="label.border-style" auto>Border Style</things-i18n-msg>
       </legend>
@@ -132,8 +132,7 @@ Example:
         <input id="border-width" is="things-editor-number-input" number="{{borderWidth::change}}" />
 
         <label class="icon-only-label color">color</label>
-        <things-editor-color id="border-color" value="{{borderColor}}">
-        </things-editor-color>
+        <things-editor-color id="border-color" value="{{borderColor}}"> </things-editor-color>
       </div>
 
       <label><things-i18n-msg msgid="label.border-type" auto>Border Type</things-i18n-msg></label>
@@ -150,7 +149,6 @@ Example:
           <paper-item class="long-dash-dot-dot" name="long-dash-dot-dot"></paper-item>
         </paper-menu>
       </paper-dropdown-menu>
-
     </fieldset>
 
     <fieldset id="cell-fieldset">
@@ -165,82 +163,74 @@ Example:
       <paper-button id="distribute-horizontal" table-event>distribute horizontal</paper-button>
       <paper-button id="distribute-vertical" table-event>distribute vertical</paper-button>
     </fieldset>
-
   </template>
 
   <script>
     Polymer({
       is: 'things-editor-table',
 
-      behaviors: [
-        Polymer.IronResizableBehavior
-      ],
+      behaviors: [Polymer.IronResizableBehavior],
 
       properties: {
         borderWidth: {
           type: Number,
           value: 1,
-          notify: true
+          notify: true,
         },
         borderColor: {
           type: String,
           value: 'black',
-          notify: true
+          notify: true,
         },
         borderStyle: {
           type: String,
           value: 'solid',
-          notify: true
+          notify: true,
         },
         property: {
-          type: Object
-        }
+          type: Object,
+        },
       },
 
       listeners: {
         'border-fieldset.change': '_onBorderChange',
         'border-style.iron-select': '_onBorderChange',
         'border-set.tap': '_onTapType',
-        'cell-fieldset.tap': '_onTapCell'
+        'cell-fieldset.tap': '_onTapCell',
       },
 
       _onTapCell: function (e) {
         // TODO 여기서 cell 핸들링 관련된 이벤트를 fire 한다.
         // 각 버튼의 fire할 이벤트의 이름을 'table-' + id 로 한다.
-        var target = e.target;
+        var target = e.target
 
-        while (!target.hasAttribute('table-event') && target !== this)
-          target = target.parentElement;
+        while (!target.hasAttribute('table-event') && target !== this) target = target.parentElement
 
-        if (target === this)
-          return;
+        if (target === this) return
 
-        this.fire('table-' + target.id);
+        this.fire('table-' + target.id)
       },
 
       _onTapType: function (e) {
-        var target = e.target;
+        var target = e.target
 
-        while (!target.hasAttribute('data-value') && target !== this)
-          target = target.parentElement;
+        while (!target.hasAttribute('data-value') && target !== this) target = target.parentElement
 
-        if (target === this)
-          return;
+        if (target === this) return
 
         this.fire('table-cell-border-set', {
           type: target.getAttribute('data-value'),
           borderWidth: this.borderWidth,
           borderStyle: this.borderStyle,
-          borderColor: this.borderColor
-        });
+          borderColor: this.borderColor,
+        })
 
-        e.stopPropagation();
+        e.stopPropagation()
       },
 
       _onBorderChange: function (e) {
-        e.stopPropagation();
-      }
-
+        e.stopPropagation()
+      },
     })
   </script>
 </dom-module>

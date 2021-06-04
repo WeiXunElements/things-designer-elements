@@ -1,16 +1,16 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../iron-pages/iron-pages.html">
-<link rel="import" href="../paper-styles/paper-styles.html">
-<link rel="import" href="../paper-radio-button/paper-radio-button.html">
-<link rel="import" href="../paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../polymer/polymer.html" />
+<link rel="import" href="../iron-pages/iron-pages.html" />
+<link rel="import" href="../paper-styles/paper-styles.html" />
+<link rel="import" href="../paper-radio-button/paper-radio-button.html" />
+<link rel="import" href="../paper-radio-group/paper-radio-group.html" />
 
-<link rel="import" href="./things-editor-script.html">
-<link rel="import" href="./things-editor-value-map.html">
-<link rel="import" href="./things-editor-value-range.html">
+<link rel="import" href="./things-editor-script.html" />
+<link rel="import" href="./things-editor-value-map.html" />
+<link rel="import" href="./things-editor-value-range.html" />
 
 <!--
 An element providing a solution to no problem in particular.
@@ -25,25 +25,24 @@ Example:
 -->
 
 <dom-module id="things-editor-value">
-
   <template>
     <style>
-       :host {
-        @apply(--things-properties-varialbe-panel);
+      :host {
+        @apply (--things-properties-varialbe-panel);
       }
 
       label {
-        @apply(--things-label);
+        @apply (--things-label);
         width: 24%;
       }
 
       input {
-        @apply(--things-input);
+        @apply (--things-input);
         width: 66%;
       }
 
       select {
-        @apply(--things-select);
+        @apply (--things-select);
         background: url(/images/bg-input-select.png) 100% 50% no-repeat #fff;
       }
 
@@ -134,7 +133,12 @@ Example:
       </things-editor-value-range>
 
       <div data-rule-type="eval">
-        <things-editor-script id="eval-editor" theme="ace/theme/monokai" mode="ace/mode/javascript" value="{{rule.eval}}">
+        <things-editor-script
+          id="eval-editor"
+          theme="ace/theme/monokai"
+          mode="ace/mode/javascript"
+          value="{{rule.eval}}"
+        >
         </things-editor-script>
       </div>
     </iron-pages>
@@ -147,18 +151,14 @@ Example:
       properties: {
         mapping: {
           type: Object,
-          notify: true
-        }
+          notify: true,
+        },
       },
 
-      observers: [
-        'onChangedMapping(mapping.*)',
-        'onChangedRule(rule.*)',
-        '_valueType(mapping.property)'
-      ],
+      observers: ['onChangedMapping(mapping.*)', 'onChangedRule(rule.*)', '_valueType(mapping.property)'],
 
       listeners: {
-        'eval-editor.blur': 'onBlurEvalEditor'
+        'eval-editor.blur': 'onBlurEvalEditor',
       },
 
       onBlurEvalEditor: function (after) {
@@ -185,7 +185,7 @@ Example:
           case 'location':
           case 'dimension':
             this.valueType = 'object'
-            break;
+            break
           case 'text':
           case 'ref':
           default:
@@ -195,8 +195,7 @@ Example:
       },
 
       onChangedMapping: function (change) {
-
-        this._not_changed_actually = (change.path === 'mapping')
+        this._not_changed_actually = change.path === 'mapping'
 
         /* 사용자가 선택한 컴포넌트가 바뀐 경우도 호출되므로, 이 경우는 제외한다. */
         if (this._not_changed_actually) {
@@ -237,8 +236,7 @@ Example:
               param = this.rule.eval || ''
 
               // rule.eval에 값이 없을 때, ace-editor 내용이 초기화되지 않는 문제때문에 처리함.
-              if (!param)
-                this.$['eval-editor'].editor.setValue('')
+              if (!param) this.$['eval-editor'].editor.setValue('')
               break
             default:
           }
@@ -262,9 +260,7 @@ Example:
       },
 
       onChangedRule: function (change) {
-
-        if (!this.mapping)
-          return
+        if (!this.mapping) return
 
         var param
 
@@ -282,7 +278,7 @@ Example:
         }
 
         this.set('mapping.param', param)
-      }
+      },
     })
   </script>
 </dom-module>

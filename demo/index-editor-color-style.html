@@ -1,25 +1,25 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes" />
     <title>things-editor-color-style Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
 
-    <link rel="import" href="../things-editor-color-style.html">
+    <link rel="import" href="../things-editor-color-style.html" />
 
-    <link rel="import" href="../bower_components/things-theme/things-point-theme.html">
+    <link rel="import" href="../bower_components/things-theme/things-point-theme.html" />
 
     <style is="custom-style" include="things-point-theme">
       :root {
         --things-editor-color-style: {
           background: lightgray;
         }
-      };
+      }
 
       textarea {
         width: 600px;
@@ -28,32 +28,26 @@ Copyright © HatioLab Inc. All rights reserved.
     </style>
   </head>
   <body unresolved>
-
     <template is="dom-bind" id="app">
-
       <p>An example of <code>&lt;things-editor-color-style&gt;</code>:</p>
 
       <textarea value="[[text]]"></textarea>
 
       <p>Color Style</p>
 
-      <things-editor-color-style id="editor"
-                                 value="{{value}}">
-      </things-editor-color-style>
-
+      <things-editor-color-style id="editor" value="{{value}}"> </things-editor-color-style>
     </template>
 
     <script>
-      window.addEventListener('WebComponentsReady', function(e) {
+      window.addEventListener('WebComponentsReady', function (e) {
         var app = document.querySelector('#app')
 
         app.value = {}
 
-        app.$.editor.addEventListener('change', function() {
-          app.text = JSON.stringify(app.value, null, "\t")
+        app.$.editor.addEventListener('change', function () {
+          app.text = JSON.stringify(app.value, null, '\t')
         })
       })
     </script>
-
   </body>
 </html>

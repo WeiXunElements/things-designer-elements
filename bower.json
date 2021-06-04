@@ -1,12 +1,10 @@
 {
   "name": "things-designer-elements",
-  "version": "3.0.8",
-  "authors": ["Hatio Lab. <heartyoh@hatiolab.com>"],
+  "version": "3.0.9",
+  "authors": ["Shenzhen Weixun"],
   "description": "Elements for property editing",
   "keywords": ["web-component", "polymer", "seed"],
   "main": "things-designer-elements.html",
-  "license": "http://things-scene.hatiolab.com/EULA/",
-  "homepage": "https://github.com/ThingsElements/things-designer-elements",
   "ignore": ["/.*", "/test/"],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.2.0",

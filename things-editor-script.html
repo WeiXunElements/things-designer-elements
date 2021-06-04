@@ -1,8 +1,8 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer.html" />
 
 <script src="../ace-builds/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 
@@ -26,16 +26,15 @@ Example:
 -->
 
 <dom-module id="things-editor-script">
-
   <template>
     <style>
-       :host {
+      :host {
         display: block;
         position: relative;
 
         width: 100%;
         height: 100%;
-        @apply(--things-editor-script)
+        @apply (--things-editor-script);
       }
 
       #container {
@@ -43,8 +42,7 @@ Example:
         height: 100%;
       }
     </style>
-    <div id='container'></div>
-
+    <div id="container"></div>
   </template>
 
   <script>
@@ -57,86 +55,84 @@ Example:
          */
         value: {
           type: String,
-          notify: true
+          notify: true,
         },
 
         theme: {
-          type: String
+          type: String,
         },
 
         mode: {
-          type: String
+          type: String,
         },
 
         fontsize: {
-          type: Number
+          type: Number,
         },
 
         softtabs: {
-          type: String
+          type: String,
         },
 
         tabsize: {
           type: Number,
-          value: 2
+          value: 2,
         },
 
         readonly: {
-          type: Boolean
+          type: Boolean,
         },
 
         wrapmode: {
-          type: Boolean
+          type: Boolean,
         },
 
         editor: {
-          type: Object
+          type: Object,
         },
 
         gutter: {
           type: Boolean,
-          value: false
-        }
+          value: false,
+        },
       },
 
       observers: [
         '_configEditor(theme, mode, fontsize, softtabs, tabsize, readonly, wrapmode)',
-        '_valueChanged(value)'
+        '_valueChanged(value)',
       ],
 
       attached: function () {
         this._attached = true
 
-        var self = this;
+        var self = this
 
         if (!this.editor) {
           this.editor = ace.edit(this.$.container, {
-            initialContent: this.value
+            initialContent: this.value,
           })
 
-          if (!this.gutter)
-            this.editor.renderer.setShowGutter(this.gutter)
+          if (!this.gutter) this.editor.renderer.setShowGutter(this.gutter)
 
           // inject base editor styles
-          this._injectTheme('#ace_editor\\.css');
-          this._injectTheme('#ace-tm');
+          this._injectTheme('#ace_editor\\.css')
+          this._injectTheme('#ace-tm')
 
           this.editor.getSession().on('change', function (event) {
             self._changedOnThis = true
             self.set('value', self.editor.getValue())
             self._changedOnThis = false
-          });
+          })
         }
 
         // prevent to warning logs ..
         this.editor.$blockScrolling = Infinity
 
         // handle theme changes
-        this.editor.renderer.addEventListener("themeLoaded", this._onThemeLoaded.bind(this));
+        this.editor.renderer.addEventListener('themeLoaded', this._onThemeLoaded.bind(this))
 
         // initial attributes
         this._configEditor()
-
       },
 
       detached: function () {
@@ -144,54 +140,53 @@ Example:
       },
 
       _configEditor: function (theme, mode, fontsize, softtabs, tabsize, readonly, wrapmode) {
-        if (!this.editor || !this._attached)
-          return
+        if (!this.editor || !this._attached) return
 
-        this.editor.setTheme(this.theme);
-        this.editor.setFontSize(this.fontsize);
-        this.editor.setReadOnly(this.readonly);
-        
+        this.editor.setTheme(this.theme)
+        this.editor.setFontSize(this.fontsize)
+        this.editor.setReadOnly(this.readonly)
+
         this.editor.commands.addCommand({
           name: 'fullscreen',
-          exec: function(editor) {
-
+          exec: function (editor) {
             function _fullscreen_callback(e) {
-              editor.resize();
+              editor.resize()
 
-              if (!document.fullscreen && !document.mozFullScreen && !document.webkitIsFullScreen && !document.msFullscreenElement) {
-                ["fullscreenchange", "mozfullscreenchange", "webkitfullscreenchange", "MSFullscreenChange"].forEach(
-                  event => document.removeEventListener(event, _fullscreen_callback)
-                );
+              if (
+                !document.fullscreen &&
+                !document.mozFullScreen &&
+                !document.webkitIsFullScreen &&
+                !document.msFullscreenElement
+              ) {
+                ;['fullscreenchange', 'mozfullscreenchange', 'webkitfullscreenchange', 'MSFullscreenChange'].forEach(
+                  (event) => document.removeEventListener(event, _fullscreen_callback)
+                )
               }
             }
-            
-            ["fullscreenchange", "mozfullscreenchange", "webkitfullscreenchange", "MSFullscreenChange"].forEach(
-              event => document.addEventListener(event, _fullscreen_callback)
-            );
 
-            var container = editor.container;
+            ;['fullscreenchange', 'mozfullscreenchange', 'webkitfullscreenchange', 'MSFullscreenChange'].forEach(
+              (event) => document.addEventListener(event, _fullscreen_callback)
+            )
 
-            if (container.requestFullScreen)
-              container.requestFullScreen();
-            else if (container.webkitRequestFullScreen)
-              container.webkitRequestFullScreen();
-            else if (container.mozRequestFullScreen)
-              container.mozRequestFullScreen();
-            else if (container.msRequestFullscreen)
-              container.msRequestFullscreen();
+            var container = editor.container
+
+            if (container.requestFullScreen) container.requestFullScreen()
+            else if (container.webkitRequestFullScreen) container.webkitRequestFullScreen()
+            else if (container.mozRequestFullScreen) container.mozRequestFullScreen()
+            else if (container.msRequestFullscreen) container.msRequestFullscreen()
 
             editor.resize()
           },
-          bindKey: {mac: "cmd-enter|f11", win: "ctrl-enter|f11"}
+          bindKey: { mac: 'cmd-enter|f11', win: 'ctrl-enter|f11' },
         })
 
-        var session = this.editor.getSession();
+        var session = this.editor.getSession()
 
-        session.setOption("useWorker", false);
-        session.setMode(this.mode);
-        session.setUseSoftTabs(this.softtabs);
-        this.tabsize && session.setTabSize(this.tabsize);
-        session.setUseWrapMode(this.wrapmode);
+        session.setOption('useWorker', false)
+        session.setMode(this.mode)
+        session.setUseSoftTabs(this.softtabs)
+        this.tabsize && session.setTabSize(this.tabsize)
+        session.setUseWrapMode(this.wrapmode)
       },
 
       _valueChanged: function (value) {
@@ -200,35 +195,32 @@ Example:
           return
         }
 
-        if (this.editor)
-          this.editor.setValue(value == undefined ? '' : String(value))
+        if (this.editor) this.editor.setValue(value == undefined ? '' : String(value))
       },
 
       _onThemeLoaded: function (e) {
-        var themeId = "#" + e.theme.cssClass;
-        this._injectTheme(themeId);
+        var themeId = '#' + e.theme.cssClass
+        this._injectTheme(themeId)
 
         // Workaround Chrome stable bug, force repaint
-        this.style.display = 'none';
-        this.offsetHeight;
-        this.style.display = '';
+        this.style.display = 'none'
+        this.offsetHeight
+        this.style.display = ''
       },
 
       // inject the style tag of a theme to the element
       _injectTheme: function (themeId) {
-        var n = document.querySelector(themeId);
-        this.appendChild(this._cloneStyle(n));
+        var n = document.querySelector(themeId)
+        this.appendChild(this._cloneStyle(n))
       },
 
       //helper function to clone a style
       _cloneStyle: function (style) {
-        var s = document.createElement('style');
-        s.id = style.id;
-        s.textContent = style.textContent;
-        return s;
-      }
-
-    });
+        var s = document.createElement('style')
+        s.id = style.id
+        s.textContent = style.textContent
+        return s
+      },
+    })
   </script>
-
 </dom-module>

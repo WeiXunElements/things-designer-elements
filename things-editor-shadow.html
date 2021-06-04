@@ -1,13 +1,13 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer.html" />
 
-<link rel="import" href="../iron-pages/iron-pages.html">
-<link rel="import" href="../things-i18n-msg/things-i18n-msg.html">
-<link rel="import" href="./things-editor-color.html">
-<link rel="import" href="./things-editor-number-input.html">
+<link rel="import" href="../iron-pages/iron-pages.html" />
+<link rel="import" href="../things-i18n-msg/things-i18n-msg.html" />
+<link rel="import" href="./things-editor-color.html" />
+<link rel="import" href="./things-editor-number-input.html" />
 
 <!--
 컴포넌트의 그림자를 주는 속성이다.
@@ -21,13 +21,12 @@ Example:
 @hero hero.svg
 -->
 
-
 <dom-module id="things-editor-shadow">
   <template>
     <style>
-       :host {
+      :host {
         display: block;
-        @apply(--things-editor-shadow)
+        @apply (--things-editor-shadow);
       }
 
       paper-radio-button {
@@ -35,7 +34,7 @@ Example:
       }
 
       .icon-only-label {
-        @apply(--things-properties-icon-only-label);
+        @apply (--things-properties-icon-only-label);
         float: left;
         margin-top: 2px;
         margin-left: 40px;
@@ -50,41 +49,39 @@ Example:
       }
 
       label {
-        @apply(--things-label);
+        @apply (--things-label);
       }
 
       input {
-        @apply(--things-input);
+        @apply (--things-input);
       }
 
       fieldset {
-        @apply(--things-fieldset);
+        @apply (--things-fieldset);
       }
 
       legend {
-        @apply(--things-fieldset-legend);
+        @apply (--things-fieldset-legend);
       }
     </style>
 
     <label>
       <things-i18n-msg msgid="label.shadowOffsetX" auto>offset-X</things-i18n-msg>
     </label>
-    <input id='left' is="things-editor-number-input" number="{{shadow.left::change}}">
+    <input id="left" is="things-editor-number-input" number="{{shadow.left::change}}" />
 
     <label>
       <things-i18n-msg msgid="label.shadowOffsetY" auto>offset-Y</things-i18n-msg>
     </label>
-    <input id='top' is="things-editor-number-input" number="{{shadow.top::change}}">
+    <input id="top" is="things-editor-number-input" number="{{shadow.top::change}}" />
 
     <label>
       <things-i18n-msg msgid="label.shadowSize" auto>Size</things-i18n-msg>
     </label>
-    <input id='blurSize' is="things-editor-number-input" number="{{shadow.blurSize::change}}">
+    <input id="blurSize" is="things-editor-number-input" number="{{shadow.blurSize::change}}" />
 
     <label class="icon-only-label color"></label>
-    <things-editor-color id='color' value="{{shadow.color::change}}">
-    </things-editor-color>
-
+    <things-editor-color id="color" value="{{shadow.color::change}}"> </things-editor-color>
   </template>
 
   <script>
@@ -93,20 +90,17 @@ Example:
 
       properties: {
         value: {
-          notify: true
-        }
+          notify: true,
+        },
       },
 
       listeners: {
-        'value-changed': 'onChangedValue'
+        'value-changed': 'onChangedValue',
       },
 
-      observers: [
-        'onChangedShadow(shadow.*)'
-      ],
+      observers: ['onChangedShadow(shadow.*)'],
 
       onChangedValue: function (changed, after) {
-
         if (this.changedOnThis) {
           return
         }
@@ -118,7 +112,7 @@ Example:
           return
         }
 
-        this.shadow = Object.assign({}, value);
+        this.shadow = Object.assign({}, value)
       },
 
       onChangedShadow: function (changed) {
@@ -130,21 +124,20 @@ Example:
         switch (name) {
           case 'shadow.left':
             this.set('value.left', value)
-            break;
+            break
           case 'shadow.top':
             this.set('value.top', value)
-            break;
+            break
           case 'shadow.color':
             this.set('value.color', value)
-            break;
+            break
           case 'shadow.blurSize':
             this.set('value.blurSize', value)
-            break;
+            break
         }
 
         this.changedOnThis = false
-      }
-
-    });
+      },
+    })
   </script>
 </dom-module>
