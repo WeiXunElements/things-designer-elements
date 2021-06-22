@@ -1,6 +1,6 @@
 {
   "name": "things-designer-elements",
-  "version": "3.0.9",
+  "version": "3.0.10",
   "authors": ["Shenzhen Weixun"],
   "description": "Elements for property editing",
   "keywords": ["web-component", "polymer", "seed"],
@@ -10,7 +10,7 @@
     "polymer": "Polymer/polymer#^1.2.0",
     "iron-elements": "PolymerElements/iron-elements#^1.0.0",
     "paper-elements": "PolymerElements/paper-elements#^1.0.1",
-    "paper-color-picker": "ThingsElements/paper-color-picker",
+    "paper-color-picker": "WeiXunElements/paper-color-picker",
     "ace-builds": "~1.2.0",
     "TinyColor": "bgrins/TinyColor",
     "codemirror": "^5.33.0"
@@ -18,7 +18,7 @@
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
     "web-component-tester": "^4.0.0",
-    "things-scene-core": "ThingsElements/things-scene-core#^2.0.0",
-    "things-theme": "ThingsElements/things-theme"
+    "things-scene-core": "WeiXunElements/things-scene-core#^2.0.0",
+    "things-theme": "WeiXunElements/things-theme"
   }
 }
